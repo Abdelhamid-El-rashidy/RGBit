@@ -1,0 +1,40 @@
+# ---- CMake build directories ----
+cmake-build-*/
+build/
+CMakeFiles/
+CMakeCache.txt
+Makefile
+install_manifest.txt
+compile_commands.json
+
+# ---- CLion / JetBrains ----
+.idea/
+*.iml
+
+# ---- Qt generated files ----
+*.pro.user
+*.qmake.stash
+*.qmake.cache
+*.qm
+
+# ---- OS junk ----
+.DS_Store
+Thumbs.db
+
+# ---- Logs ----
+*.log
+
+# ---- Binary outputs ----
+*.o
+*.obj
+*.so
+*.dll
+*.dylib
+*.a
+*.lib
+*.exe
+*.out
+
+# ---- Swap / temp ----
+*~
+*.swp
