@@ -14,6 +14,9 @@
 #ifndef _IMAGE_CLASS_H
 #define _IMAGE_CLASS_H
 
+#include <string>
+#include <QImage>
+
 
 #define ll long long
 #define PNG_TYPE 1
@@ -307,12 +310,11 @@ public:
      * @brief Invert the image pixels by shifting RGB channels.
      */
     void invert();
-    void blur(int raduis);
-    void blurring();
     void rotate90();
     void rotate180();
     void rotate270();
     void frame(int sz, const std::array<int,3>& color);
+    void blur(int kernal_size, double sigma);
 
 
 
@@ -333,6 +335,8 @@ public:
     unsigned char& operator()(int row, int col, int channel) {
         return getPixel(row, col, channel);
     }
+
+    QImage toQImage() const;
 
 };
 

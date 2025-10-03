@@ -2,6 +2,8 @@
 #include  "Image_Class.h"
 
 
+
+
 using namespace std;
 
 void Image::invert() {
@@ -81,120 +83,78 @@ void Image::frame(int size, const array<int,3> &color) {
     }
 }
 
-void Image::blur(int radius) {
-    if (radius <= 0) return;
-
-    int kernel_size = 2 * radius + 1;
-    double sigma = radius / 2.0;  // heuristic: sigma ~ radius/2
-
-    // --- 1. Build Gaussian kernel ---
-    std::vector<double> kernel(kernel_size);
+std::vector<std::vector<double>> createGaussianKernel(int kernelSize, double sigma) {
+    std::vector<std::vector<double>> kernel(kernelSize, std::vector<double>(kernelSize));
     double sum = 0.0;
-    for (int i = -radius; i <= radius; i++) {
-        double val = std::exp(-(i * i) / (2 * sigma * sigma));
-        kernel[i + radius] = val;
-        sum += val;
-    }
-    for (double &v : kernel) v /= sum; // normalize
+    int half = kernelSize / 2;
 
-    // --- 2. Temporary buffer for horizontal pass ---
-    Image temp(this->width, this->height);
-
-    // Horizontal blur
-    for (int y = 0; y < this->height; y++) {
-        for (int x = 0; x < this->width; x++) {
-            for (int c = 0; c < this->channels; c++) {
-                double acc = 0.0;
-                for (int k = -radius; k <= radius; k++) {
-                    int xx = std::clamp(x + k, 0, this->width - 1);
-                    acc += this->operator()(xx, y, c) * kernel[k + radius];
-                }
-                temp(x, y, c) = static_cast<unsigned char>(std::round(acc));
-            }
+    for (int y = -half; y <= half; y++) {
+        for (int x = -half; x <= half; x++) {
+            double value = std::exp(-(x*x + y*y) / (2 * sigma * sigma));
+            kernel[y + half][x + half] = value;
+            sum += value;
         }
     }
 
-    // --- 3. Vertical blur into output ---
-    Image blurred(this->width,this->height);
+    // Normalize so sum = 1
+    for (int i = 0; i < kernelSize; i++)
+        for (int j = 0; j < kernelSize; j++)
+            kernel[i][j] /= sum;
 
-    for (int y = 0; y < this->height; y++) {
-        for (int x = 0; x < this->width; x++) {
-            for (int c = 0; c < this->channels; c++) {
-                double acc = 0.0;
-                for (int k = -radius; k <= radius; k++) {
-                    int yy = std::clamp(y + k, 0, this->height - 1);
-                    acc += temp(x, yy, c) * kernel[k + radius];
-                }
-                blurred(x, y, c) = static_cast<unsigned char>(std::round(acc));
-            }
-        }
-    }
-
-    // --- 4. Put back into original ---
-    std::swap(this->imageData, blurred.imageData);
+    return kernel;
 }
 
-void Image::blurring(){
+// Gaussian blur filter
+void Image::blur(int kernelSize=3, double sigma=1.0) {
+    if (!imageData) return;
 
-    int kernelSize = 21;
-    int radiusKernel = kernelSize/2;
 
-    Image image2(this->width, this->height);
+    auto kernel = createGaussianKernel(kernelSize, sigma);
+    int half = kernelSize / 2;
 
-    for (int i = radiusKernel; i < this->width - radiusKernel; i++)
-    {
-        for (int j = radiusKernel; j < this->height - radiusKernel; j++)
-        {
-            int rSum = 0, gSum = 0, bSum = 0;
-            int nNeighbors = 0;
+    unsigned char* newImageData = (unsigned char*)malloc(width * height * channels);
 
-            for (int x = -radiusKernel; x <= radiusKernel; x++)
-            {
-                for (int y = -radiusKernel; y <= radiusKernel; y++)
-                {
-                    int xNeighbor = x + i;
-                    int yNeighbor = y + j;
-                    if (xNeighbor >= 0 && xNeighbor < this->width && yNeighbor >= 0 && yNeighbor < this->height)
-                    {
-                        rSum += this->operator()(xNeighbor, yNeighbor, 0);
-                        gSum += this->operator()(xNeighbor, yNeighbor, 1);
-                        bSum += this->operator()(xNeighbor, yNeighbor, 2);
-                        nNeighbors++;
-                    }
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+            double sumR = 0, sumG = 0, sumB = 0;
+
+            for (int ky = -half; ky <= half; ky++) {
+                for (int kx = -half; kx <= half; kx++) {
+                    int nx = clamp(x + kx, 0, width - 1);
+                    int ny = clamp(y + ky, 0, height - 1);
+
+                    double weight = kernel[ky + half][kx + half];
+
+                    sumR += getPixel(nx, ny, 0) * weight;
+                    sumG += getPixel(nx, ny, 1) * weight;
+                    sumB += getPixel(nx, ny, 2) * weight;
                 }
             }
-            int rAvg, gAvg, bAvg;
-            if (nNeighbors > 0)
-            {
-                rAvg = rSum/nNeighbors;
-                gAvg = gSum/nNeighbors;
-                bAvg = bSum/nNeighbors;
-            }
-            else
-            {
-                rAvg = this->operator()(i, j, 0);
-                gAvg = this->operator()(i, j, 1);
-                bAvg = this->operator()(i, j, 2);
-            }
-            image2(i, j, 0) = rAvg;
-            image2(i, j, 1) = gAvg;
-            image2(i, j, 2) = bAvg;
+
+            newImageData[(y * width + x) * channels + 0] = static_cast<unsigned char>(sumR);
+            newImageData[(y * width + x) * channels + 1] = static_cast<unsigned char>(sumG);
+            newImageData[(y * width + x) * channels + 2] = static_cast<unsigned char>(sumB);
         }
     }
 
-    Image blurredImage(image2.width - radiusKernel*2, image2.height - radiusKernel*2);
+    stbi_image_free(imageData);
+    imageData = newImageData;
+}
 
-    for (int i = 0; i < blurredImage.width; i++)
-    {
-        for (int j = 0; j < blurredImage.height; j++)
-        {
-            for (int c = 0; c < 3; c++)
-            {
-                blurredImage(i, j, c) = image2(i + radiusKernel, j + radiusKernel, c);
-            }
-        }
+QImage Image::toQImage() const {
+    if (!imageData || width <= 0 || height <= 0)
+        return QImage();
+
+    QImage::Format format;
+    if (channels == 3) {
+        format = QImage::Format_RGB888;
+    } else if (channels == 4) {
+        format = QImage::Format_RGBA8888;
+    } else {
+        return QImage();
     }
-    (*this) = blurredImage;
+
+    return QImage(imageData, width, height, width * channels, format).copy();
 }
 
 
