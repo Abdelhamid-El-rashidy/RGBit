@@ -239,6 +239,139 @@ void Image::skew(double angleDeg, int dir) {
 }
 
 
+void toGray(Image& image) {
+    for ( int i = 0; i < image.width ; ++i) {
+        for(int j = 0 ; j < image.height ; ++j ){
+            unsigned int avg = 0;
+            for(int k = 0; k < 3 ; ++k) {
+                avg += image(i,j,k);
+            }
+            avg = avg /3;
+            for(int k = 0 ; k < 3 ; ++k ){
+                image(i,j,k) = avg;
+            }
+        }
+    }
+}
+///     Darken   and     lighteng    ///
+void toDarken(Image& image) {
+    for ( int i = 0; i < image.width ; ++i) {
+        for(int j = 0 ; j < image.height ; ++j ){
+            float factor = 0.5;
+            for(int k = 0; k < 3 ; ++k) {
+                image(i,j,k) = factor  *  image(i,j,k);
+            }
+        }
+    }
+}
+void toLighten(Image& image) {
+    for ( int i = 0; i < image.width ; ++i) {
+        for(int j = 0 ; j < image.height ; ++j ){
+            float factor = 1.5;
+            for(int k = 0; k < 3 ; ++k) {
+                if (image(i,j,k) > 127 ) {
+                    image(i,j,k) = 255 ;
+                }
+                else {
+                    image(i,j,k) = factor  *  image(i,j,k);
+                }
+            }
+        }
+    }
+}
+///     merge   ///
+void toresize(Image& image) {
+    Image resized(image.width / 3 , image.height / 3 );
+    float scaleX = static_cast<float>(image.width) / resized.width;
+    float scaleY = static_cast<float>(image.height) / resized.height;
+    for (int i = 0; i < resized.width; i++) {
+        for (int j = 0; j < resized.height; j++) {
+            for (int k = 0; k < 3; k++) {
+                int srcX = min((int)ceil(i * scaleX), image.width - 1);
+                int srcY = min((int)ceil(j * scaleY), image.height - 1);
+                resized(i, j, k) = image(srcX, srcY, k);
+            }
+        }
+    }
+    image = resized ;
+    image.saveImage("resized.png");
+}
+
+void merge(Image& image1,Image& image2) {
+    for ( int i = 0; i < image2.width ; ++i) {
+        for(int j = 0 ; j < image2.height ; ++j ){
+            float factor = 0.5;
+            for(int k = 0; k < 3 ; ++k) {
+                image2(i, j, k) = factor * image2(i, j, k);
+            }
+        }
+    }
+    for ( int i = 0; i < image2.width ; ++i) {
+        for(int j = 0 ; j < image2.height ; ++j ){
+            float factor = 0.5;
+            for(int k = 0; k < 3 ; ++k) {
+                image2(i, j, k) += factor * image1(i, j, k);
+            }
+        }
+    }
+}
+///      detect_edges    / ////
+
+void detect_edges(Image& image1) {
+    Image change(image1.width, image1.height);
+    Image image2(image1.width, image1.height);
+    for (int i = 0; i < image1.width; ++i) {
+        for (int j = 0; j < image1.height; ++j) {
+            int gray = 0.299 * image1(i, j, 0) + 0.587 * image1(i, j, 1) + 0.114 * image1(i, j, 2);
+            for (int k = 0; k < 3; ++k)
+                change(i, j, k) = (gray > 127) ? 255 : 0;
+        }
+    }
+    for (int i = 1; i < image1.width - 1; ++i) {
+        for (int j = 1; j < image1.height - 1; ++j) {
+            bool edge = false;
+            if (change(i, j, 0) == 0) {
+                if (
+                    change(i+1,j,0)==255 || change(i-1,j,0)==255 ||
+                    change(i,j+1,0)==255 || change(i,j-1,0)==255 ||
+                    change(i+1,j+1,0)==255 || change(i+1,j-1,0)==255 ||
+                    change(i-1,j+1,0)==255 || change(i-1,j-1,0)==255
+                    ) {
+                    edge = true;
+                }
+            }
+            for (int k = 0; k < 3; ++k)
+                image2(i, j, k) = edge ? 0 : 255;
+        }
+    }
+    image1 = image2;
+}
+
+////    sunlight   ////
+void sunlight(Image& image1) {
+    int centerX = image1.width / 2;
+    int centerY = image1.height / 2;
+    double maxDistance = sqrt(centerX * centerX + centerY * centerY);
+    for (int i = 0; i < image1.width; ++i) {
+        for (int j = 0; j < image1.height; ++j) {
+            double dx = i - centerX;
+            double dy = j - centerY;
+            double distance = sqrt(dx * dx + dy * dy);
+            double intensity_factor = 1.5 - (distance / maxDistance);
+            if (intensity_factor < 1.0) intensity_factor = 1.0;
+            for (int k = 0; k < 3; ++k) {
+                int val = image1(i,j,k);
+                if (k == 0) val += 60 * intensity_factor;
+                if (k == 1) val += 40 * intensity_factor;
+                if (k == 2) val -= 20 * intensity_factor;
+                if (val > 255) val = 255;
+                if (val < 0) val = 0;
+                image1(i,j,k) = val;
+            }
+        }
+    }
+}
+
 
 QImage Image::toQImage() const {
     if (!imageData || width <= 0 || height <= 0)
