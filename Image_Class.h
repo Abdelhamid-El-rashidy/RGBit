@@ -315,6 +315,8 @@ public:
     void rotate270();
     void frame(int sz, const std::array<int,3>& color);
     void blur(int kernal_size, double sigma);
+    void oilPainting();
+    void skew(double angle, int dir);
 
 
 
