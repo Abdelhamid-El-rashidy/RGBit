@@ -1,4 +1,3 @@
-```markdown
 # Image Processing Application
 
 A modern **Image Processing GUI** built using **C++ and Qt Framework**, featuring tools for filtering, blurring, and image adjustments such as brightness, contrast, and color controls — similar to photo editors like Pixlr or Photoshop.
