@@ -15,31 +15,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     setFocusPolicy(Qt::StrongFocus);
 
-    ui->sidebar->setStyleSheet(
-        "QGroupBox {"
-        "  color: white;"
-        "  border: 1px solid #4C566A;"
-        "  border-radius: 6px;"
-        "  margin-top: 10px;"
-        "  font-weight: bold;"
-        "}"
-        "QGroupBox::title {"
-        "  subcontrol-origin: margin;"
-        "  subcontrol-position: top left;"
-        "  padding: 3 10px;"
-        "  color: #88C0D0;"
-        "}"
-        "QPushButton {"
-        "  background: transparent;"
-        "  border: none;"
-        "  text-align: left;"
-        "  color: white;"
-        "  padding: 4px;"
-        "}"
-        "QPushButton:hover {"
-        "  background-color: #434C5E;"
-        "}"
-        );
 
     // --- Sidebar Animation ---
     sidebarAnim = new QPropertyAnimation(ui->sidebar, "geometry", this);

@@ -35,12 +35,14 @@
       <height>651</height>
      </rect>
     </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
     <property name="styleSheet">
      <string notr="true">
       QFrame {
-      background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1,
-      stop:0 #1f1f2e, stop:1 #252533);
-      border-right: 1px solid #2c2f3a;
+      background-color: #12121a;
+      border-left: 1px solid #2c2f3a;
       }
       QPushButton {
       color: #e0e0e0;
@@ -479,9 +481,9 @@
     </widget>
    </widget>
    <zorder>Bottombar</zorder>
-   <zorder>mainbar</zorder>
    <zorder>sidebar</zorder>
    <zorder>Displayer</zorder>
+   <zorder>mainbar</zorder>
   </widget>
  </widget>
  <resources/>
