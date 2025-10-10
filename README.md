@@ -1,8 +1,3 @@
-Absolutely — here’s a **clean, professional full README.md** for your project, with no emojis and fully consistent formatting.
-You can directly paste this into your GitHub repository’s `README.md` file.
-
----
-
 # Image Processing Application
 
 A modern **Image Processing GUI** built using **C++ and the Qt Framework**, featuring tools for filtering, blurring, and image transformations such as brightness, contrast, and color adjustments — similar to photo editors like Pixlr or Photoshop.
