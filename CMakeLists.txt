@@ -26,5 +26,7 @@ qt_add_executable(IMG-Processer-GUI
 )
 
 target_link_libraries(IMG-Processer-GUI PRIVATE Qt6::Widgets Qt6::Gui)
+target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+
 
 qt_finalize_executable(IMG-Processer-GUI)

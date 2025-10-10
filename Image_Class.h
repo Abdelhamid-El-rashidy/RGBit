@@ -317,6 +317,22 @@ public:
     void blur(int kernal_size, double sigma);
     void oilPainting();
     void skew(double angle, int dir);
+    void toGray();
+    void toDarken();
+    void toLighten();
+    void toresize();
+    Image merge(Image& img);
+    void detect_edges();
+    void sunlight();
+    void resize(int newWidth, int newHeight);
+    void old();
+    void purple();
+    void crop(int x, int y, int width, int height);
+    void Black_White();
+    void flipH();
+    void flipV();
+    void dark_light(int op);
+    void infrared();
 
 
 

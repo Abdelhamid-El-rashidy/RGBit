@@ -21,7 +21,7 @@ void Image::rotate90() {
     for (int x = 0; x<this->width;x++) {
         for (int y = 0; y<this->height;y++) {
             for (int c = 0; c<3;c++) {
-                newImage((this->height-1)-y,x,c) = this->operator()(x,y,c);
+                newImage(y, this->width - 1 - x, c) = this->operator()(x, y, c);
             }
         }
     }
@@ -32,7 +32,7 @@ void Image::rotate180() {
     for (int x = 0; x<this->width;x++) {
         for (int y = 0; y<this->height;y++) {
             for (int c = 0; c<3;c++) {
-                newImage((this->width-1)-x,(this->height-1)-y,c) = this->operator()(x,y,c);
+                newImage(this->width - 1 - x, this->height - 1 - y, c) = this->operator()(x, y, c);
             }
         }
     }
@@ -43,7 +43,7 @@ void Image::rotate270() {
     for (int x = 0; x<this->width;x++) {
         for (int y = 0; y<this->height;y++) {
             for (int c = 0; c<3;c++) {
-                newImage(y, (this->width-1) - x, c) = this->operator()(x, y, c);
+                newImage(this->height - 1 - y, x, c) = this->operator()(x, y, c);
             }
         }
     }
@@ -238,97 +238,90 @@ void Image::skew(double angleDeg, int dir) {
     *this = newimage;
 }
 
-
-void toGray(Image& image) {
-    for ( int i = 0; i < image.width ; ++i) {
-        for(int j = 0 ; j < image.height ; ++j ){
+void Image::toGray() {
+    for (int i = 0; i < width; ++i) {
+        for (int j = 0; j < height; ++j) {
             unsigned int avg = 0;
-            for(int k = 0; k < 3 ; ++k) {
-                avg += image(i,j,k);
+            for (int k = 0; k < 3; ++k) {
+                avg += (*this)(i, j, k);
             }
-            avg = avg /3;
-            for(int k = 0 ; k < 3 ; ++k ){
-                image(i,j,k) = avg;
+            avg = avg / 3;
+            for (int k = 0; k < 3; ++k) {
+                (*this)(i, j, k) = avg;
             }
         }
     }
 }
-///     Darken   and     lighteng    ///
-void toDarken(Image& image) {
-    for ( int i = 0; i < image.width ; ++i) {
-        for(int j = 0 ; j < image.height ; ++j ){
+
+void Image::toDarken() {
+    for (int i = 0; i < width; ++i) {
+        for (int j = 0; j < height; ++j) {
             float factor = 0.5;
-            for(int k = 0; k < 3 ; ++k) {
-                image(i,j,k) = factor  *  image(i,j,k);
+            for (int k = 0; k < 3; ++k) {
+                (*this)(i, j, k) = factor * (*this)(i, j, k);
             }
         }
     }
 }
-void toLighten(Image& image) {
-    for ( int i = 0; i < image.width ; ++i) {
-        for(int j = 0 ; j < image.height ; ++j ){
+
+void Image::toLighten() {
+    for (int i = 0; i < width; ++i) {
+        for (int j = 0; j < height; ++j) {
             float factor = 1.5;
-            for(int k = 0; k < 3 ; ++k) {
-                if (image(i,j,k) > 127 ) {
-                    image(i,j,k) = 255 ;
-                }
-                else {
-                    image(i,j,k) = factor  *  image(i,j,k);
+            for (int k = 0; k < 3; ++k) {
+                if ((*this)(i, j, k) > 127) {
+                    (*this)(i, j, k) = 255;
+                } else {
+                    (*this)(i, j, k) = factor * (*this)(i, j, k);
                 }
             }
         }
     }
 }
-///     merge   ///
-void toresize(Image& image) {
-    Image resized(image.width / 3 , image.height / 3 );
-    float scaleX = static_cast<float>(image.width) / resized.width;
-    float scaleY = static_cast<float>(image.height) / resized.height;
-    for (int i = 0; i < resized.width; i++) {
-        for (int j = 0; j < resized.height; j++) {
+
+Image Image::merge(Image& img2) {
+    int minwidth = min(width, img2.width);
+    int minheight = min(height, img2.height);
+
+    Image resized1(minwidth, minheight);
+    Image resized2(minwidth, minheight);
+
+    float scaleX1 = static_cast<float>(width) / minwidth;
+    float scaleY1 = static_cast<float>(height) / minheight;
+    float scaleX2 = static_cast<float>(img2.width) / minwidth;
+    float scaleY2 = static_cast<float>(img2.height) / minheight;
+
+    for (int i = 0; i < minwidth; i++) {
+        for (int j = 0; j < minheight; j++) {
+            int x1 = min((int)floor(i * scaleX1), width - 1);
+            int y1 = min((int)floor(j * scaleY1), height - 1);
+            int x2 = min((int)floor(i * scaleX2), img2.width - 1);
+            int y2 = min((int)floor(j * scaleY2), img2.height - 1);
+
             for (int k = 0; k < 3; k++) {
-                int srcX = min((int)ceil(i * scaleX), image.width - 1);
-                int srcY = min((int)ceil(j * scaleY), image.height - 1);
-                resized(i, j, k) = image(srcX, srcY, k);
-            }
-        }
-    }
-    image = resized ;
-    image.saveImage("resized.png");
-}
+                int val1 = (*this)(x1, y1, k);
+                int val2 = img2(x2, y2, k);
 
-void merge(Image& image1,Image& image2) {
-    for ( int i = 0; i < image2.width ; ++i) {
-        for(int j = 0 ; j < image2.height ; ++j ){
-            float factor = 0.5;
-            for(int k = 0; k < 3 ; ++k) {
-                image2(i, j, k) = factor * image2(i, j, k);
+                int blended = static_cast<int>(0.5 * val1 + 0.5 * val2);
+                resized1(i, j, k) = clamp(blended, 0, 255);
             }
         }
     }
-    for ( int i = 0; i < image2.width ; ++i) {
-        for(int j = 0 ; j < image2.height ; ++j ){
-            float factor = 0.5;
-            for(int k = 0; k < 3 ; ++k) {
-                image2(i, j, k) += factor * image1(i, j, k);
-            }
-        }
-    }
-}
-///      detect_edges    / ////
 
-void detect_edges(Image& image1) {
-    Image change(image1.width, image1.height);
-    Image image2(image1.width, image1.height);
-    for (int i = 0; i < image1.width; ++i) {
-        for (int j = 0; j < image1.height; ++j) {
-            int gray = 0.299 * image1(i, j, 0) + 0.587 * image1(i, j, 1) + 0.114 * image1(i, j, 2);
+    return resized1;
+}
+void Image::detect_edges() {
+    Image change(width, height);
+    Image result(width, height);
+    for (int i = 0; i < width; ++i) {
+        for (int j = 0; j < height; ++j) {
+            int gray = 0.299 * (*this)(i, j, 0) + 0.587 * (*this)(i, j, 1) + 0.114 * (*this)(i, j, 2);
             for (int k = 0; k < 3; ++k)
                 change(i, j, k) = (gray > 127) ? 255 : 0;
         }
     }
-    for (int i = 1; i < image1.width - 1; ++i) {
-        for (int j = 1; j < image1.height - 1; ++j) {
+    for (int i = 1; i < width - 1; ++i) {
+        for (int j = 1; j < height - 1; ++j) {
             bool edge = false;
             if (change(i, j, 0) == 0) {
                 if (
@@ -336,42 +329,154 @@ void detect_edges(Image& image1) {
                     change(i,j+1,0)==255 || change(i,j-1,0)==255 ||
                     change(i+1,j+1,0)==255 || change(i+1,j-1,0)==255 ||
                     change(i-1,j+1,0)==255 || change(i-1,j-1,0)==255
-                    ) {
+                ) {
                     edge = true;
                 }
             }
             for (int k = 0; k < 3; ++k)
-                image2(i, j, k) = edge ? 0 : 255;
+                result(i, j, k) = edge ? 0 : 255;
         }
     }
-    image1 = image2;
+    *this = result;
 }
 
-////    sunlight   ////
-void sunlight(Image& image1) {
-    int centerX = image1.width / 2;
-    int centerY = image1.height / 2;
+void Image::sunlight() {
+    int centerX = width / 2;
+    int centerY = height / 2;
     double maxDistance = sqrt(centerX * centerX + centerY * centerY);
-    for (int i = 0; i < image1.width; ++i) {
-        for (int j = 0; j < image1.height; ++j) {
+    for (int i = 0; i < width; ++i) {
+        for (int j = 0; j < height; ++j) {
             double dx = i - centerX;
             double dy = j - centerY;
             double distance = sqrt(dx * dx + dy * dy);
             double intensity_factor = 1.5 - (distance / maxDistance);
             if (intensity_factor < 1.0) intensity_factor = 1.0;
             for (int k = 0; k < 3; ++k) {
-                int val = image1(i,j,k);
+                int val = (*this)(i,j,k);
                 if (k == 0) val += 60 * intensity_factor;
                 if (k == 1) val += 40 * intensity_factor;
                 if (k == 2) val -= 20 * intensity_factor;
                 if (val > 255) val = 255;
                 if (val < 0) val = 0;
-                image1(i,j,k) = val;
+                (*this)(i,j,k) = val;
             }
         }
     }
 }
 
+void Image::resize(int newWidth, int newHeight) {
+    Image resized(newWidth, newHeight);
+    float scaleX = static_cast<float>(width) / newWidth;
+    float scaleY = static_cast<float>(height) / newHeight;
+    for (int i = 0; i < newWidth; i++) {
+        for (int j = 0; j < newHeight; j++) {
+            for (int k = 0; k < 3; k++) {
+                int srcX = min((int)ceil(i * scaleX), width - 1);
+                int srcY = min((int)ceil(j * scaleY), height - 1);
+                resized(i, j, k) = (*this)(srcX, srcY, k);
+            }
+        }
+    }
+    *this = resized;
+}
+
+void Image::old() {
+    // Empty as original
+}
+
+void Image::purple() {
+    for (int i = 0; i < width; i++) {
+        for (int j = 0; j < height; j++) {
+            (*this)(i,j,0) = std::min(255, (*this)(i,j,0) + 10);
+            (*this)(i,j,1) = std::max(0, (*this)(i,j,1) - 15);
+            (*this)(i,j,2) = std::min(255, (*this)(i,j,2) + 20);
+        }
+    }
+}
+
+void Image::crop(int x, int y, int nwidth, int nheight) {
+    Image crop(nwidth, nheight);
+    if (x + nwidth > width || y + nheight > height) {
+        throw("Invalid Crop");
+        return;
+    }
+    for (int i = 0; i < nwidth; i++) {
+        for (int j = 0; j < nheight; j++) {
+            for (int k = 0; k < 3; k++) {
+                crop(i, j, k) = (*this)(i + x, j + y, k);
+            }
+        }
+    }
+    *this = crop;
+}
+
+void Image::Black_White() {
+    for (int i = 0; i < width; i++) {
+        for (int j = 0; j < height; j++) {
+            int sum = 0;
+            for (int k = 0; k < 3; k++) {
+                sum += (*this)(i, j, k);
+            }
+            int val = ((sum / 3) >= 100 ? 255 : 0);
+            for (int k = 0; k < 3; k++) {
+                (*this)(i, j, k) = val;
+            }
+        }
+    }
+}
+
+void Image::flipH() {
+    for (int i = 0; i < width / 2; i++) {
+        for (int j = 0; j < height; j++) {
+            for (int k = 0; k < channels; k++) {
+                int tmp = (*this)(i, j, k);
+                (*this)(i, j, k) = (*this)(width - i - 1, j, k);
+                (*this)(width - i - 1, j, k) = tmp;
+            }
+        }
+    }
+}
+
+void Image::flipV() {
+    for (int i = 0; i < width; i++) {
+        for (int j = 0; j < height / 2; j++) {
+            for (int k = 0; k < channels; k++) {
+                int tmp = (*this)(i, j, k);
+                (*this)(i, j, k) = (*this)(i, height - j - 1, k);
+                (*this)(i, height - j - 1, k) = tmp;
+            }
+        }
+    }
+}
+
+void Image::dark_light(int op) {
+    for (int i = 0; i < width; ++i) {
+        for (int j = 0; j < height; ++j) {
+            for (int k = 0; k < 3; ++k) {
+                if (op)
+                    (*this)(i, j, k) = std::min(255, int((*this)(i, j, k) * 1.5));
+                else
+                    (*this)(i, j, k) = floor(0.5 * (*this)(i, j, k));
+            }
+        }
+    }
+}
+
+void Image::infrared() {
+    for (int i = 0; i < width; i++) {
+        for (int j = 0; j < height; j++) {
+            int gray = (*this)(i, j, 0);
+            gray = min(255, max(0, gray));
+            int adjustedRed = static_cast<int>(gray * 1.8);
+            int finalRed = min(255, max(0, adjustedRed));
+
+
+            (*this)(i, j, 0) = finalRed;
+            (*this)(i, j, 1) = 0;        
+            (*this)(i, j, 2) = 0;
+        }
+    }
+}
 
 QImage Image::toQImage() const {
     if (!imageData || width <= 0 || height <= 0)

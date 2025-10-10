@@ -16,6 +16,10 @@
 #include <QMenu>
 #include <QActionGroup>
 #include <QPropertyAnimation>
+#include <QEasingCurve>
+#include <QIntValidator>
+
+
 
 
 #include "Image_Class.h"
@@ -34,36 +38,76 @@ public:
 private slots:
     void loadImage();
     void saveImage();
-    void applyGray();
-    void applyInvert();
-    void applyBlur();
-    void applyRotate();
+    void on_resetButton_clicked();
     void undo();
     void redo();
 
 
-    void on_resetButton_clicked();
+    void on_rot90_clicked();
+
+    void on_rot180_clicked();
+
+    void on_rot270_clicked();
+
+    void on_flipv_clicked();
+
+    void on_fliph_clicked();
+
+    void on_BW_clicked();
+
+    void on_Sunlight_clicked();
+
+    void on_Invert_clicked();
+
+    void on_Gray_clicked();
+
+    void on_Infrared_clicked();
+
+    void on_Purple_clicked();
+
+    void on_Oil_clicked();
+
+    void on_OldTv_clicked();
+
+    void on_CropBtn_clicked();
+
+    void on_ResizeBtn_clicked();
+
+    void on_blur_clicked();
+
+    void on_Increase_clicked();
+
+    void on_decrease_clicked();
+
+    void on_merge_clicked();
+
+    void showImagesOrg();
+
+    void keyPressEvent(QKeyEvent *event);
+    void keyReleaseEvent(QKeyEvent *event);
+
+
+    void on_pushButton_clicked();
 
 private:
     Ui::MainWindow *ui;
     QPixmap currentImage;
-    bool adjustPanelVisible = false;
+
+    // for sidebar
+    bool sidebarVisible = false;
+    QPropertyAnimation *sidebarAnim;
+    void showSidebar(QWidget *page);
+    void hideSidebar();
 
     // Optional (for slide animation)
     QPropertyAnimation *panelAnimation;
 
-    void setupConnections(); // Helper to connect signals and slots
     void updateImageDisplay(const QPixmap &pix);
     Image originalImage;
     Image filteredImage;
     QImage filtered;
     bool originalShown = false;
 
-    void setupToolBar();
-
-    QToolBar *filterToolBar;
-    QMenu *filtersMenu;
-    QMenu *effectsMenu;
 
     void showImages();
     std::queue<Image> recent;
