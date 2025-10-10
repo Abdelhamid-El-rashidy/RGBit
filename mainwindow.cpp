@@ -606,3 +606,36 @@ void MainWindow::on_pushButton_clicked()
 
     dialog.exec();
 }
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    if (originalImage.imageData == nullptr) {
+        QMessageBox::warning(this, "Error", "Load Image to apply filter");
+        return;
+    }
+    filteredImage.detect_edges();
+    showImages();
+}
+
+
+void MainWindow::on_skewleft_clicked()
+{
+    if (originalImage.imageData == nullptr) {
+        QMessageBox::warning(this, "Error", "Load Image to apply filter");
+        return;
+    }
+    filteredImage.skew(45,0);
+    showImages();
+}
+
+
+void MainWindow::on_skewright_clicked()
+{
+    if (originalImage.imageData == nullptr) {
+        QMessageBox::warning(this, "Error", "Load Image to apply filter");
+        return;
+    }
+    filteredImage.skew(45,1);
+    showImages();
+}
+

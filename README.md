@@ -1,69 +1,105 @@
+Absolutely — here’s a **clean, professional full README.md** for your project, with no emojis and fully consistent formatting.
+You can directly paste this into your GitHub repository’s `README.md` file.
+
+---
+
 # Image Processing Application
 
-A modern **Image Processing GUI** built using **C++ and Qt Framework**, featuring tools for filtering, blurring, and image adjustments such as brightness, contrast, and color controls — similar to photo editors like Pixlr or Photoshop.
+A modern **Image Processing GUI** built using **C++ and the Qt Framework**, featuring tools for filtering, blurring, and image transformations such as brightness, contrast, and color adjustments — similar to photo editors like Pixlr or Photoshop.
 
 ---
 
-## 🚀 Features
+## Features
 
-### 🧠 Core Image Processing
-- EFfect Filter
-  - Oil Painting Filter
-  - Sunlight Filter
-  - Purple Filter
-  - Infrared Filter
-  - Black & White Filter
-- Transformation Filter
-  - Skew
-  - Rotate (90,180,270)
-  - Flip (horizontally, Vertically)
-- Blur Filter
-- Merge
+### Core Image Processing
 
-### 🪟 User Interface
-- Built using **Qt Widgets** (`.ui` file designed in Qt Designer).
-- Sidebar panel for **image properties** (appears when clicking “Properties” button).
-- Central area for **image preview** using `QLabel`.
-- Supports loading and saving images (`.png`, `.jpg`, `.jpeg`, `.bmp`).
+* **Effect Filters**
+
+  * Oil Painting Filter
+  * Sunlight Filter
+  * Purple Filter
+  * Gray
+  * Infrared Filter
+  * Black & White Filter
+  * Old TV Filter
+  * Invert
+  * Brightness
+* **Transformation Filters**
+  * Skew
+  * Rotate (90°, 180°, 270°)
+  * Flip (Horizontal / Vertical)
+* **Blur Filters**
+* **Merge and Crop**
+* Edges Detector
+* **Resize and Frame Tools**
 
 ---
 
-## 🧩 Project Structure
+## User Interface
+
+* Built using **Qt Widgets** (`.ui` file designed in Qt Designer)
+* Sidebar panel for **image properties** (appears when clicking “Properties” button)
+* Central preview area for **original** and **filtered** images using `QLabel`
+* Supports **loading and saving** images in `.png`, `.jpg`, `.jpeg`, and `.bmp` formats
+* Animated sidebar for smoother transitions between editing tools
+
+---
+
+## Project Structure
 
 ```
-
 ImageProcessor/
 ├── include/
 │   ├── image.h               # Image class handling raw pixel data
-│   └── mainwindow.h          # GUI logic and slots
+│   └── mainwindow.h          # GUI logic and event handlers
 ├── src/
-│   ├── main.cpp              # Entry point
-│   ├── mainwindow.cpp        # UI event handlers and filters
+│   ├── main.cpp              # Application entry point
+│   ├── mainwindow.cpp        # UI event handlers and image operations
 │   ├── image.cpp             # Core image algorithms
 ├── ui/
 │   └── mainwindow.ui         # Designed Qt interface (XML format)
 ├── assets/
 │   └── sample.jpg            # Example test image
-├── CMakeLists.txt            # CMake build file
+├── CMakeLists.txt            # CMake build configuration
 └── README.md                 # Project documentation
-
-````
-
----
-
-## ⚙️ Installation & Build
-
-### 🧱 Requirements
-- **Qt 6.x** or **Qt 5.x** (with Qt Widgets module)
-- **CMake ≥ 3.16**
-- **C++17** compatible compiler (GCC, Clang, MSVC)
-- **stb_image / stb_image_write** for image I/O (included in repo)
+```
 
 ---
 
-### 🧰 Build Steps
+## Installation & Setup
 
-#### 🖥️ Using CMake
+### Prerequisites
+
+Before building, ensure the following dependencies are installed:
+
+#### On Linux (Ubuntu / Debian)
+
+```bash
+sudo apt update
+sudo apt install build-essential cmake qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools
+```
+
+For Qt 6:
+
+```bash
+sudo apt install qt6-base-dev qt6-base-dev-tools
+```
+
+#### On Windows
+
+* Install [Qt](https://www.qt.io/download-open-source) and select the **Qt 6.x (MinGW)** or **Qt 5.x** package.
+* Ensure **CMake** and **MinGW** are added to your system PATH.
+
+#### On macOS
+
+```bash
+brew install cmake qt
+```
+
+---
+
+### Building with CMake
+
 ```bash
 git clone https://github.com/<your-username>/Qt-ImageProcessor.git
 cd Qt-ImageProcessor
@@ -71,32 +107,66 @@ mkdir build && cd build
 cmake ..
 make
 ./ImageProcessor
-````
+```
 
-#### 🪟 Using Qt Creator
+If `cmake` cannot find Qt, specify its installation path:
 
-1. Open `CMakeLists.txt` in Qt Creator.
-2. Configure with your preferred Qt kit.
-3. Build and run the project directly.
+```bash
+cmake -DCMAKE_PREFIX_PATH=/path/to/Qt/6.x/gcc_64 ..
+```
 
 ---
 
+### Building in CLion or Qt Creator
 
-## Author
+#### In CLion
 
-**Abdelhamid Ahmed Abdelhamid ElRashidy**
-**Hazem Mohamed**
-**Anas Ibrahim**
+1. Open the project folder in **CLion**.
+2. Navigate to **File → Settings → Build, Execution, Deployment → CMake**.
+3. Click **+** to add a new CMake profile (for example, `Debug`).
+4. Press **Reload CMake Project**.
+5. Click **Build → Build Project** or press `Ctrl + F9` to compile.
 
+#### In Qt Creator
+
+1. Open the `CMakeLists.txt` file.
+2. Configure the project using your preferred **Qt Kit**.
+3. Build and run the application directly.
+
+---
+
+### Troubleshooting
+
+If you get this message:
+
+```
+Cannot find any CMake profile
+```
+
+Go to **Settings → Build, Execution, Deployment → CMake**, and create a new profile (e.g., `Debug`).
+
+If you see:
+
+```
+Could not find Qt6::Widgets
+```
+
+Run:
+
+```bash
+cmake -DCMAKE_PREFIX_PATH=/path/to/Qt/6.x/gcc_64 ..
+```
+
+---
+
+## Authors
+
+- Abdelhamid Ahmed Abdelhamid ElRashidy 
+- Hazem Mahmoud Mohammed 
+- Anas Ibrahem Hesham Ali
 ---
 
 ## License
 
-This project is licensed under the **MIT License** – free for personal and academic use.
+This project is licensed under the **MIT License** — free for personal, educational, and academic use.
 
----
-
-## Screenshot
-
-![App Screenshot](assets/sample_screenshot.png)
-*(Example layout inspired by Pixlr’s property editor design.)*
