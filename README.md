@@ -166,7 +166,20 @@ cmake -DCMAKE_PREFIX_PATH=/path/to/Qt/6.x/gcc_64 ..
 - Anas Ibrahem Hesham Ali
 ---
 
+## Authors
+
+- Abdelhamid Ahmed Abdelhamid ElRashidy
+- Hazem Mahmoud Mohammed
+- Anas Ibrahem Hesham Ali
+---
+
+## Resources
+
+* **Project Report:** [Google Document Link](https://docs.google.com/document/d/1uPoAtI0X4FZSFgmnABq6FTRaYfOWz46X1Rf8pQi4_94/edit?tab=t.0)
+* **Demo Video:** [Google Drive Link](https://drive.google.com/your-video-link)
+
+---
+
 ## License
 
 This project is licensed under the **MIT License** — free for personal, educational, and academic use.
-
