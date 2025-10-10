@@ -325,7 +325,6 @@ public:
     void detect_edges();
     void sunlight();
     void resize(int newWidth, int newHeight);
-    void old();
     void purple();
     void crop(int x, int y, int width, int height);
     void Black_White();

@@ -351,7 +351,8 @@ void MainWindow::on_OldTv_clicked()
         QMessageBox::warning(this, "Error", "Load Image to apply filter");
         return;
     }
-    filteredImage.old();
+    Image img("oldtv.jpg");
+    filteredImage = img.merge(filteredImage);
     showImages();
 }
 

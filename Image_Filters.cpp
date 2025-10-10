@@ -380,10 +380,6 @@ void Image::resize(int newWidth, int newHeight) {
     *this = resized;
 }
 
-void Image::old() {
-    // Empty as original
-}
-
 void Image::purple() {
     for (int i = 0; i < width; i++) {
         for (int j = 0; j < height; j++) {
