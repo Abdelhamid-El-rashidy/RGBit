@@ -6,7 +6,9 @@ Authors Info: Abdelhamid Ahmed => 20240728, S8
                 Anas Ibrahim => 20241017, S22
                 Hazem Mahmoud => 20240153, S8
 
-Note: You will find needed resources like installation steps, report, and video demo links in Readme file.
+Note:
+- You will find needed resources like installation steps, report, and video demo links in Readme file.
+- There are some functionalites still in progress like undo, redo. They will be ready in final submission.
 */
 
 #include "mainwindow.h"
