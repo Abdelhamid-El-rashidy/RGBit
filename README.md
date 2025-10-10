@@ -176,7 +176,7 @@ cmake -DCMAKE_PREFIX_PATH=/path/to/Qt/6.x/gcc_64 ..
 ## Resources
 
 * **Project Report:** [Google Document Link](https://docs.google.com/document/d/1uPoAtI0X4FZSFgmnABq6FTRaYfOWz46X1Rf8pQi4_94/edit?tab=t.0)
-* **Demo Video:** [Google Drive Link](https://drive.google.com/your-video-link)
+* **Demo Video:** [Google Drive Link](https://drive.google.com/drive/folders/1oabwI5nQSOdJEY3tQPBP4ow-7c4mLNsm?usp=drive_link)
 
 ---
 
