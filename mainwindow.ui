@@ -443,7 +443,7 @@
        <x>710</x>
        <y>10</y>
        <width>94</width>
-       <height>31</height>
+       <height>35</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -478,7 +478,7 @@
        <x>590</x>
        <y>10</y>
        <width>94</width>
-       <height>31</height>
+       <height>35</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -513,7 +513,7 @@
        <x>470</x>
        <y>10</y>
        <width>94</width>
-       <height>31</height>
+       <height>35</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -676,7 +676,7 @@
       </rect>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="effectsPage">
       <layout class="QVBoxLayout" name="effectsLayout">
@@ -932,7 +932,7 @@
            }</string>
          </property>
          <property name="text">
-          <string>Emboss</string>
+          <string>HDR</string>
          </property>
         </widget>
        </item>

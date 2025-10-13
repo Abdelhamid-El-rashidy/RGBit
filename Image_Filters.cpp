@@ -461,17 +461,18 @@ void Image::dark_light(int op) {
 void Image::infrared() {
     for (int i = 0; i < width; i++) {
         for (int j = 0; j < height; j++) {
-            int gray = (*this)(i, j, 0);
-            gray = min(255, max(0, gray));
-            int adjustedRed = static_cast<int>(gray * 1.8);
-            int finalRed = min(255, max(0, adjustedRed));
+            // int gray = (*this)(i, j, 0);
+            // gray = min(255, max(0, gray));
+            // int adjustedRed = static_cast<int>(gray * 1.8);
+            // int finalRed = min(255, max(0, adjustedRed));
 
 
-            (*this)(i, j, 0) = finalRed;
-            (*this)(i, j, 1) = 0;        
-            (*this)(i, j, 2) = 0;
+            (*this)(i, j, 0) = (*this)(i, j, 0) * 0.00;
+            (*this)(i, j, 1) = (*this)(i, j, 1) * 1;
+            (*this)(i, j, 2) = (*this)(i, j, 2) * 1;
         }
     }
+    (*this).invert();
 }
 
 void Image::emboss() {
