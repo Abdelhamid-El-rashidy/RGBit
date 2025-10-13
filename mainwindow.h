@@ -95,6 +95,12 @@ private slots:
 
     void on_skewright_clicked();
 
+    void on_undo_clicked();
+
+    void on_redo_clicked();
+
+    void on_emboss_clicked();
+
 private:
     Ui::MainWindow *ui;
     QPixmap currentImage;
@@ -117,8 +123,8 @@ private:
 
     void showImages();
     std::queue<Image> recent;
-    std::stack<QImage> undoStack;
-    std::stack<QImage> redoStack;
+    std::stack<Image> undoStack;
+    std::stack<Image> redoStack;
     // recent
     // push, pop, top
 };

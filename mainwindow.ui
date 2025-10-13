@@ -16,7 +16,7 @@
   <property name="styleSheet">
    <string notr="true">
     QMainWindow {
-    background-color: #171717;
+    background-color: #120017;
     color: #e0e0e0;
     font-family: &quot;Segoe UI&quot;;
     }
@@ -39,41 +39,65 @@
      <bool>false</bool>
     </property>
     <property name="styleSheet">
-     <string notr="true">
-      QFrame {
-      background-color: #12121a;
+     <string notr="true">QFrame#mainbar {
+      background-color: #1A1A22; /* Slightly updated dark background */
       border-left: 1px solid #2c2f3a;
       }
-      QPushButton {
-      color: #e0e0e0;
+      QFrame#mainbar QPushButton {
+      color: #CCCCCC; /* Lighter text for contrast */
       background-color: transparent;
       border: none;
-      padding: 10px;
+      padding: 10px 0; /* Align text neatly */
       font-weight: 500;
       }
-      QPushButton:hover {
-      background-color: #2d2d3a;
-      color: #4c82ff;
+      QFrame#mainbar QPushButton:hover {
+      background-color: #2D2D35; /* Simulates depth/shadow */
+      color: #00BCD4; /* Modern Teal Accent */
+      border-left: 3px solid #00BCD4; /* Modern &quot;selected&quot; indicator */
       }
-      QPushButton:checked {
-      background-color: #3a6ee8;
+      QFrame#mainbar QPushButton:checked {
+      background-color: #3949AB; /* Deep Indigo Active State */
       color: white;
-      border-radius: 8px;
-      }
-     </string>
+      border-radius: 0; /* Remove radius for sharper, modern look */
+      border-left: 3px solid #00BCD4; /* Maintain accent line */
+      }</string>
     </property>
     <widget class="QWidget" name="verticalLayoutWidget_2">
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>0</y>
-       <width>104</width>
-       <height>651</height>
+       <y>-10</y>
+       <width>91</width>
+       <height>661</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
        <widget class="QPushButton" name="TransformBtn">
+        <property name="styleSheet">
+         <string notr="true">QFrame#mainbar {
+          background-color: #1A1A22; /* Slightly updated dark background */
+          border-left: 1px solid #2c2f3a;
+          }
+          QFrame#mainbar QPushButton {
+          color: #CCCCCC; /* Lighter text for contrast */
+          background-color: transparent;
+          border: none;
+          padding: 10px 0; /* Align text neatly */
+          font-weight: 500;
+          }
+          QFrame#mainbar QPushButton:hover {
+          background-color: #2D2D35; /* Simulates depth/shadow */
+          color: #00BCD4; /* Modern Teal Accent */
+          border-left: 3px solid #00BCD4; /* Modern &quot;selected&quot; indicator */
+          }
+          QFrame#mainbar QPushButton:checked {
+          background-color: #3949AB; /* Deep Indigo Active State */
+          color: white;
+          border-radius: 0; /* Remove radius for sharper, modern look */
+          border-left: 3px solid #00BCD4; /* Maintain accent line */
+          }</string>
+        </property>
         <property name="text">
          <string>Transform</string>
         </property>
@@ -81,6 +105,30 @@
       </item>
       <item>
        <widget class="QPushButton" name="CropBtn">
+        <property name="styleSheet">
+         <string notr="true">QFrame#mainbar {
+          background-color: #1A1A22; /* Slightly updated dark background */
+          border-left: 1px solid #2c2f3a;
+          }
+          QFrame#mainbar QPushButton {
+          color: #CCCCCC; /* Lighter text for contrast */
+          background-color: transparent;
+          border: none;
+          padding: 10px 0; /* Align text neatly */
+          font-weight: 500;
+          }
+          QFrame#mainbar QPushButton:hover {
+          background-color: #2D2D35; /* Simulates depth/shadow */
+          color: #00BCD4; /* Modern Teal Accent */
+          border-left: 3px solid #00BCD4; /* Modern &quot;selected&quot; indicator */
+          }
+          QFrame#mainbar QPushButton:checked {
+          background-color: #3949AB; /* Deep Indigo Active State */
+          color: white;
+          border-radius: 0; /* Remove radius for sharper, modern look */
+          border-left: 3px solid #00BCD4; /* Maintain accent line */
+          }</string>
+        </property>
         <property name="text">
          <string>Crop</string>
         </property>
@@ -88,6 +136,30 @@
       </item>
       <item>
        <widget class="QPushButton" name="ResizeBtn">
+        <property name="styleSheet">
+         <string notr="true">QFrame#mainbar {
+          background-color: #1A1A22; /* Slightly updated dark background */
+          border-left: 1px solid #2c2f3a;
+          }
+          QFrame#mainbar QPushButton {
+          color: #CCCCCC; /* Lighter text for contrast */
+          background-color: transparent;
+          border: none;
+          padding: 10px 0; /* Align text neatly */
+          font-weight: 500;
+          }
+          QFrame#mainbar QPushButton:hover {
+          background-color: #2D2D35; /* Simulates depth/shadow */
+          color: #00BCD4; /* Modern Teal Accent */
+          border-left: 3px solid #00BCD4; /* Modern &quot;selected&quot; indicator */
+          }
+          QFrame#mainbar QPushButton:checked {
+          background-color: #3949AB; /* Deep Indigo Active State */
+          color: white;
+          border-radius: 0; /* Remove radius for sharper, modern look */
+          border-left: 3px solid #00BCD4; /* Maintain accent line */
+          }</string>
+        </property>
         <property name="text">
          <string>Resize</string>
         </property>
@@ -95,6 +167,30 @@
       </item>
       <item>
        <widget class="QPushButton" name="merge">
+        <property name="styleSheet">
+         <string notr="true">QFrame#mainbar {
+          background-color: #1A1A22; /* Slightly updated dark background */
+          border-left: 1px solid #2c2f3a;
+          }
+          QFrame#mainbar QPushButton {
+          color: #CCCCCC; /* Lighter text for contrast */
+          background-color: transparent;
+          border: none;
+          padding: 10px 0; /* Align text neatly */
+          font-weight: 500;
+          }
+          QFrame#mainbar QPushButton:hover {
+          background-color: #2D2D35; /* Simulates depth/shadow */
+          color: #00BCD4; /* Modern Teal Accent */
+          border-left: 3px solid #00BCD4; /* Modern &quot;selected&quot; indicator */
+          }
+          QFrame#mainbar QPushButton:checked {
+          background-color: #3949AB; /* Deep Indigo Active State */
+          color: white;
+          border-radius: 0; /* Remove radius for sharper, modern look */
+          border-left: 3px solid #00BCD4; /* Maintain accent line */
+          }</string>
+        </property>
         <property name="text">
          <string>Merge</string>
         </property>
@@ -102,6 +198,31 @@
       </item>
       <item>
        <widget class="QPushButton" name="blur">
+        <property name="styleSheet">
+         <string notr="true">QFrame#mainbar {
+          background-color: #1A1A22; /* Slightly updated dark background */
+          border-left: 1px solid #2c2f3a;
+          }
+          QFrame#mainbar QPushButton {
+          color: #CCCCCC; /* Lighter text for contrast */
+          background-color: transparent;
+          border: none;
+          padding: 10px 0; /* Align text neatly */
+          font-weight: 500;
+          }
+          QFrame#mainbar QPushButton:hover {
+          background-color: #2D2D35; /* Simulates depth/shadow */
+          color: #00BCD4; /* Modern Teal Accent */
+          border-left: 3px solid #00BCD4; /* Modern &quot;selected&quot; indicator */
+          }
+          QFrame#mainbar QPushButton:checked {
+          background-color: #3949AB; /* Deep Indigo Active State */
+          color: white;
+          border-radius: 0; /* Remove radius for sharper, modern look */
+          border-left: 3px solid #00BCD4; /* Maintain accent line */
+          }
+         </string>
+        </property>
         <property name="text">
          <string>Blur</string>
         </property>
@@ -109,6 +230,31 @@
       </item>
       <item>
        <widget class="QPushButton" name="BrightnessBtn">
+        <property name="styleSheet">
+         <string notr="true">QFrame#mainbar {
+          background-color: #1A1A22; /* Slightly updated dark background */
+          border-left: 1px solid #2c2f3a;
+          }
+          QFrame#mainbar QPushButton {
+          color: #CCCCCC; /* Lighter text for contrast */
+          background-color: transparent;
+          border: none;
+          padding: 10px 0; /* Align text neatly */
+          font-weight: 500;
+          }
+          QFrame#mainbar QPushButton:hover {
+          background-color: #2D2D35; /* Simulates depth/shadow */
+          color: #00BCD4; /* Modern Teal Accent */
+          border-left: 3px solid #00BCD4; /* Modern &quot;selected&quot; indicator */
+          }
+          QFrame#mainbar QPushButton:checked {
+          background-color: #3949AB; /* Deep Indigo Active State */
+          color: white;
+          border-radius: 0; /* Remove radius for sharper, modern look */
+          border-left: 3px solid #00BCD4; /* Maintain accent line */
+          }
+         </string>
+        </property>
         <property name="text">
          <string>Brightness</string>
         </property>
@@ -116,6 +262,31 @@
       </item>
       <item>
        <widget class="QPushButton" name="pushButton">
+        <property name="styleSheet">
+         <string notr="true">QFrame#mainbar {
+          background-color: #1A1A22; /* Slightly updated dark background */
+          border-left: 1px solid #2c2f3a;
+          }
+          QFrame#mainbar QPushButton {
+          color: #CCCCCC; /* Lighter text for contrast */
+          background-color: transparent;
+          border: none;
+          padding: 10px 0; /* Align text neatly */
+          font-weight: 500;
+          }
+          QFrame#mainbar QPushButton:hover {
+          background-color: #2D2D35; /* Simulates depth/shadow */
+          color: #00BCD4; /* Modern Teal Accent */
+          border-left: 3px solid #00BCD4; /* Modern &quot;selected&quot; indicator */
+          }
+          QFrame#mainbar QPushButton:checked {
+          background-color: #3949AB; /* Deep Indigo Active State */
+          color: white;
+          border-radius: 0; /* Remove radius for sharper, modern look */
+          border-left: 3px solid #00BCD4; /* Maintain accent line */
+          }
+         </string>
+        </property>
         <property name="text">
          <string>Frame</string>
         </property>
@@ -123,6 +294,30 @@
       </item>
       <item>
        <widget class="QPushButton" name="pushButton_2">
+        <property name="styleSheet">
+         <string notr="true">QFrame#mainbar {
+          background-color: #1A1A22; /* Slightly updated dark background */
+          border-left: 1px solid #2c2f3a;
+          }
+          QFrame#mainbar QPushButton {
+          color: #CCCCCC; /* Lighter text for contrast */
+          background-color: transparent;
+          border: none;
+          padding: 10px 0; /* Align text neatly */
+          font-weight: 500;
+          }
+          QFrame#mainbar QPushButton:hover {
+          background-color: #2D2D35; /* Simulates depth/shadow */
+          color: #00BCD4; /* Modern Teal Accent */
+          border-left: 3px solid #00BCD4; /* Modern &quot;selected&quot; indicator */
+          }
+          QFrame#mainbar QPushButton:checked {
+          background-color: #3949AB; /* Deep Indigo Active State */
+          color: white;
+          border-radius: 0; /* Remove radius for sharper, modern look */
+          border-left: 3px solid #00BCD4; /* Maintain accent line */
+          }</string>
+        </property>
         <property name="text">
          <string>Detect</string>
         </property>
@@ -130,240 +325,37 @@
       </item>
       <item>
        <widget class="QPushButton" name="EffectsBtn">
+        <property name="styleSheet">
+         <string notr="true">QFrame#mainbar {
+          background-color: #1A1A22; /* Slightly updated dark background */
+          border-left: 1px solid #2c2f3a;
+          }
+          QFrame#mainbar QPushButton {
+          color: #CCCCCC; /* Lighter text for contrast */
+          background-color: transparent;
+          border: none;
+          padding: 10px 0; /* Align text neatly */
+          font-weight: 500;
+          }
+          QFrame#mainbar QPushButton:hover {
+          background-color: #2D2D35; /* Simulates depth/shadow */
+          color: #00BCD4; /* Modern Teal Accent */
+          border-left: 3px solid #00BCD4; /* Modern &quot;selected&quot; indicator */
+          }
+          QFrame#mainbar QPushButton:checked {
+          background-color: #3949AB; /* Deep Indigo Active State */
+          color: white;
+          border-radius: 0; /* Remove radius for sharper, modern look */
+          border-left: 3px solid #00BCD4; /* Maintain accent line */
+          }
+         </string>
+        </property>
         <property name="text">
          <string>Effects</string>
         </property>
        </widget>
       </item>
      </layout>
-    </widget>
-   </widget>
-   <widget class="QFrame" name="sidebar">
-    <property name="geometry">
-     <rect>
-      <x>90</x>
-      <y>0</y>
-      <width>220</width>
-      <height>650</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">
-      QFrame {
-      background-color: #1f1f2e;
-      border-left: 1px solid #2c2f3a;
-      color: #e0e0e0;
-      }
-      QLabel {
-      color: #bfc2cc;
-      font-weight: 600;
-      }
-      QPushButton {
-      background-color: #2b2b3a;
-      color: #e0e0e0;
-      border: 1px solid #32364a;
-      border-radius: 6px;
-      padding: 6px;
-      }
-      QPushButton:hover {
-      background-color: #3a3a4a;
-      border-color: #4c82ff;
-      color: #4c82ff;
-      }
-      QPushButton:pressed {
-      background-color: #3a6ee8;
-      color: white;
-      }
-     </string>
-    </property>
-    <widget class="QStackedWidget" name="sidebarStack">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>50</y>
-       <width>200</width>
-       <height>550</height>
-      </rect>
-     </property>
-     <property name="currentIndex">
-      <number>2</number>
-     </property>
-     <widget class="QWidget" name="effectsPage">
-      <layout class="QVBoxLayout" name="effectsLayout">
-       <item>
-        <widget class="QLabel" name="effectsTitle">
-         <property name="text">
-          <string>Effects</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="BW">
-         <property name="text">
-          <string>Black &amp; White</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="Sunlight">
-         <property name="text">
-          <string>Sunlight</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="Invert">
-         <property name="text">
-          <string>Invert</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="Gray">
-         <property name="text">
-          <string>Gray</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="Infrared">
-         <property name="text">
-          <string>Infrared</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="Purple">
-         <property name="text">
-          <string>Purple</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="Oil">
-         <property name="text">
-          <string>Oil Painting</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="OldTv">
-         <property name="text">
-          <string>Old TV</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="Brightpage">
-      <layout class="QVBoxLayout" name="effectsLayout">
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout">
-         <item>
-          <widget class="QPushButton" name="Increase">
-           <property name="text">
-            <string>Increase</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="decrease">
-           <property name="text">
-            <string>Decrease</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="transformPage">
-      <layout class="QFormLayout" name="transformLayout">
-       <item row="0" column="0" colspan="2">
-        <widget class="QLabel" name="rotateLabel">
-         <property name="text">
-          <string>Rotate</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QPushButton" name="rot90">
-         <property name="text">
-          <string>270</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QPushButton" name="rot180">
-         <property name="text">
-          <string>180</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QPushButton" name="rot270">
-         <property name="text">
-          <string>90</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0" colspan="2">
-        <widget class="QLabel" name="fliplabel">
-         <property name="text">
-          <string>Flip</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0">
-        <widget class="QPushButton" name="flipv">
-         <property name="text">
-          <string>Vertical</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="1">
-        <widget class="QPushButton" name="fliph">
-         <property name="text">
-          <string>Horizontal</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="0" colspan="2">
-        <widget class="QLabel" name="skew">
-         <property name="text">
-          <string>Skew</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="0">
-        <widget class="QPushButton" name="skewleft">
-         <property name="text">
-          <string>Left</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="1">
-        <widget class="QPushButton" name="skewright">
-         <property name="text">
-          <string>Right</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </widget>
-    <widget class="QPushButton" name="closeSidebar">
-     <property name="geometry">
-      <rect>
-       <x>190</x>
-       <y>10</y>
-       <width>25</width>
-       <height>25</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>X</string>
-     </property>
     </widget>
    </widget>
    <widget class="QFrame" name="Displayer">
@@ -384,11 +376,14 @@
     <widget class="QLabel" name="filteredLabel">
      <property name="geometry">
       <rect>
-       <x>80</x>
-       <y>20</y>
-       <width>450</width>
-       <height>450</height>
+       <x>19</x>
+       <y>10</y>
+       <width>581</width>
+       <height>471</height>
       </rect>
+     </property>
+     <property name="text">
+      <string/>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -397,10 +392,10 @@
     <widget class="QLabel" name="originalLabel">
      <property name="geometry">
       <rect>
-       <x>80</x>
-       <y>20</y>
-       <width>450</width>
-       <height>450</height>
+       <x>19</x>
+       <y>10</y>
+       <width>581</width>
+       <height>471</height>
       </rect>
      </property>
      <property name="scaledContents">
@@ -448,8 +443,30 @@
        <x>710</x>
        <y>10</y>
        <width>94</width>
-       <height>26</height>
+       <height>31</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QFrame#Bottombar {
+       background-color: #1B1B25; /* Updated bottom bar background */
+       border-top: 1px solid #2c2f3a;
+       }
+       QPushButton {
+       background-color: #28283D; /* Updated button background */
+       color: #E0E0E0;
+       border-radius: 8px; /* Slightly more rounded */
+       padding: 8px 16px; /* Increased padding */
+       border: none; /* Remove default border */
+       }
+       QPushButton:hover {
+       background-color: #303045; /* Darker background for hover */
+       color: #00BCD4; /* Modern Teal Accent */
+       border-bottom: 2px solid #00BCD4; /* Accent line on hover */
+       }
+       QPushButton:pressed {
+       background-color: #3949AB; /* Deep Indigo Pressed State */
+       color: white;
+       }</string>
      </property>
      <property name="text">
       <string>Save</string>
@@ -461,8 +478,30 @@
        <x>590</x>
        <y>10</y>
        <width>94</width>
-       <height>26</height>
+       <height>31</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QFrame#Bottombar {
+       background-color: #1B1B25; /* Updated bottom bar background */
+       border-top: 1px solid #2c2f3a;
+       }
+       QPushButton {
+       background-color: #28283D; /* Updated button background */
+       color: #E0E0E0;
+       border-radius: 8px; /* Slightly more rounded */
+       padding: 8px 16px; /* Increased padding */
+       border: none; /* Remove default border */
+       }
+       QPushButton:hover {
+       background-color: #303045; /* Darker background for hover */
+       color: #00BCD4; /* Modern Teal Accent */
+       border-bottom: 2px solid #00BCD4; /* Accent line on hover */
+       }
+       QPushButton:pressed {
+       background-color: #3949AB; /* Deep Indigo Pressed State */
+       color: white;
+       }</string>
      </property>
      <property name="text">
       <string>Load</string>
@@ -474,8 +513,30 @@
        <x>470</x>
        <y>10</y>
        <width>94</width>
-       <height>26</height>
+       <height>31</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QFrame#Bottombar {
+       background-color: #1B1B25; /* Updated bottom bar background */
+       border-top: 1px solid #2c2f3a;
+       }
+       QPushButton {
+       background-color: #28283D; /* Updated button background */
+       color: #E0E0E0;
+       border-radius: 8px; /* Slightly more rounded */
+       padding: 8px 16px; /* Increased padding */
+       border: none; /* Remove default border */
+       }
+       QPushButton:hover {
+       background-color: #303045; /* Darker background for hover */
+       color: #00BCD4; /* Modern Teal Accent */
+       border-bottom: 2px solid #00BCD4; /* Accent line on hover */
+       }
+       QPushButton:pressed {
+       background-color: #3949AB; /* Deep Indigo Pressed State */
+       color: white;
+       }</string>
      </property>
      <property name="text">
       <string>Reset</string>
@@ -484,11 +545,33 @@
     <widget class="QPushButton" name="undo">
      <property name="geometry">
       <rect>
-       <x>870</x>
+       <x>840</x>
        <y>10</y>
-       <width>51</width>
-       <height>26</height>
+       <width>71</width>
+       <height>31</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QFrame#Bottombar {
+       background-color: #1B1B25; /* Updated bottom bar background */
+       border-top: 1px solid #2c2f3a;
+       }
+       QPushButton {
+       background-color: #28283D; /* Updated button background */
+       color: #E0E0E0;
+       border-radius: 8px; /* Slightly more rounded */
+       padding: 8px 16px; /* Increased padding */
+       border: none; /* Remove default border */
+       }
+       QPushButton:hover {
+       background-color: #303045; /* Darker background for hover */
+       color: #00BCD4; /* Modern Teal Accent */
+       border-bottom: 2px solid #00BCD4; /* Accent line on hover */
+       }
+       QPushButton:pressed {
+       background-color: #3949AB; /* Deep Indigo Pressed State */
+       color: white;
+       }</string>
      </property>
      <property name="text">
       <string>Undo</string>
@@ -497,19 +580,716 @@
     <widget class="QPushButton" name="redo">
      <property name="geometry">
       <rect>
-       <x>930</x>
+       <x>920</x>
        <y>10</y>
-       <width>51</width>
-       <height>26</height>
+       <width>71</width>
+       <height>31</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QFrame#Bottombar {
+       background-color: #1B1B25; /* Updated bottom bar background */
+       border-top: 1px solid #2c2f3a;
+       }
+       QPushButton {
+       background-color: #28283D; /* Updated button background */
+       color: #E0E0E0;
+       border-radius: 8px; /* Slightly more rounded */
+       padding: 8px 16px; /* Increased padding */
+       border: none; /* Remove default border */
+       }
+       QPushButton:hover {
+       background-color: #303045; /* Darker background for hover */
+       color: #00BCD4; /* Modern Teal Accent */
+       border-bottom: 2px solid #00BCD4; /* Accent line on hover */
+       }
+       QPushButton:pressed {
+       background-color: #3949AB; /* Deep Indigo Pressed State */
+       color: white;
+       }</string>
      </property>
      <property name="text">
       <string>Redo</string>
      </property>
     </widget>
    </widget>
-   <zorder>Bottombar</zorder>
+   <widget class="QFrame" name="sidebar">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>0</y>
+      <width>220</width>
+      <height>650</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QFrame {
+      /* Base Sidebar Container Style - Softened Dark Tone */
+      background-color: #1F232D; /* Softer, deep charcoal/blue-gray */
+      border-left: 1px solid #3A404F;
+      color: #E0E0E0;
+      border-radius: 0;
+      }
+
+      QLabel {
+      /* Text Styles */
+      color: #B0B5C2; /* Clear, light gray text */
+      font-weight: 700;
+      padding: 10px 0;
+      }
+
+      QPushButton {
+      /* Button Base Style - Clear separation from background */
+      background-color: #2D3340; /* Distinctly lighter than the frame */
+      color: #DCE0EB;
+      border: none;
+      border-radius: 6px; /* Clean, slightly smaller radius */
+      padding: 10px 8px;
+      margin: 4px 8px;
+      /* Subtle drop shadow for depth */
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+      }
+
+      QPushButton:hover {
+      /* Hover State - Clear, rich primary blue accent */
+      background-color: #3B4254; /* Background change is subtle */
+      color: #4C82FF; /* Rich Indigo Blue accent */
+      border-left: 3px solid #4C82FF; /* Bar on the left to indicate selection */
+      padding-left: 5px; /* Adjust padding to accommodate the border */
+      }
+
+      QPushButton:pressed {
+      /* Pressed State - Sunk-in effect */
+      background-color: #1F232D;
+      color: #FFFFFF;
+      border-left: 3px solid #4C82FF;
+      }
+     </string>
+    </property>
+    <widget class="QStackedWidget" name="sidebarStack">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>200</width>
+       <height>550</height>
+      </rect>
+     </property>
+     <property name="currentIndex">
+      <number>2</number>
+     </property>
+     <widget class="QWidget" name="effectsPage">
+      <layout class="QVBoxLayout" name="effectsLayout">
+       <item>
+        <widget class="QPushButton" name="BW">
+         <property name="styleSheet">
+          <string notr="true">QFrame#sidebar {
+           background-color: #1E1E2F; /* Updated dark blue/gray background */
+           border-left: 1px solid #2c2f3a;
+           color: #e0e0e0;
+           }
+           /* ... other styles ... */
+           QPushButton {
+           background-color: #28283D; /* Updated button background */
+           color: #E0E0E0;
+           border: none; /* Remove border for cleaner look */
+           border-radius: 4px; /* Slightly smaller radius */
+           padding: 8px; /* Slightly larger padding */
+           }
+           QPushButton:hover {
+           background-color: #303045; /* Darker background to simulate lift/shadow */
+           color: #00BCD4; /* Modern Teal Accent */
+           border: 1px solid #00BCD4; /* Light border on hover */
+           }
+           QPushButton:pressed {
+           background-color: #3949AB; /* Deep Indigo Pressed State */
+           color: white;
+           border: 1px solid #3949AB;
+           }</string>
+         </property>
+         <property name="text">
+          <string>Black &amp; White</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="Sunlight">
+         <property name="styleSheet">
+          <string notr="true">QFrame#sidebar {
+           background-color: #1E1E2F; /* Updated dark blue/gray background */
+           border-left: 1px solid #2c2f3a;
+           color: #e0e0e0;
+           }
+           /* ... other styles ... */
+           QPushButton {
+           background-color: #28283D; /* Updated button background */
+           color: #E0E0E0;
+           border: none; /* Remove border for cleaner look */
+           border-radius: 4px; /* Slightly smaller radius */
+           padding: 8px; /* Slightly larger padding */
+           }
+           QPushButton:hover {
+           background-color: #303045; /* Darker background to simulate lift/shadow */
+           color: #00BCD4; /* Modern Teal Accent */
+           border: 1px solid #00BCD4; /* Light border on hover */
+           }
+           QPushButton:pressed {
+           background-color: #3949AB; /* Deep Indigo Pressed State */
+           color: white;
+           border: 1px solid #3949AB;
+           }</string>
+         </property>
+         <property name="text">
+          <string>Sunlight</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="Invert">
+         <property name="styleSheet">
+          <string notr="true">QFrame#sidebar {
+           background-color: #1E1E2F; /* Updated dark blue/gray background */
+           border-left: 1px solid #2c2f3a;
+           color: #e0e0e0;
+           }
+           /* ... other styles ... */
+           QPushButton {
+           background-color: #28283D; /* Updated button background */
+           color: #E0E0E0;
+           border: none; /* Remove border for cleaner look */
+           border-radius: 4px; /* Slightly smaller radius */
+           padding: 8px; /* Slightly larger padding */
+           }
+           QPushButton:hover {
+           background-color: #303045; /* Darker background to simulate lift/shadow */
+           color: #00BCD4; /* Modern Teal Accent */
+           border: 1px solid #00BCD4; /* Light border on hover */
+           }
+           QPushButton:pressed {
+           background-color: #3949AB; /* Deep Indigo Pressed State */
+           color: white;
+           border: 1px solid #3949AB;
+           }</string>
+         </property>
+         <property name="text">
+          <string>Invert</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="Gray">
+         <property name="styleSheet">
+          <string notr="true">QFrame#sidebar {
+           background-color: #1E1E2F; /* Updated dark blue/gray background */
+           border-left: 1px solid #2c2f3a;
+           color: #e0e0e0;
+           }
+           /* ... other styles ... */
+           QPushButton {
+           background-color: #28283D; /* Updated button background */
+           color: #E0E0E0;
+           border: none; /* Remove border for cleaner look */
+           border-radius: 4px; /* Slightly smaller radius */
+           padding: 8px; /* Slightly larger padding */
+           }
+           QPushButton:hover {
+           background-color: #303045; /* Darker background to simulate lift/shadow */
+           color: #00BCD4; /* Modern Teal Accent */
+           border: 1px solid #00BCD4; /* Light border on hover */
+           }
+           QPushButton:pressed {
+           background-color: #3949AB; /* Deep Indigo Pressed State */
+           color: white;
+           border: 1px solid #3949AB;
+           }</string>
+         </property>
+         <property name="text">
+          <string>Gray</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="Infrared">
+         <property name="styleSheet">
+          <string notr="true">QFrame#sidebar {
+           background-color: #1E1E2F; /* Updated dark blue/gray background */
+           border-left: 1px solid #2c2f3a;
+           color: #e0e0e0;
+           }
+           /* ... other styles ... */
+           QPushButton {
+           background-color: #28283D; /* Updated button background */
+           color: #E0E0E0;
+           border: none; /* Remove border for cleaner look */
+           border-radius: 4px; /* Slightly smaller radius */
+           padding: 8px; /* Slightly larger padding */
+           }
+           QPushButton:hover {
+           background-color: #303045; /* Darker background to simulate lift/shadow */
+           color: #00BCD4; /* Modern Teal Accent */
+           border: 1px solid #00BCD4; /* Light border on hover */
+           }
+           QPushButton:pressed {
+           background-color: #3949AB; /* Deep Indigo Pressed State */
+           color: white;
+           border: 1px solid #3949AB;
+           }</string>
+         </property>
+         <property name="text">
+          <string>Infrared</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="Purple">
+         <property name="styleSheet">
+          <string notr="true">QFrame#sidebar {
+           background-color: #1E1E2F; /* Updated dark blue/gray background */
+           border-left: 1px solid #2c2f3a;
+           color: #e0e0e0;
+           }
+           /* ... other styles ... */
+           QPushButton {
+           background-color: #28283D; /* Updated button background */
+           color: #E0E0E0;
+           border: none; /* Remove border for cleaner look */
+           border-radius: 4px; /* Slightly smaller radius */
+           padding: 8px; /* Slightly larger padding */
+           }
+           QPushButton:hover {
+           background-color: #303045; /* Darker background to simulate lift/shadow */
+           color: #00BCD4; /* Modern Teal Accent */
+           border: 1px solid #00BCD4; /* Light border on hover */
+           }
+           QPushButton:pressed {
+           background-color: #3949AB; /* Deep Indigo Pressed State */
+           color: white;
+           border: 1px solid #3949AB;
+           }</string>
+         </property>
+         <property name="text">
+          <string>Purple</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="Oil">
+         <property name="styleSheet">
+          <string notr="true">QFrame#sidebar {
+           background-color: #1E1E2F; /* Updated dark blue/gray background */
+           border-left: 1px solid #2c2f3a;
+           color: #e0e0e0;
+           }
+           /* ... other styles ... */
+           QPushButton {
+           background-color: #28283D; /* Updated button background */
+           color: #E0E0E0;
+           border: none; /* Remove border for cleaner look */
+           border-radius: 4px; /* Slightly smaller radius */
+           padding: 8px; /* Slightly larger padding */
+           }
+           QPushButton:hover {
+           background-color: #303045; /* Darker background to simulate lift/shadow */
+           color: #00BCD4; /* Modern Teal Accent */
+           border: 1px solid #00BCD4; /* Light border on hover */
+           }
+           QPushButton:pressed {
+           background-color: #3949AB; /* Deep Indigo Pressed State */
+           color: white;
+           border: 1px solid #3949AB;
+           }</string>
+         </property>
+         <property name="text">
+          <string>Oil Painting</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="emboss">
+         <property name="styleSheet">
+          <string notr="true">QFrame#sidebar {
+           background-color: #1E1E2F; /* Updated dark blue/gray background */
+           border-left: 1px solid #2c2f3a;
+           color: #e0e0e0;
+           }
+           /* ... other styles ... */
+           QPushButton {
+           background-color: #28283D; /* Updated button background */
+           color: #E0E0E0;
+           border: none; /* Remove border for cleaner look */
+           border-radius: 4px; /* Slightly smaller radius */
+           padding: 8px; /* Slightly larger padding */
+           }
+           QPushButton:hover {
+           background-color: #303045; /* Darker background to simulate lift/shadow */
+           color: #00BCD4; /* Modern Teal Accent */
+           border: 1px solid #00BCD4; /* Light border on hover */
+           }
+           QPushButton:pressed {
+           background-color: #3949AB; /* Deep Indigo Pressed State */
+           color: white;
+           border: 1px solid #3949AB;
+           }</string>
+         </property>
+         <property name="text">
+          <string>Emboss</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="OldTv">
+         <property name="styleSheet">
+          <string notr="true">QFrame#sidebar {
+           background-color: #1E1E2F; /* Updated dark blue/gray background */
+           border-left: 1px solid #2c2f3a;
+           color: #e0e0e0;
+           }
+           /* ... other styles ... */
+           QPushButton {
+           background-color: #28283D; /* Updated button background */
+           color: #E0E0E0;
+           border: none; /* Remove border for cleaner look */
+           border-radius: 4px; /* Slightly smaller radius */
+           padding: 8px; /* Slightly larger padding */
+           }
+           QPushButton:hover {
+           background-color: #303045; /* Darker background to simulate lift/shadow */
+           color: #00BCD4; /* Modern Teal Accent */
+           border: 1px solid #00BCD4; /* Light border on hover */
+           }
+           QPushButton:pressed {
+           background-color: #3949AB; /* Deep Indigo Pressed State */
+           color: white;
+           border: 1px solid #3949AB;
+           }</string>
+         </property>
+         <property name="text">
+          <string>Old TV</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="Brightpage">
+      <layout class="QVBoxLayout" name="effectsLayout">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QPushButton" name="Increase">
+           <property name="text">
+            <string>Increase</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="decrease">
+           <property name="text">
+            <string>Decrease</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="transformPage">
+      <layout class="QFormLayout" name="transformLayout">
+       <item row="0" column="0" colspan="2">
+        <widget class="QLabel" name="rotateLabel">
+         <property name="text">
+          <string>Rotate</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QPushButton" name="rot90">
+         <property name="styleSheet">
+          <string notr="true">QFrame#sidebar {
+           background-color: #1E1E2F; /* Updated dark blue/gray background */
+           border-left: 1px solid #2c2f3a;
+           color: #e0e0e0;
+           }
+           /* ... other styles ... */
+           QPushButton {
+           background-color: #28283D; /* Updated button background */
+           color: #E0E0E0;
+           border: none; /* Remove border for cleaner look */
+           border-radius: 4px; /* Slightly smaller radius */
+           padding: 8px; /* Slightly larger padding */
+           }
+           QPushButton:hover {
+           background-color: #303045; /* Darker background to simulate lift/shadow */
+           color: #00BCD4; /* Modern Teal Accent */
+           border: 1px solid #00BCD4; /* Light border on hover */
+           }
+           QPushButton:pressed {
+           background-color: #3949AB; /* Deep Indigo Pressed State */
+           color: white;
+           border: 1px solid #3949AB;
+           }</string>
+         </property>
+         <property name="text">
+          <string>270</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QPushButton" name="rot180">
+         <property name="styleSheet">
+          <string notr="true">QFrame#sidebar {
+           background-color: #1E1E2F; /* Updated dark blue/gray background */
+           border-left: 1px solid #2c2f3a;
+           color: #e0e0e0;
+           }
+           /* ... other styles ... */
+           QPushButton {
+           background-color: #28283D; /* Updated button background */
+           color: #E0E0E0;
+           border: none; /* Remove border for cleaner look */
+           border-radius: 4px; /* Slightly smaller radius */
+           padding: 8px; /* Slightly larger padding */
+           }
+           QPushButton:hover {
+           background-color: #303045; /* Darker background to simulate lift/shadow */
+           color: #00BCD4; /* Modern Teal Accent */
+           border: 1px solid #00BCD4; /* Light border on hover */
+           }
+           QPushButton:pressed {
+           background-color: #3949AB; /* Deep Indigo Pressed State */
+           color: white;
+           border: 1px solid #3949AB;
+           }
+          </string>
+         </property>
+         <property name="text">
+          <string>180</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QPushButton" name="rot270">
+         <property name="styleSheet">
+          <string notr="true">QFrame#sidebar {
+           background-color: #1E1E2F; /* Updated dark blue/gray background */
+           border-left: 1px solid #2c2f3a;
+           color: #e0e0e0;
+           }
+           /* ... other styles ... */
+           QPushButton {
+           background-color: #28283D; /* Updated button background */
+           color: #E0E0E0;
+           border: none; /* Remove border for cleaner look */
+           border-radius: 4px; /* Slightly smaller radius */
+           padding: 8px; /* Slightly larger padding */
+           }
+           QPushButton:hover {
+           background-color: #303045; /* Darker background to simulate lift/shadow */
+           color: #00BCD4; /* Modern Teal Accent */
+           border: 1px solid #00BCD4; /* Light border on hover */
+           }
+           QPushButton:pressed {
+           background-color: #3949AB; /* Deep Indigo Pressed State */
+           color: white;
+           border: 1px solid #3949AB;
+           }
+          </string>
+         </property>
+         <property name="text">
+          <string>90</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0" colspan="2">
+        <widget class="QLabel" name="fliplabel">
+         <property name="text">
+          <string>Flip</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QPushButton" name="flipv">
+         <property name="styleSheet">
+          <string notr="true">QFrame#sidebar {
+           background-color: #1E1E2F; /* Updated dark blue/gray background */
+           border-left: 1px solid #2c2f3a;
+           color: #e0e0e0;
+           }
+           /* ... other styles ... */
+           QPushButton {
+           background-color: #28283D; /* Updated button background */
+           color: #E0E0E0;
+           border: none; /* Remove border for cleaner look */
+           border-radius: 4px; /* Slightly smaller radius */
+           padding: 8px; /* Slightly larger padding */
+           }
+           QPushButton:hover {
+           background-color: #303045; /* Darker background to simulate lift/shadow */
+           color: #00BCD4; /* Modern Teal Accent */
+           border: 1px solid #00BCD4; /* Light border on hover */
+           }
+           QPushButton:pressed {
+           background-color: #3949AB; /* Deep Indigo Pressed State */
+           color: white;
+           border: 1px solid #3949AB;
+           }</string>
+         </property>
+         <property name="text">
+          <string>Vertical</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QPushButton" name="fliph">
+         <property name="styleSheet">
+          <string notr="true">QFrame#sidebar {
+           background-color: #1E1E2F; /* Updated dark blue/gray background */
+           border-left: 1px solid #2c2f3a;
+           color: #e0e0e0;
+           }
+           /* ... other styles ... */
+           QPushButton {
+           background-color: #28283D; /* Updated button background */
+           color: #E0E0E0;
+           border: none; /* Remove border for cleaner look */
+           border-radius: 4px; /* Slightly smaller radius */
+           padding: 8px; /* Slightly larger padding */
+           }
+           QPushButton:hover {
+           background-color: #303045; /* Darker background to simulate lift/shadow */
+           color: #00BCD4; /* Modern Teal Accent */
+           border: 1px solid #00BCD4; /* Light border on hover */
+           }
+           QPushButton:pressed {
+           background-color: #3949AB; /* Deep Indigo Pressed State */
+           color: white;
+           border: 1px solid #3949AB;
+           }</string>
+         </property>
+         <property name="text">
+          <string>Horizontal</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0" colspan="2">
+        <widget class="QLabel" name="skew">
+         <property name="text">
+          <string>Skew</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="0">
+        <widget class="QPushButton" name="skewleft">
+         <property name="styleSheet">
+          <string notr="true">QFrame#sidebar {
+           background-color: #1E1E2F; /* Updated dark blue/gray background */
+           border-left: 1px solid #2c2f3a;
+           color: #e0e0e0;
+           }
+           /* ... other styles ... */
+           QPushButton {
+           background-color: #28283D; /* Updated button background */
+           color: #E0E0E0;
+           border: none; /* Remove border for cleaner look */
+           border-radius: 4px; /* Slightly smaller radius */
+           padding: 8px; /* Slightly larger padding */
+           }
+           QPushButton:hover {
+           background-color: #303045; /* Darker background to simulate lift/shadow */
+           color: #00BCD4; /* Modern Teal Accent */
+           border: 1px solid #00BCD4; /* Light border on hover */
+           }
+           QPushButton:pressed {
+           background-color: #3949AB; /* Deep Indigo Pressed State */
+           color: white;
+           border: 1px solid #3949AB;
+           }
+          </string>
+         </property>
+         <property name="text">
+          <string>Left</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="1">
+        <widget class="QPushButton" name="skewright">
+         <property name="styleSheet">
+          <string notr="true">QFrame#sidebar {
+           background-color: #1E1E2F; /* Updated dark blue/gray background */
+           border-left: 1px solid #2c2f3a;
+           color: #e0e0e0;
+           }
+           /* ... other styles ... */
+           QPushButton {
+           background-color: #28283D; /* Updated button background */
+           color: #E0E0E0;
+           border: none; /* Remove border for cleaner look */
+           border-radius: 4px; /* Slightly smaller radius */
+           padding: 8px; /* Slightly larger padding */
+           }
+           QPushButton:hover {
+           background-color: #303045; /* Darker background to simulate lift/shadow */
+           color: #00BCD4; /* Modern Teal Accent */
+           border: 1px solid #00BCD4; /* Light border on hover */
+           }
+           QPushButton:pressed {
+           background-color: #3949AB; /* Deep Indigo Pressed State */
+           color: white;
+           border: 1px solid #3949AB;
+           }</string>
+         </property>
+         <property name="text">
+          <string>Right</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+    <widget class="QPushButton" name="closeSidebar">
+     <property name="geometry">
+      <rect>
+       <x>180</x>
+       <y>0</y>
+       <width>40</width>
+       <height>40</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton#closeSidebar {
+       /* Set the specific size and shape */
+       max-width: 30px;
+       max-height: 30px;
+       min-width: 30px;
+       min-height: 30px;
+       padding: 0px;
+       margin: 5px;
+
+       /* Styling the 'X' */
+       color: #E0E0E0; /* Light gray 'X' */
+       background-color: #2D3340;
+       border: none;
+       border-radius: 4px;
+       font-size: 16px; /* Makes the 'X' fill the button */
+       font-weight: 800;
+       }
+
+       QPushButton#closeSidebar:hover {
+       background-color: #E74C3C; /* Bright red color on hover */
+       color: white; /* White 'X' on red background */
+       border: none;
+       }
+
+       QPushButton#closeSidebar:pressed {
+       background-color: #C0392B; /* Darker red when clicked */
+       }</string>
+     </property>
+     <property name="text">
+      <string>X</string>
+     </property>
+    </widget>
+   </widget>
    <zorder>sidebar</zorder>
+   <zorder>Bottombar</zorder>
    <zorder>Displayer</zorder>
    <zorder>mainbar</zorder>
   </widget>

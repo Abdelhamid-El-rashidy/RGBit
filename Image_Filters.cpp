@@ -165,7 +165,7 @@ void Image::blur(int size, double sigma) {
 void Image::oilPainting() {
     if (!imageData) return;
 
-    const int radius = 5; const int intensityLevels = 20.0;
+    const int radius = 5; const int intensityLevels = 128.0;
 
     Image newImage(width, height);
 
@@ -472,6 +472,38 @@ void Image::infrared() {
             (*this)(i, j, 2) = 0;
         }
     }
+}
+
+void Image::emboss() {
+    int kernel[3][3] = {
+        {-2,-1,0}, {-1,1,1}, {0,1,2}
+    };
+    const int kSize = 3; int half = kSize / 2;
+    Image newImage(width, height);
+
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+            int pixelValue[3] = {0, 0, 0};
+
+            for (int dy = -half; dy <= half; dy++) {
+                for (int dx = -half; dx <= half; dx++) {
+                    int ny = clamp(y + dy, 0, height - 1);
+                    int nx = clamp(x + dx, 0, width - 1);
+                    for (int c = 0; c < 3; c++) {
+                        pixelValue[c] += (*this)(nx, ny, c) * kernel[dy+half][dx+half];
+                    }
+                }
+            }
+
+            for (int c = 0; c < 3; c++) {
+                pixelValue[c] = clamp(pixelValue[c], 0, 255);
+                newImage(x, y, c) = static_cast<unsigned char>(pixelValue[c]);
+            }
+        }
+    }
+
+    *this = newImage;
+
 }
 
 QImage Image::toQImage() const {

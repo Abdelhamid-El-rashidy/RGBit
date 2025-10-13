@@ -6,12 +6,53 @@
 #include <QDialogButtonBox>
 #include <QMessageBox>
 #include <QKeyEvent>
+#include <QVBoxLayout>
+#include <QGraphicsDropShadowEffect>
 
+
+// --- QSS for Modern Dialogs ---
+// Note: This style sheet is defined here and applied directly to the QDialog widgets
+// to ensure the custom pop-ups match the dark theme and button styles defined in the .ui file.
+const QString MODERN_DIALOG_QSS = R"(
+    QDialog {
+        background-color: #1E1E2F; /* Dark dialog background */
+        color: #E0E0E0;
+        border: 1px solid #00BCD4; /* Subtle accent border */
+        border-radius: 8px;
+    }
+    QLabel {
+        color: #CCCCCC;
+    }
+    QLineEdit {
+        background-color: #28283D; /* Input background */
+        border: 1px solid #303045;
+        color: #E0E0E0;
+        padding: 5px;
+        border-radius: 4px;
+    }
+    QPushButton {
+        background-color: #28283D; /* Button background */
+        color: #E0E0E0;
+        border: none;
+        border-radius: 4px;
+        padding: 8px;
+    }
+    QPushButton:hover {
+        background-color: #303045; /* Hover (shadow simulation) */
+        color: #00BCD4; /* Modern Teal Accent */
+        border: 1px solid #00BCD4;
+    }
+    QPushButton:pressed {
+        background-color: #3949AB; /* Deep Indigo Pressed State */
+        color: white;
+    }
+)";
 
 
 MainWindow::MainWindow(QWidget *parent)
     :QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
+
 
     setFocusPolicy(Qt::StrongFocus);
 
@@ -65,7 +106,14 @@ void MainWindow::loadImage() {
         }
         originalShown = false;
         filteredImage = originalImage;
-        showImages();
+        if (!originalShown && originalImage.imageData != nullptr) {
+            ui->originalLabel->setPixmap(QPixmap::fromImage(originalImage.toQImage())
+                .scaled(ui->originalLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+            originalShown = true;
+        }
+        filtered = filteredImage.toQImage();
+        ui->filteredLabel->setPixmap(QPixmap::fromImage(filtered)
+            .scaled(ui->filteredLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
     }
     filtered = filteredImage.toQImage();
 }
@@ -94,7 +142,6 @@ void MainWindow::showImages() {
     }
 
     if (filteredImage.imageData != nullptr) {
-        undoStack.push(filtered);
         filtered = filteredImage.toQImage();
         ui->filteredLabel->setPixmap(QPixmap::fromImage(filtered)
             .scaled(ui->filteredLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
@@ -107,7 +154,6 @@ void MainWindow::showImagesOrg() {
         }
 
         if (filteredImage.imageData != nullptr) {
-            undoStack.push(filtered);
             filtered = filteredImage.toQImage();
             ui->filteredLabel->setPixmap(QPixmap::fromImage(filtered));
             ui->filteredLabel->adjustSize();
@@ -120,9 +166,12 @@ void MainWindow::undo() {
         QMessageBox::warning(this, "Error", "Undo Stack is empty.");
         return;
     }
-    filtered = undoStack.top();
+    redoStack.push(filteredImage);
+    filteredImage = undoStack.top();
     undoStack.pop();
-    redoStack.push(filtered);
+    filtered = filteredImage.toQImage();
+    ui->filteredLabel->setPixmap(QPixmap::fromImage(filtered)
+        .scaled(ui->filteredLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
 }
 
 void MainWindow::redo() {
@@ -130,9 +179,12 @@ void MainWindow::redo() {
         QMessageBox::warning(this, "Error", "Redo Stack is empty.");
         return;
     }
-    filtered = redoStack.top();
+    undoStack.push(filteredImage);
+    filteredImage = redoStack.top();
     redoStack.pop();
-    undoStack.push(filtered);
+    filtered = filteredImage.toQImage();
+    ui->filteredLabel->setPixmap(QPixmap::fromImage(filtered)
+        .scaled(ui->filteredLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event) {
@@ -219,6 +271,7 @@ void MainWindow::on_rot90_clicked()
         QMessageBox::warning(this, "Error", "Load Image to apply filter");
         return;
     }
+    undoStack.push(filteredImage);
     filteredImage.rotate90();
     showImages();
 }
@@ -230,6 +283,7 @@ void MainWindow::on_rot180_clicked()
         QMessageBox::warning(this, "Error", "Load Image to apply filter");
         return;
     }
+    undoStack.push(filteredImage);
     filteredImage.rotate180();
     showImages();
 }
@@ -241,6 +295,7 @@ void MainWindow::on_rot270_clicked()
         QMessageBox::warning(this, "Error", "Load Image to apply filter");
         return;
     }
+    undoStack.push(filteredImage);
     filteredImage.rotate270();
     showImages();
 }
@@ -252,6 +307,7 @@ void MainWindow::on_flipv_clicked()
         QMessageBox::warning(this, "Error", "Load Image to apply filter");
         return;
     }
+    undoStack.push(filteredImage);
     filteredImage.flipV();
     showImages();
 }
@@ -263,6 +319,7 @@ void MainWindow::on_fliph_clicked()
         QMessageBox::warning(this, "Error", "Load Image to apply filter");
         return;
     }
+    undoStack.push(filteredImage);
     filteredImage.flipH();
     showImages();
 }
@@ -274,6 +331,7 @@ void MainWindow::on_BW_clicked()
         QMessageBox::warning(this, "Error", "Load Image to apply filter");
         return;
     }
+    undoStack.push(filteredImage);
     filteredImage.Black_White();
     showImages();
 }
@@ -285,6 +343,7 @@ void MainWindow::on_Sunlight_clicked()
         QMessageBox::warning(this, "Error", "Load Image to apply filter");
         return;
     }
+    undoStack.push(filteredImage);
     filteredImage.sunlight();
     showImages();
 }
@@ -296,6 +355,7 @@ void MainWindow::on_Invert_clicked()
         QMessageBox::warning(this, "Error", "Load Image to apply filter");
         return;
     }
+    undoStack.push(filteredImage);
     filteredImage.invert();
     showImages();
 }
@@ -307,6 +367,7 @@ void MainWindow::on_Gray_clicked()
         QMessageBox::warning(this, "Error", "Load Image to apply filter");
         return;
     }
+    undoStack.push(filteredImage);
     filteredImage.toGray();
     showImages();
 }
@@ -318,6 +379,7 @@ void MainWindow::on_Infrared_clicked()
         QMessageBox::warning(this, "Error", "Load Image to apply filter");
         return;
     }
+    undoStack.push(filteredImage);
     filteredImage.infrared();
     showImages();
 }
@@ -329,6 +391,7 @@ void MainWindow::on_Purple_clicked()
         QMessageBox::warning(this, "Error", "Load Image to apply filter");
         return;
     }
+    undoStack.push(filteredImage);
     filteredImage.purple();
     showImages();
 }
@@ -340,6 +403,7 @@ void MainWindow::on_Oil_clicked()
         QMessageBox::warning(this, "Error", "Load Image to apply filter");
         return;
     }
+    undoStack.push(filteredImage);
     filteredImage.oilPainting();
     showImages();
 }
@@ -351,6 +415,7 @@ void MainWindow::on_OldTv_clicked()
         QMessageBox::warning(this, "Error", "Load Image to apply filter");
         return;
     }
+    undoStack.push(filteredImage);
     Image img("oldtv.jpg");
     filteredImage = img.merge(filteredImage);
     showImages();
@@ -363,11 +428,14 @@ void MainWindow::on_CropBtn_clicked()
         QMessageBox::warning(this, "Error", "Load an image before cropping.");
         return;
     }
-
+    undoStack.push(filteredImage);
     QDialog dialog(this);
     dialog.setWindowTitle("Crop Image");
     dialog.setModal(true);
     dialog.setFixedSize(300, 220);
+
+    // Apply modern dark theme QSS
+    dialog.setStyleSheet(MODERN_DIALOG_QSS);
 
     QLineEdit *xEdit = new QLineEdit(&dialog);
     QLineEdit *yEdit = new QLineEdit(&dialog);
@@ -392,6 +460,10 @@ void MainWindow::on_CropBtn_clicked()
 
     QDialogButtonBox *buttons =
         new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, &dialog);
+
+    // Apply consistent button style to the box
+    buttons->setStyleSheet(MODERN_DIALOG_QSS);
+
     form->addWidget(buttons);
 
     dialog.setLayout(form);
@@ -423,10 +495,14 @@ void MainWindow::on_ResizeBtn_clicked()
         QMessageBox::warning(this, "Error", "Load or apply a filter before resizing.");
         return;
     }
+    undoStack.push(filteredImage);
 
     QDialog dialog(this);
     dialog.setWindowTitle("Resize Image");
     dialog.setFixedSize(250, 150);
+
+    // Apply modern dark theme QSS
+    dialog.setStyleSheet(MODERN_DIALOG_QSS);
 
     QFormLayout *layout = new QFormLayout(&dialog);
 
@@ -442,6 +518,9 @@ void MainWindow::on_ResizeBtn_clicked()
     QDialogButtonBox *buttonBox = new QDialogButtonBox(
         QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog);
     layout->addWidget(buttonBox);
+
+    // Apply consistent button style to the box
+    buttonBox->setStyleSheet(MODERN_DIALOG_QSS);
 
     QObject::connect(buttonBox, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
     QObject::connect(buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
@@ -472,6 +551,7 @@ void MainWindow::on_blur_clicked()
         QMessageBox::warning(this, "Error", "Load Image to apply filter");
         return;
     }
+    undoStack.push(filteredImage);
     filteredImage.blur(4,5);
     showImages();
 }
@@ -483,6 +563,7 @@ void MainWindow::on_Increase_clicked()
         QMessageBox::warning(this, "Error", "Load Image to apply filter");
         return;
     }
+    undoStack.push(filteredImage);
     filteredImage.toLighten();
     showImages();
 }
@@ -495,6 +576,7 @@ void MainWindow::on_decrease_clicked()
         QMessageBox::warning(this, "Error", "Load Image to apply filter");
         return;
     }
+    undoStack.push(filteredImage);
     filteredImage.toDarken();
     showImages();
 }
@@ -506,6 +588,7 @@ void MainWindow::on_merge_clicked()
         QMessageBox::warning(this, "Error", "Load Image to apply filter");
         return;
     }
+    undoStack.push(filteredImage);
 
     QString fileName = QFileDialog::getOpenFileName(
     this, "Open Image", "", "Images (*.png *.jpg *.jpeg *.bmp)");
@@ -532,12 +615,16 @@ void MainWindow::on_pushButton_clicked()
         QMessageBox::warning(this, "Error", "Load an image before adding a frame.");
         return;
     }
+    undoStack.push(filteredImage);
 
     // Create dialog
     QDialog dialog(this);
     dialog.setWindowTitle("Add Frame");
     dialog.setModal(true);
     dialog.setFixedSize(300, 250);
+
+    // Apply modern dark theme QSS
+    dialog.setStyleSheet(MODERN_DIALOG_QSS);
 
     auto *layout = new QVBoxLayout(&dialog);
 
@@ -613,6 +700,8 @@ void MainWindow::on_pushButton_2_clicked()
         QMessageBox::warning(this, "Error", "Load Image to apply filter");
         return;
     }
+    undoStack.push(filteredImage);
+
     filteredImage.detect_edges();
     showImages();
 }
@@ -624,6 +713,8 @@ void MainWindow::on_skewleft_clicked()
         QMessageBox::warning(this, "Error", "Load Image to apply filter");
         return;
     }
+    undoStack.push(filteredImage);
+
     filteredImage.skew(45,0);
     showImages();
 }
@@ -635,7 +726,32 @@ void MainWindow::on_skewright_clicked()
         QMessageBox::warning(this, "Error", "Load Image to apply filter");
         return;
     }
+    undoStack.push(filteredImage);
+
     filteredImage.skew(45,1);
+    showImages();
+}
+void MainWindow::on_undo_clicked()
+{
+    undo();
+}
+
+
+void MainWindow::on_redo_clicked()
+{
+    redo();
+}
+
+
+void MainWindow::on_emboss_clicked()
+{
+    if (originalImage.imageData == nullptr) {
+        QMessageBox::warning(this, "Error", "Load Image to apply filter");
+        return;
+    }
+    undoStack.push(filteredImage);
+
+    filteredImage.emboss();
     showImages();
 }
 

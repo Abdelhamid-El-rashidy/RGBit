@@ -332,6 +332,7 @@ public:
     void flipV();
     void dark_light(int op);
     void infrared();
+    void emboss();
 
 
 
