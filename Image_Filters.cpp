@@ -279,6 +279,19 @@ void Image::toLighten() {
     }
 }
 
+void Image::Brightness(float value) {
+
+    float val = (abs(value)/100.0) + (value >= 0.0);
+    for (int i = 0; i < width; i++) {
+        for (int j = 0; j < height; j++) {
+            for (int k = 0; k < channels; k++) {
+                if (value > 0 && (*this)(i,j,k) > 127) (*this)(i,j,k) = 255;
+                else (*this)(i,j,k) = (*this)(i,j,k)*(val);
+            }
+        }
+    }
+}
+
 Image Image::merge(Image& img2) {
     int minwidth = min(width, img2.width);
     int minheight = min(height, img2.height);
