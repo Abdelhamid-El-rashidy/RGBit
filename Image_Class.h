@@ -333,6 +333,7 @@ public:
     void dark_light(int op);
     void infrared();
     void emboss();
+    void wave();
 
 
 

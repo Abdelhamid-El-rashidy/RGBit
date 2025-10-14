@@ -5,9 +5,12 @@
 #include <QLineEdit>
 #include <QDialogButtonBox>
 #include <QMessageBox>
+#include <QColorDialog>
+#include  <QSlider>
 #include <QKeyEvent>
 #include <QVBoxLayout>
 #include <QGraphicsDropShadowEffect>
+#include <QtConcurrent/QtConcurrent>
 
 
 // --- QSS for Modern Dialogs ---
@@ -53,8 +56,13 @@ MainWindow::MainWindow(QWidget *parent)
     :QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
 
+    statusLabel = new QLabel("Ready");
+    statusLabel->setAlignment(Qt::AlignCenter);
+    ui->statusBar->addWidget(statusLabel);
+    ui->statusBar->setVisible(false);
 
     setFocusPolicy(Qt::StrongFocus);
+
 
 
     // --- Sidebar Animation ---
@@ -86,7 +94,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->resetButton, &QPushButton::clicked, this, &MainWindow::on_resetButton_clicked);
 
 
-    ui->originalLabel->setVisible(false);
 }
 
 MainWindow::~MainWindow() {
@@ -106,14 +113,7 @@ void MainWindow::loadImage() {
         }
         originalShown = false;
         filteredImage = originalImage;
-        if (!originalShown && originalImage.imageData != nullptr) {
-            ui->originalLabel->setPixmap(QPixmap::fromImage(originalImage.toQImage())
-                .scaled(ui->originalLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
-            originalShown = true;
-        }
-        filtered = filteredImage.toQImage();
-        ui->filteredLabel->setPixmap(QPixmap::fromImage(filtered)
-            .scaled(ui->filteredLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        showImages();
     }
     filtered = filteredImage.toQImage();
 }
@@ -135,31 +135,22 @@ void MainWindow::saveImage() {
 
 
 void MainWindow::showImages() {
-    if (!originalShown && originalImage.imageData != nullptr) {
-        ui->originalLabel->setPixmap(QPixmap::fromImage(originalImage.toQImage())
-            .scaled(ui->originalLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
-        originalShown = true;
-    }
+    if (!originalImage.imageData)
+        return;
 
-    if (filteredImage.imageData != nullptr) {
-        filtered = filteredImage.toQImage();
-        ui->filteredLabel->setPixmap(QPixmap::fromImage(filtered)
-            .scaled(ui->filteredLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
-    }
+    QImage origQImage = originalImage.toQImage();
+    QImage filtQImage = filteredImage.imageData
+        ? filteredImage.toQImage()
+        : origQImage;
+
+    QSize targetSize = ui->imageView->size();
+
+    QImage resizedOriginal = origQImage.scaled(targetSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    QImage resizedFiltered = filtQImage.scaled(targetSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+
+    ui->imageView->setOriginalImage(origQImage);
+    ui->imageView->setFilteredImage(filtQImage);
 }
-void MainWindow::showImagesOrg() {
-        if (!originalShown && originalImage.imageData != nullptr) {
-            ui->originalLabel->setPixmap(QPixmap::fromImage(originalImage.toQImage()));
-            originalShown = true;
-        }
-
-        if (filteredImage.imageData != nullptr) {
-            filtered = filteredImage.toQImage();
-            ui->filteredLabel->setPixmap(QPixmap::fromImage(filtered));
-            ui->filteredLabel->adjustSize();
-        }
-}
-
 
 void MainWindow::undo() {
     if (undoStack.empty()) {
@@ -170,8 +161,7 @@ void MainWindow::undo() {
     filteredImage = undoStack.top();
     undoStack.pop();
     filtered = filteredImage.toQImage();
-    ui->filteredLabel->setPixmap(QPixmap::fromImage(filtered)
-        .scaled(ui->filteredLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    showImages();
 }
 
 void MainWindow::redo() {
@@ -183,33 +173,15 @@ void MainWindow::redo() {
     filteredImage = redoStack.top();
     redoStack.pop();
     filtered = filteredImage.toQImage();
-    ui->filteredLabel->setPixmap(QPixmap::fromImage(filtered)
-        .scaled(ui->filteredLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    showImages();
 }
 
-void MainWindow::keyPressEvent(QKeyEvent *event) {
-    if (event->key() == Qt::Key_Space) {
-        if (originalImage.imageData != nullptr && filteredImage.imageData != nullptr) {
-            ui->originalLabel->setVisible(true);
-            ui->filteredLabel->setVisible(false);
-        }
-    }
-    QMainWindow::keyPressEvent(event);
-}
-
-void MainWindow::keyReleaseEvent(QKeyEvent *event) {
-    if (event->key() == Qt::Key_Space) {
-        if (originalImage.imageData != nullptr && filteredImage.imageData != nullptr) {
-            ui->originalLabel->setVisible(false);
-            ui->filteredLabel->setVisible(true);
-        }
-    }
-    QMainWindow::keyReleaseEvent(event);
-}
 
 
 void MainWindow::on_resetButton_clicked()
 {
+    while (!undoStack.empty()) undoStack.pop();
+    while (!redoStack.empty()) redoStack.pop();
     filteredImage = originalImage;
     showImages();
 }
@@ -536,7 +508,7 @@ void MainWindow::on_ResizeBtn_clicked()
 
         try {
             filteredImage.resize(newWidth, newHeight);
-            showImagesOrg();
+            showImages();
             QMessageBox::information(this, "Done", "Image resized successfully!");
         } catch (...) {
             QMessageBox::critical(this, "Error", "Failed to resize image.");
@@ -547,15 +519,83 @@ void MainWindow::on_ResizeBtn_clicked()
 
 void MainWindow::on_blur_clicked()
 {
-    if (originalImage.imageData == nullptr) {
-        QMessageBox::warning(this, "Error", "Load Image to apply filter");
+    if (filteredImage.imageData == nullptr) {
+        QMessageBox::warning(this, "Error", "Load an image before applying Gaussian Blur.");
         return;
     }
-    undoStack.push(filteredImage);
-    filteredImage.blur(4,5);
-    showImages();
-}
 
+    QDialog dialog(this);
+    dialog.setWindowTitle("Gaussian Blur");
+    dialog.setModal(true);
+    dialog.setFixedSize(320, 180);
+    dialog.setStyleSheet(MODERN_DIALOG_QSS);
+
+    QVBoxLayout *layout = new QVBoxLayout(&dialog);
+
+    QLabel *label = new QLabel("Blur Intensity:");
+    QSlider *slider = new QSlider(Qt::Horizontal);
+    slider->setRange(1, 10);       // 1–10 intuitive range
+    slider->setValue(3);
+    QLabel *valueLabel = new QLabel("3");
+    valueLabel->setAlignment(Qt::AlignCenter);
+
+    layout->addWidget(label);
+    layout->addWidget(slider);
+    layout->addWidget(valueLabel);
+
+    QObject::connect(slider, &QSlider::valueChanged, [&](int val) {
+        valueLabel->setText(QString::number(val));
+    });
+
+    // Buttons
+    QHBoxLayout *buttonsLayout = new QHBoxLayout();
+    QPushButton *okButton = new QPushButton("Apply");
+    QPushButton *cancelButton = new QPushButton("Cancel");
+    buttonsLayout->addWidget(okButton);
+    buttonsLayout->addWidget(cancelButton);
+    layout->addLayout(buttonsLayout);
+
+    QObject::connect(okButton, &QPushButton::clicked, [&]() {
+        int blurLevel = slider->value();
+
+        // Map blurLevel → (kernelSize, sigma)
+        int kernelSize = 2 * blurLevel + 1;
+        double sigma = 0.8 * blurLevel;
+
+        ui->statusBar->setVisible(true);
+        statusLabel->setText("Processing... Please wait.");
+        QApplication::processEvents();
+
+        undoStack.push(filteredImage);
+
+        QFuture<void> future = QtConcurrent::run([=, this]() {
+            filteredImage.blur(kernelSize, sigma);
+        });
+
+        QFutureWatcher<void> *watcher = new QFutureWatcher<void>(this);
+
+        connect(watcher, &QFutureWatcher<void>::finished, this, [=]() {
+            showImages();
+            statusLabel->setText("Done");
+            QApplication::processEvents();
+
+            QTimer::singleShot(1000, this, [=]() {
+                ui->statusBar->setVisible(false);
+            });
+
+            watcher->deleteLater();
+        });
+
+        watcher->setFuture(future);
+        dialog.accept();
+    });
+
+    QObject::connect(cancelButton, &QPushButton::clicked, &dialog, &QDialog::reject);
+
+    dialog.exec();
+    ui->statusBar->setVisible(true);
+
+}
 
 void MainWindow::on_Increase_clicked()
 {
@@ -615,15 +655,11 @@ void MainWindow::on_pushButton_clicked()
         QMessageBox::warning(this, "Error", "Load an image before adding a frame.");
         return;
     }
-    undoStack.push(filteredImage);
 
-    // Create dialog
     QDialog dialog(this);
     dialog.setWindowTitle("Add Frame");
     dialog.setModal(true);
-    dialog.setFixedSize(300, 250);
-
-    // Apply modern dark theme QSS
+    dialog.setFixedSize(300, 180);
     dialog.setStyleSheet(MODERN_DIALOG_QSS);
 
     auto *layout = new QVBoxLayout(&dialog);
@@ -637,26 +673,10 @@ void MainWindow::on_pushButton_clicked()
     sizeLayout->addWidget(sizeEdit);
     layout->addLayout(sizeLayout);
 
-    // RGB inputs
-    QHBoxLayout *rgbLayout = new QHBoxLayout();
-    QLabel *rLabel = new QLabel("R:");
-    QLabel *gLabel = new QLabel("G:");
-    QLabel *bLabel = new QLabel("B:");
-    QLineEdit *rEdit = new QLineEdit();
-    QLineEdit *gEdit = new QLineEdit();
-    QLineEdit *bEdit = new QLineEdit();
-
-    rEdit->setValidator(new QIntValidator(0, 255, &dialog));
-    gEdit->setValidator(new QIntValidator(0, 255, &dialog));
-    bEdit->setValidator(new QIntValidator(0, 255, &dialog));
-
-    rgbLayout->addWidget(rLabel);
-    rgbLayout->addWidget(rEdit);
-    rgbLayout->addWidget(gLabel);
-    rgbLayout->addWidget(gEdit);
-    rgbLayout->addWidget(bLabel);
-    rgbLayout->addWidget(bEdit);
-    layout->addLayout(rgbLayout);
+    // Color picker
+    QPushButton *colorButton = new QPushButton("Choose Frame Color");
+    QColor selectedColor = Qt::black;  // Default color
+    layout->addWidget(colorButton);
 
     // Buttons
     QHBoxLayout *buttonsLayout = new QHBoxLayout();
@@ -666,25 +686,28 @@ void MainWindow::on_pushButton_clicked()
     buttonsLayout->addWidget(cancelButton);
     layout->addLayout(buttonsLayout);
 
-    // Connections
+    // When user clicks "Choose Color"
+    QObject::connect(colorButton, &QPushButton::clicked, [&]() {
+        QColor color = QColorDialog::getColor(Qt::black, &dialog, "Select Frame Color");
+        if (color.isValid()) {
+            selectedColor = color;
+            colorButton->setText("Color: " + color.name());
+            colorButton->setStyleSheet(QString("background-color: %1; color: white;").arg(color.name()));
+        }
+    });
+
+    // When user clicks OK
     QObject::connect(okButton, &QPushButton::clicked, [&]() {
-        bool ok1, ok2, ok3, ok4;
-        int size = sizeEdit->text().toInt(&ok1);
-        int r = rEdit->text().toInt(&ok2);
-        int g = gEdit->text().toInt(&ok3);
-        int b = bEdit->text().toInt(&ok4);
-
-        if (!ok1 || !ok2 || !ok3 || !ok4) {
-            QMessageBox::warning(&dialog, "Invalid Input", "Please fill all fields correctly.");
+        bool ok;
+        int size = sizeEdit->text().toInt(&ok);
+        if (!ok || size*2>=filteredImage.width) {
+            QMessageBox::warning(&dialog, "Invalid Input", "Please enter a valid border size.");
             return;
         }
 
-        if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255) {
-            QMessageBox::warning(&dialog, "Invalid RGB", "RGB values must be between 0 and 255.");
-            return;
-        }
+        undoStack.push(filteredImage);
 
-        filteredImage.frame(size, {r, g, b});
+        filteredImage.frame(size, {selectedColor.red(), selectedColor.green(), selectedColor.blue()});
         showImages();
         dialog.accept();
     });
@@ -693,6 +716,7 @@ void MainWindow::on_pushButton_clicked()
 
     dialog.exec();
 }
+
 
 void MainWindow::on_pushButton_2_clicked()
 {

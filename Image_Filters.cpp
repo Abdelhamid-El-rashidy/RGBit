@@ -165,7 +165,7 @@ void Image::blur(int size, double sigma) {
 void Image::oilPainting() {
     if (!imageData) return;
 
-    const int radius = 5; const int intensityLevels = 128.0;
+    const int radius = 3; const int intensityLevels = 128.0;
 
     Image newImage(width, height);
 
@@ -506,6 +506,7 @@ void Image::emboss() {
     *this = newImage;
 
 }
+
 
 QImage Image::toQImage() const {
     if (!imageData || width <= 0 || height <= 0)

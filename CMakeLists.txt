@@ -18,6 +18,8 @@ set(PROJECT_SOURCES
         mainwindow.cpp
         mainwindow.h
         mainwindow.ui
+        imageview.cpp
+        imageview.h
 )
 
 qt_add_executable(IMG-Processer-GUI

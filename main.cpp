@@ -11,6 +11,16 @@ Note:
 - There are some functionalites still in progress like undo, redo. They will be ready in final submission.
 */
 
+/**
+ * @File  : main.cpp
+ * @brief : This file contains the declaration of the Image class.
+ *
+ * @authors : Abdelhamid Ahmed, Hazem Mahmoud, Anas Ibrahim,
+ * @copyright : FCAI Cairo University
+ * @version   : v1.0
+ * @date      : 14/10/2025
+ */
+
 #include "mainwindow.h"
 
 #include <QApplication>

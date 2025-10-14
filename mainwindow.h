@@ -81,10 +81,6 @@ private slots:
 
     void on_merge_clicked();
 
-    void showImagesOrg();
-
-    void keyPressEvent(QKeyEvent *event);
-    void keyReleaseEvent(QKeyEvent *event);
 
 
     void on_pushButton_clicked();
@@ -103,6 +99,8 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    QLabel *statusLabel;
+
     QPixmap currentImage;
 
     // for sidebar

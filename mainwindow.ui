@@ -373,37 +373,19 @@
       QLabel { background-color: #0d0d14; border-radius: 4px; }
      </string>
     </property>
-    <widget class="QLabel" name="filteredLabel">
+    <widget class="ImageView" name="imageView">
      <property name="geometry">
       <rect>
-       <x>19</x>
-       <y>10</y>
+       <x>15</x>
+       <y>20</y>
        <width>581</width>
-       <height>471</height>
+       <height>441</height>
       </rect>
      </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="scaledContents">
-      <bool>true</bool>
+     <property name="styleSheet">
+      <string notr="true">border: none;</string>
      </property>
     </widget>
-    <widget class="QLabel" name="originalLabel">
-     <property name="geometry">
-      <rect>
-       <x>19</x>
-       <y>10</y>
-       <width>581</width>
-       <height>471</height>
-      </rect>
-     </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <zorder>originalLabel</zorder>
-    <zorder>filteredLabel</zorder>
    </widget>
    <widget class="QFrame" name="Bottombar">
     <property name="geometry">
@@ -676,7 +658,7 @@
       </rect>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="effectsPage">
       <layout class="QVBoxLayout" name="effectsLayout">
@@ -1293,7 +1275,15 @@
    <zorder>Displayer</zorder>
    <zorder>mainbar</zorder>
   </widget>
+  <widget class="QStatusBar" name="statusBar"/>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ImageView</class>
+   <extends>QGraphicsView</extends>
+   <header>imageview.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
