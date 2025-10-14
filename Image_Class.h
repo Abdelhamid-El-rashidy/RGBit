@@ -320,6 +320,7 @@ public:
     void toGray();
     void toDarken();
     void toLighten();
+    void Brightness(float value);
     void toresize();
     Image merge(Image& img);
     void detect_edges();

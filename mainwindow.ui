@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1000</width>
+    <width>1010</width>
     <height>650</height>
    </rect>
   </property>
@@ -17,7 +17,7 @@
    <string notr="true">
     QMainWindow {
     background-color: #120017;
-    color: #e0e0e0;
+    color: #e0eee0;
     font-family: &quot;Segoe UI&quot;;
     }
    </string>
@@ -31,7 +31,7 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>91</width>
+      <width>100</width>
       <height>651</height>
      </rect>
     </property>
@@ -62,14 +62,49 @@
       border-left: 3px solid #00BCD4; /* Maintain accent line */
       }</string>
     </property>
-    <widget class="QWidget" name="verticalLayoutWidget_2">
+    <property name="frameShape">
+     <enum>QFrame::Shape::Box</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Shadow::Raised</enum>
+    </property>
+    <property name="lineWidth">
+     <number>1</number>
+    </property>
+    <property name="midLineWidth">
+     <number>3</number>
+    </property>
+    <widget class="QFrame" name="verticalFrame_2">
      <property name="geometry">
       <rect>
-       <x>0</x>
+       <x>-5</x>
        <y>-10</y>
-       <width>91</width>
+       <width>101</width>
        <height>661</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">
+      QFrame {
+      background-color: #1b1b25;
+      border-top: 1px solid #2c2f3a;
+      }
+      QPushButton {
+      background-color: #2b2b3a;
+      color: #e0e0e0;
+      border-radius: 6px;
+      padding: 6px 12px;
+      }
+      QPushButton:hover {
+      background-color: #3a3a4a;
+      border: 1px solid #4c82ff;
+      color: #4c82ff;
+      }
+      QPushButton:pressed {
+      background-color: #3a6ee8;
+      color: white;
+      }
+     </string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
@@ -1270,10 +1305,10 @@
      </property>
     </widget>
    </widget>
+   <zorder>mainbar</zorder>
    <zorder>sidebar</zorder>
    <zorder>Bottombar</zorder>
    <zorder>Displayer</zorder>
-   <zorder>mainbar</zorder>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
