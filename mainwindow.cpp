@@ -56,6 +56,16 @@ MainWindow::MainWindow(QWidget *parent)
     :QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
 
+    // ui->Logo->setPixmap(QPixmap(":/images/logo.png")); // if using resource file
+    // ui->Logo->setPixmap(QPixmap("C:\Users\windows 11\Downloads\done.png"));
+    ui->Logo->setPixmap(QPixmap("C:\\Users\\windows 11\\Downloads\\lst-removebg-preview.png"));
+    ui->Logo->setScaledContents(true); // make it resize with label
+    ui->Logo->setStyleSheet("background: transparent; border: none;");
+    // ui->Logo->setPixmap(QPixmap(":/images/logo.png").scaled(
+    //     ui->Logo->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+
+
+
     statusLabel = new QLabel("Ready");
     statusLabel->setAlignment(Qt::AlignCenter);
     ui->statusBar->addWidget(statusLabel);
@@ -92,7 +102,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->load, &QPushButton::clicked, this, &MainWindow::loadImage);
     connect(ui->saveButton, &QPushButton::clicked, this, &MainWindow::saveImage);
     connect(ui->resetButton, &QPushButton::clicked, this, &MainWindow::on_resetButton_clicked);
-
 
 }
 
