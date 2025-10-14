@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1010</width>
-    <height>650</height>
+    <width>1091</width>
+    <height>682</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -77,8 +77,8 @@
     <widget class="QFrame" name="verticalFrame_2">
      <property name="geometry">
       <rect>
-       <x>-5</x>
-       <y>-10</y>
+       <x>0</x>
+       <y>-20</y>
        <width>101</width>
        <height>661</height>
       </rect>
@@ -1187,13 +1187,6 @@
          </property>
         </widget>
        </item>
-       <item row="6" column="0" colspan="2">
-        <widget class="QLabel" name="skew">
-         <property name="text">
-          <string>Skew</string>
-         </property>
-        </widget>
-       </item>
        <item row="7" column="0">
         <widget class="QPushButton" name="skewleft">
          <property name="styleSheet">
@@ -1259,6 +1252,13 @@
          </property>
         </widget>
        </item>
+       <item row="6" column="0" colspan="2">
+        <widget class="QLabel" name="skew">
+         <property name="text">
+          <string>Skew</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
     </widget>
@@ -1305,10 +1305,53 @@
      </property>
     </widget>
    </widget>
-   <zorder>mainbar</zorder>
+   <widget class="QLabel" name="Logo">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>517</y>
+      <width>400</width>
+      <height>200</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">
+      QFrame {
+      background-color: #1b1b25;
+      border-top: 1px solid #2c2f3a;
+      }
+      QPushButton {
+      background-color: #2b2b3a;
+      color: #e0e0e0;
+      border-radius: 6px;
+      padding: 6px 12px;
+      }
+      QPushButton:hover {
+      background-color: #3a3a4a;
+      border: 1px solid #4c82ff;
+      color: #4c82ff;
+      }
+      QPushButton:pressed {
+      background-color: #3a6ee8;
+      color: white;
+      }
+     </string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Shape::NoFrame</enum>
+    </property>
+    <property name="lineWidth">
+     <number>0</number>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <zorder>Displayer</zorder>
    <zorder>sidebar</zorder>
    <zorder>Bottombar</zorder>
-   <zorder>Displayer</zorder>
+   <zorder>mainbar</zorder>
+   <zorder>Logo</zorder>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
