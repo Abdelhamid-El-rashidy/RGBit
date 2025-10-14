@@ -41,6 +41,8 @@ private slots:
     void on_resetButton_clicked();
     void undo();
     void redo();
+    void keyPressEvent(QKeyEvent *event);
+    void keyReleaseEvent(QKeyEvent *event);
 
 
     void on_rot90_clicked();

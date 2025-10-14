@@ -16,6 +16,7 @@ public:
     void setOriginalImage(const QImage &image);
     void setFilteredImage(const QImage &image);
     void clearImages();
+    void showOriginal(bool visible);
 
 protected:
     void wheelEvent(QWheelEvent *event) override;

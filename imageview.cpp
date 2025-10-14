@@ -70,3 +70,8 @@ void ImageView::resizeEvent(QResizeEvent *event) {
     QGraphicsView::resizeEvent(event);
     fitView();
 }
+
+void ImageView::showOriginal(bool visible) {
+    originalItem->setVisible(visible);
+    filteredItem->setVisible(!visible);
+}

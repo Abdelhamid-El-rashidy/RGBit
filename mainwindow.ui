@@ -1305,10 +1305,10 @@
      </property>
     </widget>
    </widget>
-   <zorder>mainbar</zorder>
    <zorder>sidebar</zorder>
    <zorder>Bottombar</zorder>
    <zorder>Displayer</zorder>
+   <zorder>mainbar</zorder>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
  </widget>

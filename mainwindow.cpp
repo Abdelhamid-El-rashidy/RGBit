@@ -230,6 +230,19 @@ void MainWindow::hideSidebar()
     sidebarAnim->start();
 }
 
+void MainWindow::keyPressEvent(QKeyEvent *event) {
+    if (event->key() == Qt::Key_Space && originalImage.imageData) {
+        ui->imageView->showOriginal(true);
+    }
+    QMainWindow::keyPressEvent(event);
+}
+
+void MainWindow::keyReleaseEvent(QKeyEvent *event) {
+    if (event->key() == Qt::Key_Space && originalImage.imageData) {
+        ui->imageView->showOriginal(false);
+    }
+    QMainWindow::keyReleaseEvent(event);
+}
 
 
 
@@ -237,6 +250,8 @@ void MainWindow::hideSidebar()
 
 
 
+
+// Filters
 void MainWindow::on_rot90_clicked()
 {
     if (originalImage.imageData == nullptr) {
@@ -491,7 +506,6 @@ void MainWindow::on_ResizeBtn_clicked()
         QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog);
     layout->addWidget(buttonBox);
 
-    // Apply consistent button style to the box
     buttonBox->setStyleSheet(MODERN_DIALOG_QSS);
 
     QObject::connect(buttonBox, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
@@ -507,7 +521,8 @@ void MainWindow::on_ResizeBtn_clicked()
         }
 
         try {
-            filteredImage.resize(newWidth, newHeight);
+            Image resized = filteredImage.resize(newWidth, newHeight);
+            filteredImage = resized;
             showImages();
             QMessageBox::information(this, "Done", "Image resized successfully!");
         } catch (...) {

@@ -321,11 +321,10 @@ public:
     void toDarken();
     void toLighten();
     void Brightness(float value);
-    void toresize();
     Image merge(Image& img);
     void detect_edges();
     void sunlight();
-    void resize(int newWidth, int newHeight);
+    Image resize(int newWidth, int newHeight);
     void purple();
     void crop(int x, int y, int width, int height);
     void Black_White();
@@ -334,7 +333,6 @@ public:
     void dark_light(int op);
     void infrared();
     void emboss();
-    void wave();
 
 
 
