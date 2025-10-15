@@ -673,6 +673,28 @@ void Image::burn(float value) {
     }
 }
 
+void Image::moonlight(int darkness) {
+    darkness = max(0, min(100, darkness));
+    float darkFactor = 1.0f - (darkness / 100.0f);
+
+    for (int i = 0; i < width; ++i) {
+        for (int j = 0; j < height; ++j) {
+            for (int k = 0; k < 3; ++k) {
+                float val = (*this)(i, j, k);
+
+                if (k == 0) val *= 0.5;
+                else if (k == 1) val *= 0.6;
+                else val *= 1.2;
+
+                val *= darkFactor;
+
+                val = min(255.0f, max(0.0f, val));
+                (*this)(i, j, k) = static_cast<unsigned char>(val);
+            }
+        }
+    }
+}
+
 
 QImage Image::toQImage() const {
     if (!imageData || width <= 0 || height <= 0)

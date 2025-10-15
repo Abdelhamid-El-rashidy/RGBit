@@ -1321,6 +1321,37 @@
          </property>
         </widget>
        </item>
+       <item row="1" column="1">
+        <widget class="QPushButton" name="moon">
+         <property name="styleSheet">
+          <string notr="true">QFrame#mainbar {
+          background-color: #1A1A22; /* Slightly updated dark background */
+          border-left: 1px solid #2c2f3a;
+          }
+          QFrame#mainbar QPushButton {
+          color: #CCCCCC; /* Lighter text for contrast */
+          background-color: transparent;
+          border: none;
+          padding: 10px 0; /* Align text neatly */
+          font-weight: 500;
+          }
+          QFrame#mainbar QPushButton:hover {
+          background-color: #2D2D35; /* Simulates depth/shadow */
+          color: #00BCD4; /* Modern Teal Accent */
+          border-left: 3px solid #00BCD4; /* Modern &quot;selected&quot; indicator */
+          }
+          QFrame#mainbar QPushButton:checked {
+          background-color: #3949AB; /* Deep Indigo Active State */
+          color: white;
+          border-radius: 0; /* Remove radius for sharper, modern look */
+          border-left: 3px solid #00BCD4; /* Maintain accent line */
+          }</string>
+         </property>
+         <property name="text">
+          <string>Moonlight</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
     </widget>

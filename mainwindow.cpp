@@ -875,4 +875,15 @@ void MainWindow::on_burned_clicked() {
     showImages();
 }
 
+void MainWindow::on_moon_clicked() {
+    if (originalImage.imageData == nullptr) {
+        QMessageBox::warning(this, "Error", "Load Image to apply filter");
+        return;
+    }
+    undoStack.push(filteredImage);
+
+    filteredImage.moonlight(50);
+    showImages();
+}
+
 

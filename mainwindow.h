@@ -103,7 +103,7 @@ private slots:
 
     void on_burned_clicked();
 
-
+    void on_moon_clicked();
 
 private:
     Ui::MainWindow *ui;

@@ -319,6 +319,7 @@ public:
     void skew(double angle, int dir);
     void swirl();
     void burn(float value);
+    void moonlight(int darkness);
     void toGray();
     void toDarken();
     void toLighten();
