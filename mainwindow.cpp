@@ -67,11 +67,11 @@ MainWindow::MainWindow(QWidget *parent)
     //     ui->Logo->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
     // In your constructor or setup function
     QLabel *logLabel = new QLabel(this);
-    logLabel->setFixedSize(150, 150);
+    logLabel->setFixedSize(300, 200);
     logLabel->setScaledContents(true);
-    QPixmap logo(":/images/logo.png");
+    QPixmap logo(":/images/3ecpo-removebg-preview.png");
     logLabel->setPixmap(logo);
-    logLabel->setGeometry(100,540,150,150);
+    logLabel->setGeometry(50,520,300,200);
 
 
 
