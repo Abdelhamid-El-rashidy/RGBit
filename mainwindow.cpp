@@ -798,16 +798,35 @@ void MainWindow::on_skewleft_clicked()
 }
 
 
-void MainWindow::on_skewright_clicked()
-{
-    if (originalImage.imageData == nullptr) {
-        QMessageBox::warning(this, "Error", "Load Image to apply filter");
-        return;
-    }
-    undoStack.push(filteredImage);
+void MainWindow::on_skewright_clicked() {
+        QWidget *skewWidget = new QWidget(this);
+        QVBoxLayout *layout = new QVBoxLayout(skewWidget);
 
-    filteredImage.skew(45,1);
-    showImages();
+
+
+        QComboBox *directionBox = new QComboBox;
+        directionBox->addItem("Horizontal");
+        directionBox->addItem("Vertical");
+
+    ui->horizontalSlider->setRange(-45,45);
+
+        // QPushButton *applyButton = new QPushButton("Apply Skew");
+        //
+        //
+        // layout->addWidget(directionBox);
+        // layout->addWidget(applyButton);
+        //
+        // skewWidget->setLayout(layout);
+        // skewWidget->show();
+        //
+        // connect(applyButton, &QPushButton::clicked, this, [=]() {
+        //     double degree = slider->value();
+        //     int dir = directionBox->currentText().toInt();
+        //
+        //     undoStack.push(filteredImage);
+        //     filteredImage.skew(degree, dir);  // Apply your Image class function
+        //     showImages();
+        // });
 }
 void MainWindow::on_undo_clicked()
 {
