@@ -263,12 +263,12 @@ void Image::oilPainting() {
 
                     // Standard formulea to calculate the inntensity
                     double intensity = (0.299 * r + 0.587 * g + 0.114 * b) * intensityLevels / 255.0;
-                    int index = clamp((int)intensity, 0, intensityLevels - 1);
+                    int ind = clamp((int)intensity, 0, intensityLevels - 1);
 
-                    intensityCount[index]++;
-                    sumR[index] += r;
-                    sumG[index] += g;
-                    sumB[index] += b;
+                    intensityCount[ind]++;
+                    sumR[ind] += r;
+                    sumG[ind] += g;
+                    sumB[ind] += b;
                 }
             }
 
