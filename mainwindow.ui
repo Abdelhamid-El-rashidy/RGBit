@@ -1424,12 +1424,51 @@
      <string>Apply</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="infobtn">
+    <property name="geometry">
+     <rect>
+      <x>890</x>
+      <y>10</y>
+      <width>71</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QFrame#Bottombar {
+       background-color: #1B1B25; /* Updated bottom bar background */
+       border-top: 1px solid #2c2f3a;
+       }
+       QPushButton {
+       background-color: #28283D; /* Updated button background */
+       color: #E0E0E0;
+       border-radius: 8px; /* Slightly more rounded */
+       padding: 8px 16px; /* Increased padding */
+       border: none; /* Remove default border */
+       }
+       QPushButton:hover {
+       background-color: #303045; /* Darker background for hover */
+       color: #00BCD4; /* Modern Teal Accent */
+       border-bottom: 2px solid #00BCD4; /* Accent line on hover */
+       }
+       QPushButton:pressed {
+       background-color: #3949AB; /* Deep Indigo Pressed State */
+       color: white;
+       }</string>
+    </property>
+    <property name="text">
+     <string>info.</string>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+   </widget>
    <zorder>sidebar</zorder>
    <zorder>Bottombar</zorder>
    <zorder>Displayer</zorder>
    <zorder>horizontalSlider</zorder>
    <zorder>pushButton_3</zorder>
    <zorder>mainbar</zorder>
+   <zorder>infobtn</zorder>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
  </widget>

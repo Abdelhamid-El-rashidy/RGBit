@@ -83,7 +83,7 @@ private slots:
 
     void on_merge_clicked();
 
-
+    void on_infobtn_clicked();
 
     void on_pushButton_clicked();
 

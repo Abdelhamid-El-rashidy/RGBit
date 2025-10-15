@@ -60,14 +60,6 @@ MainWindow::MainWindow(QWidget *parent)
     :QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
 
-    // ui->Logo->setPixmap(QPixmap(":/images/logo.png")); // if using resource file
-    // ui->Logo->setPixmap(QPixmap("C:\Users\windows 11\Downloads\logo.png"));
-    // ui->Logo->setPixmap(QPixmap("logo.png"));
-    // ui->Logo->setScaledContents(true); // make it resize with label
-    // ui->Logo->setStyleSheet("background: transparent; border: none;");
-    // ui->Logo->setPixmap(QPixmap(":/images/logo.png").scaled(
-    //     ui->Logo->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
-    // In your constructor or setup function
     QLabel *logLabel = new QLabel(this);
     logLabel->setFixedSize(300, 200);
     logLabel->setScaledContents(true);
@@ -115,6 +107,11 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->saveButton, &QPushButton::clicked, this, &MainWindow::saveImage);
     connect(ui->resetButton, &QPushButton::clicked, this, &MainWindow::on_resetButton_clicked);
 
+    ui->saveButton->setShortcut(QKeySequence("Ctrl+S"));
+    ui->resetButton->setShortcut(QKeySequence("Ctrl+R"));
+    ui->load->setShortcut(QKeySequence("Ctrl+L"));
+    ui->undo->setShortcut(QKeySequence("Ctrl+Z"));
+    ui->redo->setShortcut(QKeySequence("Ctrl+Y"));
 }
 
 MainWindow::~MainWindow() {
@@ -886,4 +883,9 @@ void MainWindow::on_moon_clicked() {
     showImages();
 }
 
+void MainWindow::on_infobtn_clicked() {
+
+    QMessageBox::information(this, "Shortcuts." ,"CTRL + L ---> load image \nCTRL + Z ---> Undo \nCTRL + Y ---> Redo\nCTRL + S ---> Save image\nCTRL + R ---> Reset image\nHold Space ---> Show original image");
+
+}
 
