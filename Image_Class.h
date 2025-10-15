@@ -317,6 +317,8 @@ public:
     void blur(int kernal_size, double sigma);
     void oilPainting();
     void skew(double angle, int dir);
+    void swirl();
+    void burn(float value);
     void toGray();
     void toDarken();
     void toLighten();

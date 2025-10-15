@@ -852,5 +852,27 @@ void MainWindow::on_emboss_clicked()
     showImages();
 }
 
+void MainWindow::on_swirlbtn_clicked()
+{
+    if (originalImage.imageData == nullptr) {
+        QMessageBox::warning(this, "Error", "Load Image to apply filter");
+        return;
+    }
+    undoStack.push(filteredImage);
+
+    filteredImage.swirl();
+    showImages();
+}
+
+void MainWindow::on_burned_clicked() {
+    if (originalImage.imageData == nullptr) {
+        QMessageBox::warning(this, "Error", "Load Image to apply filter");
+        return;
+    }
+    undoStack.push(filteredImage);
+
+    filteredImage.burn(50);
+    showImages();
+}
 
 

@@ -99,6 +99,11 @@ private slots:
 
     void on_emboss_clicked();
 
+    void on_swirlbtn_clicked();
+
+    void on_burned_clicked();
+
+
 
 private:
     Ui::MainWindow *ui;

@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
 #include  "Image_Class.h"
+#define C_PI 3.141592653589793238462643383279502884197169399375
 
 
 
@@ -610,6 +611,66 @@ void Image::emboss() {
 
     *this = newImage;
 
+}
+
+void Image::swirl()
+{
+    int strength = 50;
+    float factor = (static_cast<double>(strength) / 100.0f) * 1.3f;
+    if (factor < 0.3f) {
+        factor = 0.3;
+    }
+    factor *= (static_cast<double>(height) / 4.0f);
+    double x0 = width / 2;
+    double y0 = height / 2;
+    Image temp = (*this);
+    for (int i = 0; i < width; i++) {
+        for (int j = 0; j < height; j++) {
+            double x = i - x0;
+            double y = j - y0;
+            double r = sqrt(x * x + y * y);
+            double originalAngle;
+            if (x != 0) {
+                originalAngle = atan(abs(y) / abs(x));
+                if (x > 0 && y < 0)
+                    originalAngle = C_PI * 2.0f - originalAngle;
+                else if (x <= 0 && y >= 0)
+                    originalAngle = C_PI - originalAngle;
+                else if (x < 0 && y < 0)
+                    originalAngle += C_PI;
+            } else {
+                if (y > 0)
+                    originalAngle = C_PI / 2.0f;
+                else
+                    originalAngle = C_PI * 3.0f / 2.0f;
+            }
+            double swirlFactor = abs(r - width) / factor;
+            double angle = originalAngle + swirlFactor;
+            int x1 = (int) (floor(r * cos(angle) + 0.5f)) + x0;
+            int y1 = (int) (floor(r * sin(angle) + 0.5f)) + y0;
+            x1 = x1 % width;
+            y1 = y1 % height;
+            x1 = width - x1;
+            y1 = height - y1;
+            if (x1 >= 0 && x1 < width && y1 >= 0 && y1 < height) {
+                temp(i, j, 0) = (*this)(x1, y1, 0);
+                temp(i, j, 1) = (*this)(x1, y1, 1);
+                temp(i, j, 2) = (*this)(x1, y1, 2);
+            }
+        }
+    }
+    (*this) = temp;
+}
+
+void Image::burn(float value) {
+   float val = (abs(value)/100.0) + (value >= 0.0);
+    for (int i = 0; i < width; i++) {
+        for (int j = 0; j < height; j++) {
+            (*this)(i,j,0) *= val;
+            (*this)(i,j,1) *= val;
+            // img(i,j,2) *= val;
+        }
+    }
 }
 
 

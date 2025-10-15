@@ -170,6 +170,68 @@
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="swirlbtn">
+        <property name="styleSheet">
+         <string notr="true">QFrame#mainbar {
+          background-color: #1A1A22; /* Slightly updated dark background */
+          border-left: 1px solid #2c2f3a;
+          }
+          QFrame#mainbar QPushButton {
+          color: #CCCCCC; /* Lighter text for contrast */
+          background-color: transparent;
+          border: none;
+          padding: 10px 0; /* Align text neatly */
+          font-weight: 500;
+          }
+          QFrame#mainbar QPushButton:hover {
+          background-color: #2D2D35; /* Simulates depth/shadow */
+          color: #00BCD4; /* Modern Teal Accent */
+          border-left: 3px solid #00BCD4; /* Modern &quot;selected&quot; indicator */
+          }
+          QFrame#mainbar QPushButton:checked {
+          background-color: #3949AB; /* Deep Indigo Active State */
+          color: white;
+          border-radius: 0; /* Remove radius for sharper, modern look */
+          border-left: 3px solid #00BCD4; /* Maintain accent line */
+          }</string>
+        </property>
+        <property name="text">
+         <string>Swirl</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="burned">
+        <property name="styleSheet">
+         <string notr="true">QFrame#mainbar {
+          background-color: #1A1A22; /* Slightly updated dark background */
+          border-left: 1px solid #2c2f3a;
+          }
+          QFrame#mainbar QPushButton {
+          color: #CCCCCC; /* Lighter text for contrast */
+          background-color: transparent;
+          border: none;
+          padding: 10px 0; /* Align text neatly */
+          font-weight: 500;
+          }
+          QFrame#mainbar QPushButton:hover {
+          background-color: #2D2D35; /* Simulates depth/shadow */
+          color: #00BCD4; /* Modern Teal Accent */
+          border-left: 3px solid #00BCD4; /* Modern &quot;selected&quot; indicator */
+          }
+          QFrame#mainbar QPushButton:checked {
+          background-color: #3949AB; /* Deep Indigo Active State */
+          color: white;
+          border-radius: 0; /* Remove radius for sharper, modern look */
+          border-left: 3px solid #00BCD4; /* Maintain accent line */
+          }</string>
+        </property>
+        <property name="text">
+         <string>Burn</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="ResizeBtn">
         <property name="styleSheet">
          <string notr="true">QFrame#mainbar {
@@ -1116,13 +1178,6 @@
          </property>
         </widget>
        </item>
-       <item row="4" column="0" colspan="2">
-        <widget class="QLabel" name="fliplabel">
-         <property name="text">
-          <string>Flip</string>
-         </property>
-        </widget>
-       </item>
        <item row="5" column="0">
         <widget class="QPushButton" name="flipv">
          <property name="styleSheet">
@@ -1259,6 +1314,13 @@
          </property>
         </widget>
        </item>
+       <item row="4" column="0" colspan="2">
+        <widget class="QLabel" name="fliplabel">
+         <property name="text">
+          <string>Flip</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
     </widget>
@@ -1331,12 +1393,12 @@
      <string>Apply</string>
     </property>
    </widget>
-   <zorder>mainbar</zorder>
    <zorder>sidebar</zorder>
    <zorder>Bottombar</zorder>
    <zorder>Displayer</zorder>
    <zorder>horizontalSlider</zorder>
    <zorder>pushButton_3</zorder>
+   <zorder>mainbar</zorder>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
