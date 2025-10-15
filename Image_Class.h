@@ -313,7 +313,7 @@ public:
     void rotate90();
     void rotate180();
     void rotate270();
-    void frame(int sz, const std::array<int,3>& color);
+    void frame(int sz, const std::array<int,3>& color, int type);
     void blur(int kernal_size, double sigma);
     void oilPainting();
     void skew(double angle, int dir);
@@ -333,6 +333,7 @@ public:
     void dark_light(int op);
     void infrared();
     void emboss();
+
 
 
 

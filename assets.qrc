@@ -1,5 +1,5 @@
 <RCC>
     <qresource prefix="/images">
-        <file>3ecpo-removebg-preview.png</file>
+        <file>logo.png</file>
     </qresource>
 </RCC>

@@ -13,6 +13,8 @@
 #include <QtConcurrent/QtConcurrent>
 #include <QLabel>
 #include <QPixmap>
+#include <QComboBox>
+
 
 
 // --- QSS for Modern Dialogs ---
@@ -69,7 +71,7 @@ MainWindow::MainWindow(QWidget *parent)
     QLabel *logLabel = new QLabel(this);
     logLabel->setFixedSize(300, 200);
     logLabel->setScaledContents(true);
-    QPixmap logo(":/images/3ecpo-removebg-preview.png");
+    QPixmap logo(":/images/logo.png");
     logLabel->setPixmap(logo);
     logLabel->setGeometry(50,520,300,200);
 
@@ -693,12 +695,12 @@ void MainWindow::on_pushButton_clicked()
     QDialog dialog(this);
     dialog.setWindowTitle("Add Frame");
     dialog.setModal(true);
-    dialog.setFixedSize(300, 180);
+    dialog.setFixedSize(300, 230);
     dialog.setStyleSheet(MODERN_DIALOG_QSS);
 
     auto *layout = new QVBoxLayout(&dialog);
 
-    // Border size input
+    // Size
     auto *sizeLayout = new QHBoxLayout();
     auto *sizeLabel = new QLabel("Border size:");
     auto *sizeEdit = new QLineEdit();
@@ -707,12 +709,21 @@ void MainWindow::on_pushButton_clicked()
     sizeLayout->addWidget(sizeEdit);
     layout->addLayout(sizeLayout);
 
-    // Color picker
+    // dropdown border style
+    auto *styleLayout = new QHBoxLayout();
+    auto *styleLabel = new QLabel("Frame style:");
+    auto *styleCombo = new QComboBox();
+    styleCombo->setStyleSheet("background-color: #1F232D;");
+    styleCombo->addItems({"Solid", "Dashed", "Dotted"});
+    styleLayout->addWidget(styleLabel);
+    styleLayout->addWidget(styleCombo);
+    layout->addLayout(styleLayout);
+
+    // color
     QPushButton *colorButton = new QPushButton("Choose Frame Color");
-    QColor selectedColor = Qt::black;  // Default color
+    QColor selectedColor = Qt::black;  // default
     layout->addWidget(colorButton);
 
-    // Buttons
     QHBoxLayout *buttonsLayout = new QHBoxLayout();
     QPushButton *okButton = new QPushButton("OK");
     QPushButton *cancelButton = new QPushButton("Cancel");
@@ -720,7 +731,6 @@ void MainWindow::on_pushButton_clicked()
     buttonsLayout->addWidget(cancelButton);
     layout->addLayout(buttonsLayout);
 
-    // When user clicks "Choose Color"
     QObject::connect(colorButton, &QPushButton::clicked, [&]() {
         QColor color = QColorDialog::getColor(Qt::black, &dialog, "Select Frame Color");
         if (color.isValid()) {
@@ -730,18 +740,27 @@ void MainWindow::on_pushButton_clicked()
         }
     });
 
-    // When user clicks OK
     QObject::connect(okButton, &QPushButton::clicked, [&]() {
         bool ok;
         int size = sizeEdit->text().toInt(&ok);
-        if (!ok || size*2>=filteredImage.width) {
+        if (!ok || size * 2 >= filteredImage.width) {
             QMessageBox::warning(&dialog, "Invalid Input", "Please enter a valid border size.");
             return;
         }
 
+        QString style = styleCombo->currentText();
+        int borderType = 0;  // 0 = Solid, 1 = Dashed, 2 = Dotted
+        if (style == "Dashed") borderType = 1;
+        else if (style == "Dotted") borderType = 2;
+
         undoStack.push(filteredImage);
 
-        filteredImage.frame(size, {selectedColor.red(), selectedColor.green(), selectedColor.blue()});
+        filteredImage.frame(
+            size,
+            {selectedColor.red(), selectedColor.green(), selectedColor.blue()},
+            borderType
+        );
+
         showImages();
         dialog.accept();
     });
@@ -750,6 +769,7 @@ void MainWindow::on_pushButton_clicked()
 
     dialog.exec();
 }
+
 
 
 void MainWindow::on_pushButton_2_clicked()

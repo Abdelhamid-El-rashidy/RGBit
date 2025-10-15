@@ -50,45 +50,119 @@ void Image::rotate270() {
     (*this) = newImage;
 }
 
-void Image::frame(int size, const array<int,3> &color) {
-    size = min(size, std::min(this->width, this->height));
+void Image::frame(int size, const std::array<int, 3> &color, int borderType) {
+    size = std::min(size, std::min(this->width, this->height));
 
-    // Top border
+    auto drawCircle = [&](int cx, int cy, int r) {
+        for (int y = -r; y <= r; y++) {
+            for (int x = -r; x <= r; x++) {
+                if (x * x + y * y <= r * r) {
+                    int px = cx + x;
+                    int py = cy + y;
+                    if (px >= 0 && px < width && py >= 0 && py < height) {
+                        for (int c = 0; c < 3; c++) {
+                            setPixel(px, py, c, color[c]);
+                        }
+                    }
+                }
+            }
+        }
+    };
+
+    int dashLength = 10;
+    int dotSpacing = 5;
+    int dotSize = 5;
+
+    if (borderType == 2) {
+        int step = dotSpacing + (dotSize*2);
+        int radius = dotSize;
+
+        // Top
+        for (int x = 0; x < width; x += step)
+            drawCircle(x, size / 2, radius);
+        // Bottom
+        for (int x = 0; x < width; x += step)
+            drawCircle(x, height - size / 2, radius);
+        // Left
+        for (int y = 0; y < height; y += step)
+            drawCircle(size/2, y, radius);
+        // Right
+        for (int y = 0; y < height; y += step)
+            drawCircle(width - size/2, y, radius);
+
+        return;
+    }
+
+
+
+    // Top
     for (int y = 0; y < size; y++) {
         for (int x = 0; x < this->width; x++) {
-            for (int c = 0; c<3;c++) {
-                setPixel(x, y, c, color[c]);
+            bool draw = true;
+
+            if (borderType == 1) { // Dashed
+                draw = ((x / dashLength) % 2 == 0);
+            }
+
+            if (draw) {
+                for (int c = 0; c < 3; c++) {
+                    setPixel(x, y, c, color[c]);
+                }
             }
         }
     }
 
-    // bottom border
+    // Bottom
     for (int y = this->height - size; y < this->height; y++) {
         for (int x = 0; x < this->width; x++) {
-            for (int c = 0; c < 3; c++) {
-                setPixel(x, y, c, color[c]);
+            bool draw = true;
+
+            if (borderType == 1) { // Dashed
+                draw = ((x / dashLength) % 2 == 0);
+            }
+
+            if (draw) {
+                for (int c = 0; c < 3; c++) {
+                    setPixel(x, y, c, color[c]);
+                }
             }
         }
     }
 
-    // Left border
+    // Left
     for (int x = 0; x < size; x++) {
         for (int y = 0; y < this->height; y++) {
-            for (int c = 0; c < 3; c++) {
-                setPixel(x, y, c, color[c]);
+            bool draw = true;
+
+            if (borderType == 1) { // Dashed
+                draw = ((y / dashLength) % 2 == 0);
+            }
+
+            if (draw) {
+                for (int c = 0; c < 3; c++) {
+                    setPixel(x, y, c, color[c]);
+                }
             }
         }
     }
 
-    // Right border
+    // Right
     for (int x = this->width - size; x < this->width; x++) {
         for (int y = 0; y < this->height; y++) {
-            for (int c = 0; c < 3; c++) {
-                setPixel(x, y, c, color[c]);
+            bool draw = true;
+
+            if (borderType == 1) { // Dashed
+                draw = ((y / dashLength) % 2 == 0);
+            }
+            if (draw) {
+                for (int c = 0; c < 3; c++) {
+                    setPixel(x, y, c, color[c]);
+                }
             }
         }
     }
 }
+
 
 vector<vector<double>> create_kernel(int kernelSize, double sigma) {
     vector<vector<double>> kernel(kernelSize, vector<double>(kernelSize));
