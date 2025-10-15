@@ -11,6 +11,8 @@
 #include <QVBoxLayout>
 #include <QGraphicsDropShadowEffect>
 #include <QtConcurrent/QtConcurrent>
+#include <QLabel>
+#include <QPixmap>
 
 
 // --- QSS for Modern Dialogs ---
@@ -57,12 +59,20 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     // ui->Logo->setPixmap(QPixmap(":/images/logo.png")); // if using resource file
-    // ui->Logo->setPixmap(QPixmap("C:\Users\windows 11\Downloads\done.png"));
-    ui->Logo->setPixmap(QPixmap("C:\\Users\\windows 11\\Downloads\\lst-removebg-preview.png"));
-    ui->Logo->setScaledContents(true); // make it resize with label
-    ui->Logo->setStyleSheet("background: transparent; border: none;");
+    // ui->Logo->setPixmap(QPixmap("C:\Users\windows 11\Downloads\logo.png"));
+    // ui->Logo->setPixmap(QPixmap("logo.png"));
+    // ui->Logo->setScaledContents(true); // make it resize with label
+    // ui->Logo->setStyleSheet("background: transparent; border: none;");
     // ui->Logo->setPixmap(QPixmap(":/images/logo.png").scaled(
     //     ui->Logo->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    // In your constructor or setup function
+    QLabel *logLabel = new QLabel(this);
+    logLabel->setFixedSize(150, 150);
+    logLabel->setScaledContents(true);
+    QPixmap logo(":/images/logo.png");
+    logLabel->setPixmap(logo);
+    logLabel->setGeometry(100,540,150,150);
+
 
 
 
@@ -802,4 +812,6 @@ void MainWindow::on_emboss_clicked()
     filteredImage.emboss();
     showImages();
 }
+
+
 

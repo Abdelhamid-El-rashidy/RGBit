@@ -25,10 +25,13 @@ set(PROJECT_SOURCES
 qt_add_executable(IMG-Processer-GUI
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
+        assets.qrc
 )
 
 target_link_libraries(IMG-Processer-GUI PRIVATE Qt6::Widgets Qt6::Gui)
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 
+qt_add_resources(RESOURCE_FILES assets.qrc)
+target_sources(${PROJECT_NAME} PRIVATE ${RESOURCE_FILES})
 
 qt_finalize_executable(IMG-Processer-GUI)

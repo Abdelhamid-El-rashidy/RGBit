@@ -99,6 +99,7 @@ private slots:
 
     void on_emboss_clicked();
 
+
 private:
     Ui::MainWindow *ui;
     QLabel *statusLabel;
