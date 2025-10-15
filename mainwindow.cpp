@@ -102,7 +102,6 @@ MainWindow::MainWindow(QWidget *parent)
     // Add more if you make new sidebar pages later
     connect(ui->closeSidebar, &QPushButton::clicked, this, &MainWindow::hideSidebar);
 
-
     connect(ui->load, &QPushButton::clicked, this, &MainWindow::loadImage);
     connect(ui->saveButton, &QPushButton::clicked, this, &MainWindow::saveImage);
     connect(ui->resetButton, &QPushButton::clicked, this, &MainWindow::on_resetButton_clicked);
@@ -113,7 +112,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->undo->setShortcut(QKeySequence("Ctrl+Z"));
     ui->redo->setShortcut(QKeySequence("Ctrl+Y"));
 }
-
 MainWindow::~MainWindow() {
     delete ui;
 }
@@ -552,6 +550,7 @@ void MainWindow::on_ResizeBtn_clicked()
 
 void MainWindow::on_blur_clicked()
 {
+    ui->closeSidebar->click();
     if (filteredImage.imageData == nullptr) {
         QMessageBox::warning(this, "Error", "Load an image before applying Gaussian Blur.");
         return;
@@ -657,6 +656,7 @@ void MainWindow::on_decrease_clicked()
 
 void MainWindow::on_merge_clicked()
 {
+    ui->closeSidebar->click();
     if (originalImage.imageData == nullptr) {
         QMessageBox::warning(this, "Error", "Load Image to apply filter");
         return;
@@ -683,7 +683,7 @@ void MainWindow::on_merge_clicked()
 
 
 void MainWindow::on_pushButton_clicked()
-{
+{   ui->closeSidebar->click();
     if (filteredImage.imageData == nullptr) {
         QMessageBox::warning(this, "Error", "Load an image before adding a frame.");
         return;
@@ -770,7 +770,7 @@ void MainWindow::on_pushButton_clicked()
 
 
 void MainWindow::on_pushButton_2_clicked()
-{
+{   ui->closeSidebar->click();
     if (originalImage.imageData == nullptr) {
         QMessageBox::warning(this, "Error", "Load Image to apply filter");
         return;
