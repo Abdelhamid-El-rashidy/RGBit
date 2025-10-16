@@ -1,6 +1,6 @@
 # RGBit
 
-RGBit is a Comprehensive image processor desktop application with **24** filters built using **C++ and the Qt Framework**, featuring tools for effects, blurring, and image transformations, and color adjustments.
+RGBit is a Comprehensive image processor desktop application with **24** filters built using **C++ and the Qt Framework**, featuring tools for effects, blurring, and image transformations, and color adjustments. Developed as part of the course requirements for **CS213 (OOP)** under the supervision of the Faculty of Computers and Artificial Intelligence, Cairo University.
 
 ---
 ![RGBit](images/Interface.png)
@@ -200,8 +200,8 @@ cmake -DCMAKE_PREFIX_PATH=/path/to/Qt/6.x/gcc_64 ..
 
 ## Links
 
-* **Project Report:** [Google Document Link](https://docs.google.com/document/d/1uPoAtI0X4FZSFgmnABq6FTRaYfOWz46X1Rf8pQi4_94/edit?tab=t.0)
-* **Demo Video:** [Google Drive Link](https://drive.google.com/drive/folders/1oabwI5nQSOdJEY3tQPBP4ow-7c4mLNsm?usp=drive_link)
+* [**Project Report**](https://docs.google.com/document/d/1uPoAtI0X4FZSFgmnABq6FTRaYfOWz46X1Rf8pQi4_94/edit?tab=t.0)
+* [**Demo Video**](https://youtu.be/H46m4kPMUM0)
 
 ---
 
