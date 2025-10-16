@@ -1,6 +1,6 @@
-# Image Processing Application
+# RGBit
 
-A modern **Image Processing GUI** built using **C++ and the Qt Framework**, featuring tools for filtering, blurring, and image transformations such as brightness, contrast, and color adjustments — similar to photo editors like Pixlr or Photoshop.
+RGBit is a Comprehensive image processor desktop application with **24** filters built using **C++ and the Qt Framework**, featuring tools for filtering, blurring, and image transformations such as brightness, contrast, and color adjustments — similar to photo editors like Pixlr or Photoshop.
 
 ---
 
@@ -8,25 +8,41 @@ A modern **Image Processing GUI** built using **C++ and the Qt Framework**, feat
 
 ### Core Image Processing
 
-* **Effect Filters**
+* **Color Filters (with live preview)**
 
-  * Oil Painting Filter
-  * Sunlight Filter
-  * Purple Filter
+  * Brightness with slider range [-100,100]
+  * Temperature with slider range [-100,100]
+  * Contrast with slider range [-100,100]
+  * Black & White
   * Gray
-  * Infrared Filter
-  * Black & White Filter
-  * Old TV Filter
+* **Effect Filters**
+  * Oil Painting
+  * Sunlight
+  * Moonlight
+  * Purple
   * Invert
-  * Brightness
+  * Infrared
+  * Burn
+  * Emboss
+  * Swirl
+  * Old TV Filter
 * **Transformation Filters**
-  * Skew
+  * Skew with slider range [-89,89]
   * Rotate (90°, 180°, 270°)
   * Flip (Horizontal / Vertical)
-* **Blur Filters**
-* **Merge and Crop**
+  * Rubber Crop
+  * Resize
+* **Guassian Blur Filter**
+* **Merge**
 * Edges Detector
-* **Resize and Frame Tools**
+* **Add Frame (solid,dotted,dashed)**
+
+### Image display & control
+* Undo/Redo Support
+* Reset Image
+* Load & Save Image
+* Help dialog for command guidance
+* “Hold-press to view original” shortcut
 
 ---
 
@@ -37,6 +53,7 @@ A modern **Image Processing GUI** built using **C++ and the Qt Framework**, feat
 * Central preview area for **original** and **filtered** images using `QLabel`
 * Supports **loading and saving** images in `.png`, `.jpg`, `.jpeg`, and `.bmp` formats
 * Animated sidebar for smoother transitions between editing tools
+* Keyboard shortcuts for quick actions
 
 ---
 
@@ -45,16 +62,21 @@ A modern **Image Processing GUI** built using **C++ and the Qt Framework**, feat
 ```
 ImageProcessor/
 ├── include/
-│   ├── image.h               # Image class handling raw pixel data
 │   └── mainwindow.h          # GUI logic and event handlers
+│   └── imageview.h           # Image displaying and Rubber crop
+│   └── stb_image.h           # This is a helper library handed through the assignment
+│   └── stb_image_write.h     # This is a helper library handed through the assignment
+│   ├── Image_Class.h         # Image class handling raw pixel data & Filter prototypes (This file is helper interface for stb library, but we add filters)
+
 ├── src/
 │   ├── main.cpp              # Application entry point
 │   ├── mainwindow.cpp        # UI event handlers and image operations
-│   ├── image.cpp             # Core image algorithms
+│   ├── Image_Filters.cpp     # Filters implementation 
+│   ├── imageview.cpp         # Image displayer and Rubber crop implementation
 ├── ui/
-│   └── mainwindow.ui         # Designed Qt interface (XML format)
-├── assets/
-│   └── sample.jpg            # Example test image
+│   └── mainwindow.ui         # Designed Qt interface
+├── Images (assets)/
+│   └── oldtv.jpg            
 ├── CMakeLists.txt            # CMake build configuration
 └── README.md                 # Project documentation
 ```
@@ -156,19 +178,19 @@ cmake -DCMAKE_PREFIX_PATH=/path/to/Qt/6.x/gcc_64 ..
 
 ## Authors
 
-- Abdelhamid Ahmed Abdelhamid ElRashidy 
-- Hazem Mahmoud Mohammed 
-- Anas Ibrahem Hesham Ali
+- [Abdelhamid Ahmed Abdelhamid ElRashidy](https://github.com/Abdelhamid-El-rashidy)
+- [Hazem Mahmoud Mohammed](https://github.com/Hazem225)
+- [Anas Ibrahem Hesham Ali](https://github.com/anas012201)
 ---
 
-## Authors
+## Acknowledgments
 
-- Abdelhamid Ahmed Abdelhamid ElRashidy
-- Hazem Mahmoud Mohammed
-- Anas Ibrahem Hesham Ali
+- Dr. Mohamed El-Ramely — Course Instructor 
+- Original Image_Class base by Shehab Diab, Youssef Mohamed, and Nada Ahmed 
+- stb_image / stb_image_write libraries provided through the assignment
 ---
 
-## Resources
+## Links
 
 * **Project Report:** [Google Document Link](https://docs.google.com/document/d/1uPoAtI0X4FZSFgmnABq6FTRaYfOWz46X1Rf8pQi4_94/edit?tab=t.0)
 * **Demo Video:** [Google Drive Link](https://drive.google.com/drive/folders/1oabwI5nQSOdJEY3tQPBP4ow-7c4mLNsm?usp=drive_link)
