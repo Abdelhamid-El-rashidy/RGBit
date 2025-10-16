@@ -493,37 +493,20 @@ void Image::sunlight() {
 
 Image Image::resize(int newWidth, int newHeight) {
     Image resized(newWidth, newHeight);
-
     float scaleX = static_cast<float>(width) / newWidth;
     float scaleY = static_cast<float>(height) / newHeight;
-
-    for (int j = 0; j < newHeight; j++) {
-        for (int i = 0; i < newWidth; i++) {
-            float fx = i * scaleX;
-            float fy = j * scaleY;
-
-            int x1 = static_cast<int>(fx);
-            int y1 = static_cast<int>(fy);
-            int x2 = std::min(x1 + 1, width - 1);
-            int y2 = std::min(y1 + 1, height - 1);
-
-            float dx = fx - x1;
-            float dy = fy - y1;
-
+    for (int i = 0; i < newWidth; i++) {
+        for (int j = 0; j < newHeight; j++) {
             for (int k = 0; k < 3; k++) {
-                float val =
-                    (1 - dx) * (1 - dy) * (*this)(x1, y1, k) +
-                    dx * (1 - dy) * (*this)(x2, y1, k) +
-                    (1 - dx) * dy * (*this)(x1, y2, k) +
-                    dx * dy * (*this)(x2, y2, k);
-
-                resized(i, j, k) = static_cast<unsigned char>(val);
+                int srcX = min((int)ceil(i * scaleX), width - 1);
+                int srcY = min((int)ceil(j * scaleY), height - 1);
+                resized(i, j, k) = (*this)(srcX, srcY, k);
             }
         }
     }
-
     return resized;
 }
+
 
 void Image::purple() {
     for (int i = 0; i < width; i++) {

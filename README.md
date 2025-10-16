@@ -1,6 +1,6 @@
 # RGBit
 
-RGBit is a Comprehensive image processor desktop application with **24** filters built using **C++ and the Qt Framework**, featuring tools for filtering, blurring, and image transformations such as brightness, contrast, and color adjustments — similar to photo editors like Pixlr or Photoshop.
+RGBit is a Comprehensive image processor desktop application with **24** filters built using **C++ and the Qt Framework**, featuring tools for effects, blurring, and image transformations, and color adjustments.
 
 ---
 ![RGBit](images/Interface.png)
@@ -55,6 +55,13 @@ RGBit is a Comprehensive image processor desktop application with **24** filters
 * Supports **loading and saving** images in `.png`, `.jpg`, `.jpeg`, and `.bmp` formats
 * Animated sidebar for smoother transitions between editing tools
 * Keyboard shortcuts for quick actions
+
+---
+
+## Performance Optimization
+
+- Blur filter: The Blur filter in this project is optimized using multithreading to leverage multi-core CPU architectures.
+  Instead of processing the entire image sequentially, the algorithm divides the image into segments, and each thread handles a separate region in parallel.
 
 ---
 
