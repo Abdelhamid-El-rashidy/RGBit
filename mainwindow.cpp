@@ -77,8 +77,7 @@ MainWindow::MainWindow(QWidget *parent)
     setFocusPolicy(Qt::StrongFocus);
 
 
-
-    // --- Sidebar Animation ---
+    // Sidebar
     sidebarAnim = new QPropertyAnimation(ui->sidebar, "geometry", this);
     sidebarAnim->setDuration(300);
     sidebarAnim->setEasingCurve(QEasingCurve::InOutCubic);
@@ -176,7 +175,7 @@ void MainWindow::loadImage() {
         showImages();
     }
     filtered = filteredImage.toQImage();
-    ui->label->setVisible(false);
+    ui->imageLabel->setVisible(false);
 }
 
 void MainWindow::saveImage() {
@@ -501,72 +500,34 @@ void MainWindow::on_OldTv_clicked()
 }
 
 
-void MainWindow::on_CropBtn_clicked()
-{
-    if (originalImage.imageData == nullptr) {
+void MainWindow::on_CropBtn_clicked() {
+    if (!originalImage.imageData) {
         QMessageBox::warning(this, "Error", "Load an image before cropping.");
         return;
     }
-    undoStack.push(filteredImage);
-    QDialog dialog(this);
-    dialog.setWindowTitle("Crop Image");
-    dialog.setModal(true);
-    dialog.setFixedSize(300, 220);
 
-    // Apply modern dark theme QSS
-    dialog.setStyleSheet(MODERN_DIALOG_QSS);
+    ui->imageView->setCroppingEnabled(true);
 
-    QLineEdit *xEdit = new QLineEdit(&dialog);
-    QLineEdit *yEdit = new QLineEdit(&dialog);
-    QLineEdit *wEdit = new QLineEdit(&dialog);
-    QLineEdit *hEdit = new QLineEdit(&dialog);
+    disconnect(ui->imageView, nullptr, this, nullptr);
 
-    xEdit->setPlaceholderText("Top-left X");
-    yEdit->setPlaceholderText("Top-left Y");
-    wEdit->setPlaceholderText("Width");
-    hEdit->setPlaceholderText("Height");
+    connect(ui->imageView, &ImageView::cropAreaSelected, this, [=](QRect rect) {
+        ui->imageView->setCroppingEnabled(false);
+        if (rect.isNull()) return;
+        int imgWidth  = filteredImage.width;
+        int imgHeight = filteredImage.height;
 
-    xEdit->setValidator(new QIntValidator(0, originalImage.width - 1, &dialog));
-    yEdit->setValidator(new QIntValidator(0, originalImage.height - 1, &dialog));
-    wEdit->setValidator(new QIntValidator(1, originalImage.width, &dialog));
-    hEdit->setValidator(new QIntValidator(1, originalImage.height, &dialog));
+        if (rect.x() < 0 || rect.y() < 0 ||
+            rect.right() >= imgWidth || rect.bottom() >= imgHeight) {
 
-    QFormLayout *form = new QFormLayout();
-    form->addRow("X:", xEdit);
-    form->addRow("Y:", yEdit);
-    form->addRow("Width:", wEdit);
-    form->addRow("Height:", hEdit);
-
-    QDialogButtonBox *buttons =
-        new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, &dialog);
-
-    // Apply consistent button style to the box
-    buttons->setStyleSheet(MODERN_DIALOG_QSS);
-
-    form->addWidget(buttons);
-
-    dialog.setLayout(form);
-
-    connect(buttons, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
-    connect(buttons, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
-
-    if (dialog.exec() == QDialog::Accepted) {
-        int x = xEdit->text().toInt();
-        int y = yEdit->text().toInt();
-        int w = wEdit->text().toInt();
-        int h = hEdit->text().toInt();
-
-        if (x < 0 || y < 0 || w <= 0 || h <= 0 ||
-            x + w > originalImage.width || y + h > originalImage.height) {
-            QMessageBox::warning(this, "Invalid Input", "Invalid crop dimensions or coordinates.");
+            QMessageBox::warning(this, "Invalid Crop", "Please select a region fully within the image.");
             return;
         }
 
-        filteredImage.crop(x, y, w, h);
+        undoStack.push(filteredImage);
+        filteredImage.crop(rect.x(), rect.y(), rect.width(), rect.height());
         showImages();
-    }
+    });
 }
-
 
 void MainWindow::on_ResizeBtn_clicked()
 {

@@ -1,4 +1,5 @@
 #include "imageview.h"
+#include <QApplication>
 
 ImageView::ImageView(QWidget *parent)
     : QGraphicsView(parent),
@@ -15,7 +16,7 @@ ImageView::ImageView(QWidget *parent)
     setDragMode(QGraphicsView::ScrollHandDrag);
     setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
 
-    originalItem->setVisible(false); // start hidden
+    originalItem->setVisible(false);
 }
 
 void ImageView::setOriginalImage(const QImage &image) {
@@ -75,3 +76,45 @@ void ImageView::showOriginal(bool visible) {
     originalItem->setVisible(visible);
     filteredItem->setVisible(!visible);
 }
+
+// cropping
+
+void ImageView::mousePressEvent(QMouseEvent *event) {
+    if (croppingEnabled && event->button() == Qt::LeftButton) {
+        origin = event->pos();
+        if (!rubberBand)
+            rubberBand = new QRubberBand(QRubberBand::Rectangle, this);
+        rubberBand->setGeometry(QRect(origin, QSize()));
+        rubberBand->show();
+    } else {
+        QGraphicsView::mousePressEvent(event);
+    }
+}
+
+void ImageView::mouseMoveEvent(QMouseEvent *event) {
+    if (croppingEnabled && rubberBand)
+        rubberBand->setGeometry(QRect(origin, event->pos()).normalized());
+    else
+        QGraphicsView::mouseMoveEvent(event);
+}
+
+void ImageView::mouseReleaseEvent(QMouseEvent *event) {
+    if (croppingEnabled && rubberBand && event->button() == Qt::LeftButton) {
+        rubberBand->hide();
+        QRect viewRect = rubberBand->geometry();
+        QRectF sceneRect = mapToScene(viewRect).boundingRect();
+        emit cropAreaSelected(sceneRect.toRect());
+    } else {
+        QGraphicsView::mouseReleaseEvent(event);
+    }
+}
+
+
+void ImageView::setCroppingEnabled(bool enabled) {
+    croppingEnabled = enabled;
+    setDragMode(enabled ? QGraphicsView::NoDrag : QGraphicsView::ScrollHandDrag);
+    if (!enabled && rubberBand) {
+        rubberBand->hide();
+    }
+}
+
