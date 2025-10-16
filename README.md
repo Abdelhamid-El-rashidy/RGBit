@@ -24,7 +24,7 @@ RGBit is a Comprehensive image processor desktop application with **24** filters
   * Invert
   * Infrared
   * Burn
-  * Emboss
+  * HDR
   * Swirl
   * Old TV Filter
 * **Transformation Filters**
