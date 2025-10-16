@@ -3,7 +3,8 @@
 RGBit is a Comprehensive image processor desktop application with **24** filters built using **C++ and the Qt Framework**, featuring tools for filtering, blurring, and image transformations such as brightness, contrast, and color adjustments — similar to photo editors like Pixlr or Photoshop.
 
 ---
-
+![RGBit](images/Interface.png)
+--
 ## Features
 
 ### Core Image Processing

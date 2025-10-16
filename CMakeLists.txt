@@ -14,7 +14,7 @@ find_package(Qt6 REQUIRED COMPONENTS Widgets Gui)
 set(PROJECT_SOURCES
         main.cpp
         pre.cpp
-        Image_Filters.cpp
+        Filters/Image_Filters.cpp
         mainwindow.cpp
         mainwindow.h
         mainwindow.ui

@@ -1,5 +1,5 @@
 #include <bits/stdc++.h>
-#include  "Image_Class.h"
+#include "Image_Class.h"
 #define C_PI 3.141592653589793238462643383279502884197169399375
 
 
