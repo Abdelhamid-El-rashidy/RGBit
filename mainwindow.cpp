@@ -16,7 +16,7 @@
 #include <QComboBox>
 #include <QSpinBox>
 
-
+using namespace std;
 
 // --- QSS for Modern Dialogs ---
 const QString MODERN_DIALOG_QSS = R"(
@@ -522,6 +522,10 @@ void MainWindow::on_CropBtn_clicked() {
             QMessageBox::warning(this, "Invalid Crop", "Please select a region fully within the image.");
             return;
         }
+        rect.setX(max(0, rect.x()));
+rect.setY(max(0, rect.y()));
+rect.setWidth(std::min(rect.width(), imgWidth - rect.x()));
+rect.setHeight(std::min(rect.height(), imgHeight - rect.y()));
 
         undoStack.push(filteredImage);
         filteredImage.crop(rect.x(), rect.y(), rect.width(), rect.height());
