@@ -316,14 +316,14 @@ public:
     void frame(int sz, const std::array<int,3>& color, int type);
     void blur(int kernal_size, double sigma);
     void oilPainting();
-    void skew(double angle, int dir);
+    void skew(double angle);
     void swirl();
     void burn(float value);
     void moonlight(int darkness);
     void toGray();
     void toDarken();
     void toLighten();
-    void Brightness(float value);
+    void Brightness(int value);
     Image merge(Image& img);
     void detect_edges();
     void sunlight();
@@ -336,6 +336,9 @@ public:
     void dark_light(int op);
     void infrared();
     void emboss();
+    void temperature(float value);
+    void contrast(float value);
+
 
 
 

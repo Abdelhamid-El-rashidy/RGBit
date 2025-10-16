@@ -14,12 +14,11 @@
 #include <QLabel>
 #include <QPixmap>
 #include <QComboBox>
+#include <QSpinBox>
 
 
 
 // --- QSS for Modern Dialogs ---
-// Note: This style sheet is defined here and applied directly to the QDialog widgets
-// to ensure the custom pop-ups match the dark theme and button styles defined in the .ui file.
 const QString MODERN_DIALOG_QSS = R"(
     QDialog {
         background-color: #1E1E2F; /* Dark dialog background */
@@ -60,12 +59,12 @@ MainWindow::MainWindow(QWidget *parent)
     :QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
 
-    QLabel *logLabel = new QLabel(this);
-    logLabel->setFixedSize(300, 200);
-    logLabel->setScaledContents(true);
-    QPixmap logo(":/images/logo.png");
-    logLabel->setPixmap(logo);
-    logLabel->setGeometry(50,520,300,200);
+    // QLabel *logLabel = new QLabel(this);
+    // logLabel->setFixedSize(300, 200);
+    // logLabel->setScaledContents(true);
+    // QPixmap logo(":/images/logo.png");
+    // logLabel->setPixmap(logo);
+    // logLabel->setGeometry(50,520,300,200);
 
 
 
@@ -84,10 +83,8 @@ MainWindow::MainWindow(QWidget *parent)
     sidebarAnim->setDuration(300);
     sidebarAnim->setEasingCurve(QEasingCurve::InOutCubic);
 
-    // Initially hidden off-screen
     ui->sidebar->setGeometry(-220, 0, 220, ui->sidebar->height());
 
-    // --- Connect Sidebar Buttons ---
     connect(ui->EffectsBtn, &QPushButton::clicked, [=]() {
         showSidebar(ui->effectsPage);
     });
@@ -99,7 +96,6 @@ MainWindow::MainWindow(QWidget *parent)
     showSidebar(ui->Brightpage);
 });
 
-    // Add more if you make new sidebar pages later
     connect(ui->closeSidebar, &QPushButton::clicked, this, &MainWindow::hideSidebar);
 
     connect(ui->load, &QPushButton::clicked, this, &MainWindow::loadImage);
@@ -111,6 +107,54 @@ MainWindow::MainWindow(QWidget *parent)
     ui->load->setShortcut(QKeySequence("Ctrl+L"));
     ui->undo->setShortcut(QKeySequence("Ctrl+Z"));
     ui->redo->setShortcut(QKeySequence("Ctrl+Y"));
+
+    // Adjustments sliders
+    ui->brightnessSlider->setRange(-100,100);
+    ui->temperatureSlider->setRange(-100,100);
+    ui->contrastSlider->setRange(-100,100);
+
+    connect(ui->brightnessSlider, &QSlider::sliderPressed, this, [=]() {
+        previewBaseline = filteredImage;  // capture baseline
+    });
+    connect(ui->brightnessSlider, &QSlider::valueChanged, this, [=](float v){
+        brightnessValue = v;
+        updatePreview();
+    });
+
+    connect(ui->temperatureSlider, &QSlider::sliderPressed, this, [=]() {
+        previewBaseline = filteredImage;
+    });
+    connect(ui->temperatureSlider, &QSlider::valueChanged, this, [=](float v){
+        temperatureValue = v;
+        updatePreview();
+    });
+
+    connect(ui->contrastSlider, &QSlider::sliderPressed, this, [=]() {
+        previewBaseline = filteredImage;
+    });
+    connect(ui->contrastSlider, &QSlider::valueChanged, this, [=](float v){
+        contrastValue = v;
+        updatePreview();
+    });
+
+    connect(ui->applyButton, &QPushButton::clicked, this, [=]() {
+        if (originalImage.imageData == nullptr) {
+            QMessageBox::warning(this, "Error", "Load Image to apply filter");
+            return;
+        }
+        undoStack.push(filteredImage);
+
+        // updatePreview();
+        filteredImage = previewImage;
+        showImages();
+
+        ui->brightnessSlider->setValue(0);
+        ui->temperatureSlider->setValue(0);
+        ui->contrastSlider->setValue(0);
+
+        brightnessValue = temperatureValue = contrastValue = 0.0;
+    });
+
 }
 MainWindow::~MainWindow() {
     delete ui;
@@ -132,6 +176,7 @@ void MainWindow::loadImage() {
         showImages();
     }
     filtered = filteredImage.toQImage();
+    ui->label->setVisible(false);
 }
 
 void MainWindow::saveImage() {
@@ -150,7 +195,7 @@ void MainWindow::saveImage() {
 }
 
 
-void MainWindow::showImages() {
+void MainWindow::showImages(int filter) {
     if (!originalImage.imageData)
         return;
 
@@ -166,6 +211,10 @@ void MainWindow::showImages() {
 
     ui->imageView->setOriginalImage(origQImage);
     ui->imageView->setFilteredImage(filtQImage);
+
+    if (!filter) {
+        while (!redoStack.empty()) redoStack.pop();
+    }
 }
 
 void MainWindow::undo() {
@@ -177,7 +226,7 @@ void MainWindow::undo() {
     filteredImage = undoStack.top();
     undoStack.pop();
     filtered = filteredImage.toQImage();
-    showImages();
+    showImages(1);
 }
 
 void MainWindow::redo() {
@@ -189,7 +238,7 @@ void MainWindow::redo() {
     filteredImage = redoStack.top();
     redoStack.pop();
     filtered = filteredImage.toQImage();
-    showImages();
+    showImages(1);
 }
 
 
@@ -260,6 +309,33 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event) {
     QMainWindow::keyReleaseEvent(event);
 }
 
+void MainWindow::updatePreview() {
+    if (previewBaseline.imageData == nullptr) return;
+
+    previewImage = filteredImage;
+
+    if (brightnessValue != 0)
+        previewImage.Brightness(brightnessValue);
+
+    if (temperatureValue != 0)
+        previewImage.temperature(temperatureValue);
+
+    if (contrastValue != 0)
+        previewImage.contrast(contrastValue);
+
+    QImage qimg = previewImage.toQImage();
+    ui->imageView->setFilteredImage(qimg);
+}
+
+void MainWindow::on_undo_clicked()
+{
+    undo();
+}
+
+void MainWindow::on_redo_clicked()
+{
+    redo();
+}
 
 
 
@@ -504,7 +580,6 @@ void MainWindow::on_ResizeBtn_clicked()
     dialog.setWindowTitle("Resize Image");
     dialog.setFixedSize(250, 150);
 
-    // Apply modern dark theme QSS
     dialog.setStyleSheet(MODERN_DIALOG_QSS);
 
     QFormLayout *layout = new QFormLayout(&dialog);
@@ -629,29 +704,9 @@ void MainWindow::on_blur_clicked()
 
 }
 
-void MainWindow::on_Increase_clicked()
-{
-    if (originalImage.imageData == nullptr) {
-        QMessageBox::warning(this, "Error", "Load Image to apply filter");
-        return;
-    }
-    undoStack.push(filteredImage);
-    filteredImage.toLighten();
-    showImages();
-}
 
 
 
-void MainWindow::on_decrease_clicked()
-{
-    if (originalImage.imageData == nullptr) {
-        QMessageBox::warning(this, "Error", "Load Image to apply filter");
-        return;
-    }
-    undoStack.push(filteredImage);
-    filteredImage.toDarken();
-    showImages();
-}
 
 
 void MainWindow::on_merge_clicked()
@@ -782,61 +837,6 @@ void MainWindow::on_pushButton_2_clicked()
 }
 
 
-void MainWindow::on_skewleft_clicked()
-{
-    if (originalImage.imageData == nullptr) {
-        QMessageBox::warning(this, "Error", "Load Image to apply filter");
-        return;
-    }
-    undoStack.push(filteredImage);
-
-    filteredImage.skew(45,0);
-    showImages();
-}
-
-
-void MainWindow::on_skewright_clicked() {
-        QWidget *skewWidget = new QWidget(this);
-        QVBoxLayout *layout = new QVBoxLayout(skewWidget);
-
-
-
-        QComboBox *directionBox = new QComboBox;
-        directionBox->addItem("Horizontal");
-        directionBox->addItem("Vertical");
-
-    ui->horizontalSlider->setRange(-45,45);
-
-        // QPushButton *applyButton = new QPushButton("Apply Skew");
-        //
-        //
-        // layout->addWidget(directionBox);
-        // layout->addWidget(applyButton);
-        //
-        // skewWidget->setLayout(layout);
-        // skewWidget->show();
-        //
-        // connect(applyButton, &QPushButton::clicked, this, [=]() {
-        //     double degree = slider->value();
-        //     int dir = directionBox->currentText().toInt();
-        //
-        //     undoStack.push(filteredImage);
-        //     filteredImage.skew(degree, dir);  // Apply your Image class function
-        //     showImages();
-        // });
-}
-void MainWindow::on_undo_clicked()
-{
-    undo();
-}
-
-
-void MainWindow::on_redo_clicked()
-{
-    redo();
-}
-
-
 void MainWindow::on_emboss_clicked()
 {
     if (originalImage.imageData == nullptr) {
@@ -887,5 +887,61 @@ void MainWindow::on_infobtn_clicked() {
 
     QMessageBox::information(this, "Shortcuts." ,"CTRL + L ---> load image \nCTRL + Z ---> Undo \nCTRL + Y ---> Redo\nCTRL + S ---> Save image\nCTRL + R ---> Reset image\nHold Space ---> Show original image");
 
+}
+
+
+
+
+void MainWindow::on_Skew_clicked()
+{
+    if (originalImage.imageData == nullptr) {
+        QMessageBox::warning(this, "Error", "Load an image first!");
+        return;
+    }
+
+    QDialog *skewDialog = new QDialog(this);
+    skewDialog->setWindowTitle("Skew Image");
+    skewDialog->setFixedSize(300, 150);
+
+    QVBoxLayout *layout = new QVBoxLayout(skewDialog);
+
+    QLabel *angleLabel = new QLabel("Skew Angle (°):");
+    QSlider *angleSlider = new QSlider(Qt::Horizontal);
+    angleSlider->setRange(-89, 89);
+    angleSlider->setValue(0);
+
+    QSpinBox *angleSpin = new QSpinBox;
+    angleSpin->setRange(-89, 89);
+    angleSpin->setValue(0);
+
+    connect(angleSlider, &QSlider::valueChanged, angleSpin, &QSpinBox::setValue);
+    connect(angleSpin, QOverload<int>::of(&QSpinBox::valueChanged), angleSlider, &QSlider::setValue);
+
+    QPushButton *applyButton = new QPushButton("Apply");
+    QPushButton *cancelButton = new QPushButton("Cancel");
+
+    QHBoxLayout *buttons = new QHBoxLayout;
+    buttons->addWidget(applyButton);
+    buttons->addWidget(cancelButton);
+
+    layout->addWidget(angleLabel);
+    layout->addWidget(angleSlider);
+    layout->addWidget(angleSpin);
+    layout->addLayout(buttons);
+
+    skewDialog->setLayout(layout);
+
+
+    connect(applyButton, &QPushButton::clicked, this, [=]() {
+        double angle = angleSlider->value();
+        undoStack.push(filteredImage);
+        filteredImage.skew(angle);
+        showImages();
+        skewDialog->accept();
+    });
+
+    connect(cancelButton, &QPushButton::clicked, skewDialog, &QDialog::reject);
+
+    skewDialog->exec();
 }
 

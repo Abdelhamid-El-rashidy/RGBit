@@ -77,10 +77,6 @@ private slots:
 
     void on_blur_clicked();
 
-    void on_Increase_clicked();
-
-    void on_decrease_clicked();
-
     void on_merge_clicked();
 
     void on_infobtn_clicked();
@@ -88,10 +84,6 @@ private slots:
     void on_pushButton_clicked();
 
     void on_pushButton_2_clicked();
-
-    void on_skewleft_clicked();
-
-    void on_skewright_clicked();
 
     void on_undo_clicked();
 
@@ -104,6 +96,10 @@ private slots:
     void on_burned_clicked();
 
     void on_moon_clicked();
+
+
+
+    void on_Skew_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -120,14 +116,20 @@ private:
     // Optional (for slide animation)
     QPropertyAnimation *panelAnimation;
 
-    void updateImageDisplay(const QPixmap &pix);
+    void updatePreview();
     Image originalImage;
     Image filteredImage;
+    Image previewBaseline;
+    Image previewImage;
+    bool previewing = false;
+    float brightnessValue = 0.0f;
+    float temperatureValue = 0.0f;
+    float contrastValue = 0.0f;
     QImage filtered;
     bool originalShown = false;
 
 
-    void showImages();
+    void showImages(int filter=0);
     std::queue<Image> recent;
     std::stack<Image> undoStack;
     std::stack<Image> redoStack;

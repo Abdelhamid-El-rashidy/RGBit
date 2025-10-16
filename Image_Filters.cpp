@@ -291,19 +291,24 @@ void Image::oilPainting() {
     (*this) = newImage;
 }
 
-void Image::skew(double angleDeg, int dir) {
-    long double angle = angleDeg*M_PI/180.0;
-    long double scale = tan(angle);
+void Image::skew(double degree) {
+    if (degree == 0.0) return;
 
-    int newWidth = width + fabs(height/scale);
+    long double radangle = degree * M_PI / 180.0;
+    long double scale = tan(radangle);
+
+    int shift = abs((int)round(height*scale));
+    int newWidth = width+shift;
+
     Image newimage(newWidth, height);
 
     for (int y = 0; y < height; y++) {
-        int row = (dir == 0) ? (height-1)-y : y;
-        int offset = (int)round(row * scale);
+        int offset = (int)round(y*scale);
         for (int x = 0; x < width; x++) {
             for (int c = 0; c < channels; c++) {
                 int nx = x + offset;
+                if (degree < 0)
+                    nx += shift;
                 if (nx >= 0 && nx < newWidth)
                     newimage(nx, y, c) = getPixel(x, y, c);
             }
@@ -354,18 +359,52 @@ void Image::toLighten() {
     }
 }
 
-void Image::Brightness(float value) {
+void Image::Brightness(int value) {
 
-    float val = (abs(value)/100.0) + (value >= 0.0);
+    // float val = (abs(value)/100.0) + (value >= 0.0);
     for (int i = 0; i < width; i++) {
         for (int j = 0; j < height; j++) {
             for (int k = 0; k < channels; k++) {
-                if (value > 0 && (*this)(i,j,k) > 127) (*this)(i,j,k) = 255;
-                else (*this)(i,j,k) = (*this)(i,j,k)*(val);
+                int val = (*this)(i, j, k);
+                int newval = clamp(val+value, 0, 255);
+                (*this)(i, j, k) = newval;
             }
         }
     }
 }
+void Image::temperature(float value) {
+    for (int i = 0; i < width; i++) {
+        for (int j = 0; j < height; j++) {
+             int r = (*this)(i, j, 0);
+             int g = (*this)(i, j, 1);
+             int b = (*this)(i, j, 2);
+
+            r += value;
+            b -= value;
+            r = clamp(r, 0, 255);
+            b = clamp(b, 0, 255);
+
+            (*this)(i, j, 0) = r;
+            (*this)(i, j, 1) = g;
+            (*this)(i, j, 2) = b;
+        }
+    }
+}
+
+// Resource: https://www.dfstudios.co.uk/articles/programming/image-programming-algorithms/image-processing-algorithms-part-5-contrast-adjustment/
+void Image::contrast(float value) {
+    float factor = (259 * (value + 255)) / (255 * (259 - value));
+    for (int i = 0; i < width; i++) {
+        for (int j = 0; j < height; j++) {
+            for (int k = 0; k < channels; k++) {
+                float p = (*this)(i, j, k);
+                p = factor * (p - 128) + 128;
+                (*this)(i, j, k) = std::clamp(p, 0.0f, 255.0f);
+            }
+        }
+    }
+}
+
 
 Image Image::merge(Image& img2) {
     int minwidth = min(width, img2.width);
@@ -621,9 +660,8 @@ void Image::swirl()
         factor = 0.3;
     }
     factor *= (static_cast<double>(height) / 4.0f);
-    double x0 = width / 2;
-    double y0 = height / 2;
-    Image temp = (*this);
+    double x0 = width / 2; double y0 = height / 2;
+    Image ret = (*this);
     for (int i = 0; i < width; i++) {
         for (int j = 0; j < height; j++) {
             double x = i - x0;
@@ -644,22 +682,20 @@ void Image::swirl()
                 else
                     originalAngle = C_PI * 3.0f / 2.0f;
             }
-            double swirlFactor = abs(r - width) / factor;
-            double angle = originalAngle + swirlFactor;
+            double Swfact = abs(r - width) / factor;
+            double angle = originalAngle + Swfact;
             int x1 = (int) (floor(r * cos(angle) + 0.5f)) + x0;
             int y1 = (int) (floor(r * sin(angle) + 0.5f)) + y0;
-            x1 = x1 % width;
-            y1 = y1 % height;
-            x1 = width - x1;
-            y1 = height - y1;
+            x1 = x1 % width; y1 = y1 % height;
+            x1 = width - x1; y1 = height - y1;
             if (x1 >= 0 && x1 < width && y1 >= 0 && y1 < height) {
-                temp(i, j, 0) = (*this)(x1, y1, 0);
-                temp(i, j, 1) = (*this)(x1, y1, 1);
-                temp(i, j, 2) = (*this)(x1, y1, 2);
+                ret(i, j, 0) = (*this)(x1, y1, 0);
+                ret(i, j, 1) = (*this)(x1, y1, 1);
+                ret(i, j, 2) = (*this)(x1, y1, 2);
             }
         }
     }
-    (*this) = temp;
+    (*this) = ret;
 }
 
 void Image::burn(float value) {

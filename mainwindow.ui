@@ -138,7 +138,7 @@
          </string>
         </property>
         <property name="text">
-         <string>Adjustments</string>
+         <string>Adjust</string>
         </property>
        </widget>
       </item>
@@ -295,7 +295,7 @@
           }</string>
         </property>
         <property name="text">
-         <string>Detect</string>
+         <string>Edges</string>
         </property>
        </widget>
       </item>
@@ -327,7 +327,7 @@
          </string>
         </property>
         <property name="text">
-         <string>Effects</string>
+         <string>Effect</string>
         </property>
        </widget>
       </item>
@@ -362,13 +362,38 @@
       <string notr="true">border: none;</string>
      </property>
     </widget>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>591</width>
+       <height>461</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color:transparent</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="assets.qrc">:/images/logo.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignCenter</set>
+     </property>
+    </widget>
    </widget>
    <widget class="QFrame" name="Bottombar">
     <property name="geometry">
      <rect>
       <x>0</x>
       <y>580</y>
-      <width>1001</width>
+      <width>1011</width>
       <height>71</height>
      </rect>
     </property>
@@ -628,48 +653,16 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>50</y>
+       <y>40</y>
        <width>200</width>
        <height>550</height>
       </rect>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="effectsPage">
       <layout class="QVBoxLayout" name="effectsLayout">
-       <item>
-        <widget class="QPushButton" name="BW">
-         <property name="styleSheet">
-          <string notr="true">QFrame#sidebar {
-           background-color: #1E1E2F; /* Updated dark blue/gray background */
-           border-left: 1px solid #2c2f3a;
-           color: #e0e0e0;
-           }
-           /* ... other styles ... */
-           QPushButton {
-           background-color: #28283D; /* Updated button background */
-           color: #E0E0E0;
-           border: none; /* Remove border for cleaner look */
-           border-radius: 4px; /* Slightly smaller radius */
-           padding: 8px; /* Slightly larger padding */
-           }
-           QPushButton:hover {
-           background-color: #303045; /* Darker background to simulate lift/shadow */
-           color: #00BCD4; /* Modern Teal Accent */
-           border: 1px solid #00BCD4; /* Light border on hover */
-           }
-           QPushButton:pressed {
-           background-color: #3949AB; /* Deep Indigo Pressed State */
-           color: white;
-           border: 1px solid #3949AB;
-           }</string>
-         </property>
-         <property name="text">
-          <string>Black &amp; White</string>
-         </property>
-        </widget>
-       </item>
        <item>
         <widget class="QPushButton" name="Sunlight">
          <property name="styleSheet">
@@ -703,6 +696,38 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="moon">
+         <property name="styleSheet">
+          <string notr="true">QFrame#sidebar {
+           background-color: #1E1E2F; /* Updated dark blue/gray background */
+           border-left: 1px solid #2c2f3a;
+           color: #e0e0e0;
+           }
+           /* ... other styles ... */
+           QPushButton {
+           background-color: #28283D; /* Updated button background */
+           color: #E0E0E0;
+           border: none; /* Remove border for cleaner look */
+           border-radius: 4px; /* Slightly smaller radius */
+           padding: 8px; /* Slightly larger padding */
+           }
+           QPushButton:hover {
+           background-color: #303045; /* Darker background to simulate lift/shadow */
+           color: #00BCD4; /* Modern Teal Accent */
+           border: 1px solid #00BCD4; /* Light border on hover */
+           }
+           QPushButton:pressed {
+           background-color: #3949AB; /* Deep Indigo Pressed State */
+           color: white;
+           border: 1px solid #3949AB;
+           }</string>
+         </property>
+         <property name="text">
+          <string>Moonlight</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="Invert">
          <property name="styleSheet">
           <string notr="true">QFrame#sidebar {
@@ -731,38 +756,6 @@
          </property>
          <property name="text">
           <string>Invert</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="Gray">
-         <property name="styleSheet">
-          <string notr="true">QFrame#sidebar {
-           background-color: #1E1E2F; /* Updated dark blue/gray background */
-           border-left: 1px solid #2c2f3a;
-           color: #e0e0e0;
-           }
-           /* ... other styles ... */
-           QPushButton {
-           background-color: #28283D; /* Updated button background */
-           color: #E0E0E0;
-           border: none; /* Remove border for cleaner look */
-           border-radius: 4px; /* Slightly smaller radius */
-           padding: 8px; /* Slightly larger padding */
-           }
-           QPushButton:hover {
-           background-color: #303045; /* Darker background to simulate lift/shadow */
-           color: #00BCD4; /* Modern Teal Accent */
-           border: 1px solid #00BCD4; /* Light border on hover */
-           }
-           QPushButton:pressed {
-           background-color: #3949AB; /* Deep Indigo Pressed State */
-           color: white;
-           border: 1px solid #3949AB;
-           }</string>
-         </property>
-         <property name="text">
-          <string>Gray</string>
          </property>
         </widget>
        </item>
@@ -995,18 +988,352 @@
      <widget class="QWidget" name="Brightpage">
       <layout class="QVBoxLayout" name="effectsLayout">
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout">
+        <widget class="QPushButton" name="BW">
+         <property name="styleSheet">
+          <string notr="true">QFrame#sidebar {
+           background-color: #1E1E2F; /* Updated dark blue/gray background */
+           border-left: 1px solid #2c2f3a;
+           color: #e0e0e0;
+           }
+           /* ... other styles ... */
+           QPushButton {
+           background-color: #28283D; /* Updated button background */
+           color: #E0E0E0;
+           border: none; /* Remove border for cleaner look */
+           border-radius: 4px; /* Slightly smaller radius */
+           padding: 8px; /* Slightly larger padding */
+           }
+           QPushButton:hover {
+           background-color: #303045; /* Darker background to simulate lift/shadow */
+           color: #00BCD4; /* Modern Teal Accent */
+           border: 1px solid #00BCD4; /* Light border on hover */
+           }
+           QPushButton:pressed {
+           background-color: #3949AB; /* Deep Indigo Pressed State */
+           color: white;
+           border: 1px solid #3949AB;
+           }</string>
+         </property>
+         <property name="text">
+          <string>Black &amp; White</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="Gray">
+         <property name="styleSheet">
+          <string notr="true">QFrame#sidebar {
+           background-color: #1E1E2F; /* Updated dark blue/gray background */
+           border-left: 1px solid #2c2f3a;
+           color: #e0e0e0;
+           }
+           /* ... other styles ... */
+           QPushButton {
+           background-color: #28283D; /* Updated button background */
+           color: #E0E0E0;
+           border: none; /* Remove border for cleaner look */
+           border-radius: 4px; /* Slightly smaller radius */
+           padding: 8px; /* Slightly larger padding */
+           }
+           QPushButton:hover {
+           background-color: #303045; /* Darker background to simulate lift/shadow */
+           color: #00BCD4; /* Modern Teal Accent */
+           border: 1px solid #00BCD4; /* Light border on hover */
+           }
+           QPushButton:pressed {
+           background-color: #3949AB; /* Deep Indigo Pressed State */
+           color: white;
+           border: 1px solid #3949AB;
+           }</string>
+         </property>
+         <property name="text">
+          <string>Gray</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="tempLabel_2">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Brightness</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignmentFlag::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSlider" name="brightnessSlider">
+         <property name="styleSheet">
+          <string notr="true">    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                                stop:0 #0077ff, stop:1 #00ccff);
+    border-radius: 3px;</string>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Orientation::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="tempLabel">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Temperature</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignmentFlag::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSlider" name="temperatureSlider">
+         <property name="styleSheet">
+          <string notr="true">    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                                stop:0 #0077ff, stop:1 #00ccff);
+    border-radius: 3px;</string>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Orientation::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="contrastLabel">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Contrast</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignmentFlag::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSlider" name="contrastSlider">
+         <property name="styleSheet">
+          <string notr="true">    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                                stop:0 #0077ff, stop:1 #00ccff);
+    border-radius: 3px;</string>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Orientation::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="applyButton">
+         <property name="text">
+          <string>Apply</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="transformPage">
+      <layout class="QFormLayout" name="transformLayout">
+       <item row="0" column="0" colspan="2">
+        <widget class="QLabel" name="rotateLabel">
+         <property name="text">
+          <string>Rotate</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
-          <widget class="QPushButton" name="decrease">
+          <widget class="QPushButton" name="rot270">
+           <property name="styleSheet">
+            <string notr="true">QFrame#sidebar {
+           background-color: #1E1E2F; /* Updated dark blue/gray background */
+           border-left: 1px solid #2c2f3a;
+           color: #e0e0e0;
+           }
+           /* ... other styles ... */
+           QPushButton {
+           background-color: #28283D; /* Updated button background */
+           color: #E0E0E0;
+           border: none; /* Remove border for cleaner look */
+           border-radius: 4px; /* Slightly smaller radius */
+           padding: 8px; /* Slightly larger padding */
+           }
+           QPushButton:hover {
+           background-color: #303045; /* Darker background to simulate lift/shadow */
+           color: #00BCD4; /* Modern Teal Accent */
+           border: 1px solid #00BCD4; /* Light border on hover */
+           }
+           QPushButton:pressed {
+           background-color: #3949AB; /* Deep Indigo Pressed State */
+           color: white;
+           border: 1px solid #3949AB;
+           }
+          </string>
+           </property>
            <property name="text">
-            <string>Brightness</string>
+            <string>90</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="moon">
+          <widget class="QPushButton" name="rot180">
            <property name="styleSheet">
-            <string notr="true">QFrame#mainbar {
+            <string notr="true">QFrame#sidebar {
+           background-color: #1E1E2F; /* Updated dark blue/gray background */
+           border-left: 1px solid #2c2f3a;
+           color: #e0e0e0;
+           }
+           /* ... other styles ... */
+           QPushButton {
+           background-color: #28283D; /* Updated button background */
+           color: #E0E0E0;
+           border: none; /* Remove border for cleaner look */
+           border-radius: 4px; /* Slightly smaller radius */
+           padding: 8px; /* Slightly larger padding */
+           }
+           QPushButton:hover {
+           background-color: #303045; /* Darker background to simulate lift/shadow */
+           color: #00BCD4; /* Modern Teal Accent */
+           border: 1px solid #00BCD4; /* Light border on hover */
+           }
+           QPushButton:pressed {
+           background-color: #3949AB; /* Deep Indigo Pressed State */
+           color: white;
+           border: 1px solid #3949AB;
+           }
+          </string>
+           </property>
+           <property name="text">
+            <string>180</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="rot90">
+           <property name="styleSheet">
+            <string notr="true">QFrame#sidebar {
+           background-color: #1E1E2F; /* Updated dark blue/gray background */
+           border-left: 1px solid #2c2f3a;
+           color: #e0e0e0;
+           }
+           /* ... other styles ... */
+           QPushButton {
+           background-color: #28283D; /* Updated button background */
+           color: #E0E0E0;
+           border: none; /* Remove border for cleaner look */
+           border-radius: 4px; /* Slightly smaller radius */
+           padding: 8px; /* Slightly larger padding */
+           }
+           QPushButton:hover {
+           background-color: #303045; /* Darker background to simulate lift/shadow */
+           color: #00BCD4; /* Modern Teal Accent */
+           border: 1px solid #00BCD4; /* Light border on hover */
+           }
+           QPushButton:pressed {
+           background-color: #3949AB; /* Deep Indigo Pressed State */
+           color: white;
+           border: 1px solid #3949AB;
+           }</string>
+           </property>
+           <property name="text">
+            <string>270</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="2" column="0" colspan="2">
+        <widget class="QLabel" name="fliplabel">
+         <property name="text">
+          <string>Flip</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <item>
+          <widget class="QPushButton" name="fliph">
+           <property name="styleSheet">
+            <string notr="true">QFrame#sidebar {
+           background-color: #1E1E2F; /* Updated dark blue/gray background */
+           border-left: 1px solid #2c2f3a;
+           color: #e0e0e0;
+           }
+           /* ... other styles ... */
+           QPushButton {
+           background-color: #28283D; /* Updated button background */
+           color: #E0E0E0;
+           border: none; /* Remove border for cleaner look */
+           border-radius: 4px; /* Slightly smaller radius */
+           padding: 8px; /* Slightly larger padding */
+           }
+           QPushButton:hover {
+           background-color: #303045; /* Darker background to simulate lift/shadow */
+           color: #00BCD4; /* Modern Teal Accent */
+           border: 1px solid #00BCD4; /* Light border on hover */
+           }
+           QPushButton:pressed {
+           background-color: #3949AB; /* Deep Indigo Pressed State */
+           color: white;
+           border: 1px solid #3949AB;
+           }</string>
+           </property>
+           <property name="text">
+            <string>Horizontal</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="flipv">
+           <property name="styleSheet">
+            <string notr="true">QFrame#sidebar {
+           background-color: #1E1E2F; /* Updated dark blue/gray background */
+           border-left: 1px solid #2c2f3a;
+           color: #e0e0e0;
+           }
+           /* ... other styles ... */
+           QPushButton {
+           background-color: #28283D; /* Updated button background */
+           color: #E0E0E0;
+           border: none; /* Remove border for cleaner look */
+           border-radius: 4px; /* Slightly smaller radius */
+           padding: 8px; /* Slightly larger padding */
+           }
+           QPushButton:hover {
+           background-color: #303045; /* Darker background to simulate lift/shadow */
+           color: #00BCD4; /* Modern Teal Accent */
+           border: 1px solid #00BCD4; /* Light border on hover */
+           }
+           QPushButton:pressed {
+           background-color: #3949AB; /* Deep Indigo Pressed State */
+           color: white;
+           border: 1px solid #3949AB;
+           }</string>
+           </property>
+           <property name="text">
+            <string>Vertical</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="10" column="0" colspan="2">
+        <widget class="QPushButton" name="Skew">
+         <property name="styleSheet">
+          <string notr="true">QFrame#mainbar {
           background-color: #1A1A22; /* Slightly updated dark background */
           border-left: 1px solid #2c2f3a;
           }
@@ -1028,202 +1355,13 @@
           border-radius: 0; /* Remove radius for sharper, modern look */
           border-left: 3px solid #00BCD4; /* Maintain accent line */
           }</string>
-           </property>
-           <property name="text">
-            <string>Moonlight</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="Increase">
-           <property name="text">
-            <string>Increase</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="transformPage">
-      <layout class="QFormLayout" name="transformLayout">
-       <item row="0" column="0" colspan="2">
-        <widget class="QLabel" name="rotateLabel">
+         </property>
          <property name="text">
-          <string>Rotate</string>
+          <string>Skew</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="0">
-        <widget class="QPushButton" name="rot90">
-         <property name="styleSheet">
-          <string notr="true">QFrame#sidebar {
-           background-color: #1E1E2F; /* Updated dark blue/gray background */
-           border-left: 1px solid #2c2f3a;
-           color: #e0e0e0;
-           }
-           /* ... other styles ... */
-           QPushButton {
-           background-color: #28283D; /* Updated button background */
-           color: #E0E0E0;
-           border: none; /* Remove border for cleaner look */
-           border-radius: 4px; /* Slightly smaller radius */
-           padding: 8px; /* Slightly larger padding */
-           }
-           QPushButton:hover {
-           background-color: #303045; /* Darker background to simulate lift/shadow */
-           color: #00BCD4; /* Modern Teal Accent */
-           border: 1px solid #00BCD4; /* Light border on hover */
-           }
-           QPushButton:pressed {
-           background-color: #3949AB; /* Deep Indigo Pressed State */
-           color: white;
-           border: 1px solid #3949AB;
-           }</string>
-         </property>
-         <property name="text">
-          <string>270</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QPushButton" name="rot180">
-         <property name="styleSheet">
-          <string notr="true">QFrame#sidebar {
-           background-color: #1E1E2F; /* Updated dark blue/gray background */
-           border-left: 1px solid #2c2f3a;
-           color: #e0e0e0;
-           }
-           /* ... other styles ... */
-           QPushButton {
-           background-color: #28283D; /* Updated button background */
-           color: #E0E0E0;
-           border: none; /* Remove border for cleaner look */
-           border-radius: 4px; /* Slightly smaller radius */
-           padding: 8px; /* Slightly larger padding */
-           }
-           QPushButton:hover {
-           background-color: #303045; /* Darker background to simulate lift/shadow */
-           color: #00BCD4; /* Modern Teal Accent */
-           border: 1px solid #00BCD4; /* Light border on hover */
-           }
-           QPushButton:pressed {
-           background-color: #3949AB; /* Deep Indigo Pressed State */
-           color: white;
-           border: 1px solid #3949AB;
-           }
-          </string>
-         </property>
-         <property name="text">
-          <string>180</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QPushButton" name="rot270">
-         <property name="styleSheet">
-          <string notr="true">QFrame#sidebar {
-           background-color: #1E1E2F; /* Updated dark blue/gray background */
-           border-left: 1px solid #2c2f3a;
-           color: #e0e0e0;
-           }
-           /* ... other styles ... */
-           QPushButton {
-           background-color: #28283D; /* Updated button background */
-           color: #E0E0E0;
-           border: none; /* Remove border for cleaner look */
-           border-radius: 4px; /* Slightly smaller radius */
-           padding: 8px; /* Slightly larger padding */
-           }
-           QPushButton:hover {
-           background-color: #303045; /* Darker background to simulate lift/shadow */
-           color: #00BCD4; /* Modern Teal Accent */
-           border: 1px solid #00BCD4; /* Light border on hover */
-           }
-           QPushButton:pressed {
-           background-color: #3949AB; /* Deep Indigo Pressed State */
-           color: white;
-           border: 1px solid #3949AB;
-           }
-          </string>
-         </property>
-         <property name="text">
-          <string>90</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0" colspan="2">
-        <widget class="QLabel" name="fliplabel">
-         <property name="text">
-          <string>Flip</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0">
-        <widget class="QPushButton" name="flipv">
-         <property name="styleSheet">
-          <string notr="true">QFrame#sidebar {
-           background-color: #1E1E2F; /* Updated dark blue/gray background */
-           border-left: 1px solid #2c2f3a;
-           color: #e0e0e0;
-           }
-           /* ... other styles ... */
-           QPushButton {
-           background-color: #28283D; /* Updated button background */
-           color: #E0E0E0;
-           border: none; /* Remove border for cleaner look */
-           border-radius: 4px; /* Slightly smaller radius */
-           padding: 8px; /* Slightly larger padding */
-           }
-           QPushButton:hover {
-           background-color: #303045; /* Darker background to simulate lift/shadow */
-           color: #00BCD4; /* Modern Teal Accent */
-           border: 1px solid #00BCD4; /* Light border on hover */
-           }
-           QPushButton:pressed {
-           background-color: #3949AB; /* Deep Indigo Pressed State */
-           color: white;
-           border: 1px solid #3949AB;
-           }</string>
-         </property>
-         <property name="text">
-          <string>Vertical</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="1">
-        <widget class="QPushButton" name="fliph">
-         <property name="styleSheet">
-          <string notr="true">QFrame#sidebar {
-           background-color: #1E1E2F; /* Updated dark blue/gray background */
-           border-left: 1px solid #2c2f3a;
-           color: #e0e0e0;
-           }
-           /* ... other styles ... */
-           QPushButton {
-           background-color: #28283D; /* Updated button background */
-           color: #E0E0E0;
-           border: none; /* Remove border for cleaner look */
-           border-radius: 4px; /* Slightly smaller radius */
-           padding: 8px; /* Slightly larger padding */
-           }
-           QPushButton:hover {
-           background-color: #303045; /* Darker background to simulate lift/shadow */
-           color: #00BCD4; /* Modern Teal Accent */
-           border: 1px solid #00BCD4; /* Light border on hover */
-           }
-           QPushButton:pressed {
-           background-color: #3949AB; /* Deep Indigo Pressed State */
-           color: white;
-           border: 1px solid #3949AB;
-           }</string>
-         </property>
-         <property name="text">
-          <string>Horizontal</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="0">
+       <item row="11" column="0" colspan="2">
         <widget class="QPushButton" name="CropBtn">
          <property name="styleSheet">
           <string notr="true">QFrame#mainbar {
@@ -1254,7 +1392,7 @@
          </property>
         </widget>
        </item>
-       <item row="6" column="1">
+       <item row="12" column="0" colspan="2">
         <widget class="QPushButton" name="ResizeBtn">
          <property name="styleSheet">
           <string notr="true">QFrame#mainbar {
@@ -1282,78 +1420,6 @@
          </property>
          <property name="text">
           <string>Resize</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="0" colspan="2">
-        <widget class="QLabel" name="skew">
-         <property name="text">
-          <string>Skew</string>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="0">
-        <widget class="QPushButton" name="skewleft">
-         <property name="styleSheet">
-          <string notr="true">QFrame#sidebar {
-           background-color: #1E1E2F; /* Updated dark blue/gray background */
-           border-left: 1px solid #2c2f3a;
-           color: #e0e0e0;
-           }
-           /* ... other styles ... */
-           QPushButton {
-           background-color: #28283D; /* Updated button background */
-           color: #E0E0E0;
-           border: none; /* Remove border for cleaner look */
-           border-radius: 4px; /* Slightly smaller radius */
-           padding: 8px; /* Slightly larger padding */
-           }
-           QPushButton:hover {
-           background-color: #303045; /* Darker background to simulate lift/shadow */
-           color: #00BCD4; /* Modern Teal Accent */
-           border: 1px solid #00BCD4; /* Light border on hover */
-           }
-           QPushButton:pressed {
-           background-color: #3949AB; /* Deep Indigo Pressed State */
-           color: white;
-           border: 1px solid #3949AB;
-           }
-          </string>
-         </property>
-         <property name="text">
-          <string>Left</string>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="1">
-        <widget class="QPushButton" name="skewright">
-         <property name="styleSheet">
-          <string notr="true">QFrame#sidebar {
-           background-color: #1E1E2F; /* Updated dark blue/gray background */
-           border-left: 1px solid #2c2f3a;
-           color: #e0e0e0;
-           }
-           /* ... other styles ... */
-           QPushButton {
-           background-color: #28283D; /* Updated button background */
-           color: #E0E0E0;
-           border: none; /* Remove border for cleaner look */
-           border-radius: 4px; /* Slightly smaller radius */
-           padding: 8px; /* Slightly larger padding */
-           }
-           QPushButton:hover {
-           background-color: #303045; /* Darker background to simulate lift/shadow */
-           color: #00BCD4; /* Modern Teal Accent */
-           border: 1px solid #00BCD4; /* Light border on hover */
-           }
-           QPushButton:pressed {
-           background-color: #3949AB; /* Deep Indigo Pressed State */
-           color: white;
-           border: 1px solid #3949AB;
-           }</string>
-         </property>
-         <property name="text">
-          <string>Right</string>
          </property>
         </widget>
        </item>
@@ -1403,32 +1469,6 @@
      </property>
     </widget>
    </widget>
-   <widget class="QSlider" name="horizontalSlider">
-    <property name="geometry">
-     <rect>
-      <x>490</x>
-      <y>550</y>
-      <width>160</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Orientation::Horizontal</enum>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_3">
-    <property name="geometry">
-     <rect>
-      <x>750</x>
-      <y>540</y>
-      <width>94</width>
-      <height>26</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Apply</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="infobtn">
     <property name="geometry">
      <rect>
@@ -1461,7 +1501,7 @@
        }</string>
     </property>
     <property name="text">
-     <string>info.</string>
+     <string>Help</string>
     </property>
     <property name="flat">
      <bool>true</bool>
@@ -1470,8 +1510,6 @@
    <zorder>sidebar</zorder>
    <zorder>Bottombar</zorder>
    <zorder>Displayer</zorder>
-   <zorder>horizontalSlider</zorder>
-   <zorder>pushButton_3</zorder>
    <zorder>mainbar</zorder>
    <zorder>infobtn</zorder>
   </widget>
@@ -1484,6 +1522,8 @@
    <header>imageview.h</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="assets.qrc"/>
+ </resources>
  <connections/>
 </ui>
