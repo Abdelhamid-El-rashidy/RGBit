@@ -495,7 +495,7 @@ void MainWindow::on_OldTv_clicked()
         return;
     }
     undoStack.push(filteredImage);
-    Image img("oldtv.jpg");
+    Image img("../images/oldtv.jpg");
     filteredImage = img.merge(filteredImage);
     showImages();
 }
